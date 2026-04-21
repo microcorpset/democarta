@@ -1301,15 +1301,16 @@ function openDevModal() {
   document.getElementById('dev-avatar').textContent = initials;
   document.getElementById('dev-name').textContent = dev.name;
   document.getElementById('dev-tagline').textContent = tField(dev.tagline) || '';
-  // Build links
+  // Build links (show generic labels so the raw URL/value is not displayed in the UI)
   const links = [];
   if (dev.whatsapp) links.push({ icon:'💬', label:'WhatsApp', href:`https://wa.me/${dev.whatsapp.replace(/\D/g,'')}` });
-  if (dev.email)    links.push({ icon:'✉️', label: dev.email, href:`mailto:${dev.email}` });
-  if (dev.website)  links.push({ icon:'🌐', label: dev.website.replace(/https?:\/\//,''), href: dev.website });
+  if (dev.email)    links.push({ icon:'✉️', label:'Email', href:`mailto:${dev.email}` });
+  if (dev.website)  links.push({ icon:'🌐', label:'Website', href: dev.website });
+  if (dev.telegram) links.push({ icon:'✈️', label:'Telegram', href: dev.telegram });
   if (dev.instagram)links.push({ icon:'📷', label:'Instagram', href: dev.instagram });
-  if (dev.phone)    links.push({ icon:'📞', label: dev.phone, href:`tel:${dev.phone}` });
+  if (dev.phone)    links.push({ icon:'📞', label:'Teléfono', href:`tel:${dev.phone}` });
   const linksHtml = links.map((l, i) =>
-    `<a class="dev-link${i===0&&dev.whatsapp?' wa':''}" href="${l.href}" target="_blank">${l.icon} ${l.label}</a>`
+    `<a class="dev-link${i===0&&dev.whatsapp?' wa':''}" href="${l.href}" target="_blank" rel="noopener noreferrer">${l.icon} ${l.label}</a>`
   ).join('');
   document.getElementById('dev-links').innerHTML = linksHtml;
   document.getElementById('dev-copyright').innerHTML =

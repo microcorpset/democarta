@@ -414,18 +414,18 @@
       }
     ],
     "developer": {
-      "name": "Tu Nombre",
+      "name": "JON GLEZ",
       "tagline": {
         "es": "Desarrollo web y cartas digitales para hostelería",
         "en": "Web development & digital menus for hospitality",
         "fr": "Développement web et menus numériques",
         "de": "Webentwicklung und digitale Speisekarten"
       },
-      "email": "tu@email.com",
-      "phone": "+34600000000",
-      "whatsapp": "+34600000000",
-      "website": "https://tuwebsite.com",
-      "instagram": "https://instagram.com/tuperfil",
+      "email": "jongt23@gmail.com",
+      "phone": "+34644700830",
+      "whatsapp": "+34644700830",
+      "website": "https://github.com/microcorpset/tarjeta",
+      "telegram": "https://t.me/jon_glez",
       "copyright": "2025",
       "showInLangModal": true
     },
@@ -1136,7 +1136,7 @@
         "de": "Frische Sardellen in Apfelessig mariniert mit Knoblauch, Petersilie und Olivenöl. Kalt auf Tomatenbrot serviert."
       },
       "price": 8.0,
-      "image": "https://images.unsplash.com/photo-1551781151-3a30eb5d0a4b?w=800&q=80",
+      "image": "https://media.istockphoto.com/id/1492411237/es/foto/cant%C3%A1brico-en-vinagre.jpg?s=612x612&w=0&k=20&c=r_dlDGrwqBokvb94yOntgT8DwgrXU3XdZS0Bbg-Uheg=",
       "tags": {
         "es": [
           "Tradicional"
@@ -2237,7 +2237,7 @@
         "de": "Frische Garnelen in Tontopf mit Olivenöl, geschnittenem Knoblauch, Chili und frischer Petersilie. Mit handwerklichem Brot."
       },
       "price": 13.0,
-      "image": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=800&q=80",
+      "image": "https://media.istockphoto.com/id/902587420/es/foto/tapas-de-camarones-espa%C3%B1ol.jpg?s=612x612&w=0&k=20&c=5Hv49ebHUuvgiPfQpxiVhvONd8hS2dzid_4cGL7xBXo=",
       "tags": {
         "es": [
           "Sin gluten",
@@ -2331,7 +2331,7 @@
         "de": "Klassische katalanische Creme mit frisch karamellisierter Zuckerkruste. Mit Zimt, Vanille und Zitronenschale."
       },
       "price": 6.5,
-      "image": "https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=800&q=80",
+      "image": "https://media.istockphoto.com/id/1464052993/es/foto/la-crema-catalana-es-un-postre-muy-t%C3%ADpico-de-la-cocina-catalana-similar-a-la-cr%C3%A8me-br%C3%BBl%C3%A9e.jpg?s=612x612&w=0&k=20&c=oQO5TOgK8YqzBkCAiIIYrGZ3u5Sy4eQ95bH8r7P-biM=",
       "tags": {
         "es": [
           "Vegetariano",
@@ -2858,7 +2858,7 @@
         "de": "Lokal gebrautes Craftbier. Als Lager, Amber oder Stout. 33cl Flasche. Fragen Sie nach den Tagesangeboten."
       },
       "price": 4.0,
-      "image": "https://images.unsplash.com/photo-1567529684892-09290a1b2d05?w=800&q=80",
+      "image": "https://media.istockphoto.com/id/1219967647/es/foto/manos-de-personas-tosando-con-cerveza-en-un-pub.jpg?s=612x612&w=0&k=20&c=Be4kLKd8az13yb7NBRPN-Q-aMTbJqdHK7dhkga0wjLg=",
       "tags": {
         "es": [
           "Local",
@@ -3188,7 +3188,7 @@
         "de": "Brut Nature Cava aus Macabeo, Xarel·lo und Parellada. Ohne zugesetzten Zucker. Feine, anhaltende Blasen."
       },
       "price": 5.0,
-      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+      "image": "https://media.istockphoto.com/id/454374117/es/foto/champaign.jpg?s=612x612&w=0&k=20&c=68dlxSSptlmSTHu44g2_iDXZcF3wqwgDS8A5YfC_pp8=",
       "tags": {
         "es": [
           "Sin gluten",

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demo — Carta Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #F5F0E8;
+      --charcoal:   #1C1C1A;
+      --gold:       #C9A84C;
+      --gold-light: #E8D5A3;
+      --brown:      #8B5E3C;
+      --rust:       #C45C26;
+      --sage:       #7A8C6E;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--charcoal);
+      color: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      gap: 0;
+    }
+
+    .demo-wrap {
+      width: 100%;
+      max-width: 480px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.6rem;
+    }
+
+    /* ── HEADER ── */
+    .demo-header { text-align: center; }
+    .demo-badge {
+      display: inline-block;
+      font-size: 0.72rem; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid rgba(201,168,76,0.4);
+      border-radius: 20px; padding: 0.3rem 0.9rem;
+      margin-bottom: 1.2rem;
+    }
+    .demo-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 6vw, 2.6rem);
+      color: var(--gold);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .demo-subtitle {
+      font-size: 0.88rem;
+      color: #9A9080;
+      line-height: 1.6;
+      max-width: 360px;
+      margin: 0 auto;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex; align-items: center; gap: 1rem;
+      color: #3A3830; font-size: 0.75rem; letter-spacing: 0.1em;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; height: 1px;
+      background: linear-gradient(to right, transparent, #3A3830, transparent);
+    }
+
+    /* ── CARDS GRID ── */
+    .cards-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .franja-card {
+      display: flex;
+      align-items: center;
+      gap: 1.1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 1.1rem 1.3rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--cream);
+      transition: background 0.2s, border-color 0.2s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .franja-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent, var(--gold));
+      border-radius: 2px 0 0 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .franja-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.14);
+      transform: translateX(3px);
+    }
+    .franja-card:hover::before { opacity: 1; }
+
+    .franja-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+    }
+    .franja-info { flex: 1; }
+    .franja-name {
+      font-size: 1rem; font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+    .franja-time {
+      font-size: 0.78rem;
+      color: var(--accent, var(--gold));
+      letter-spacing: 0.04em;
+    }
+    .franja-desc {
+      font-size: 0.78rem;
+      color: #6A6560;
+      margin-top: 0.15rem;
+      line-height: 1.4;
+    }
+    .franja-arrow {
+      font-size: 1rem;
+      color: #3A3830;
+      flex-shrink: 0;
+      transition: color 0.2s;
+    }
+    .franja-card:hover .franja-arrow { color: var(--cream); }
+
+    /* ── THEME GRID ── */
+    .theme-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+    .theme-card {
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      padding: 0.9rem 0.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px;
+      text-decoration: none; color: var(--cream);
+      cursor: pointer; transition: all 0.2s;
+      position: relative; overflow: hidden;
+    }
+    .theme-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.2); }
+    .theme-swatch {
+      width: 100%; height: 36px; border-radius: 6px;
+      display: flex; overflow: hidden;
+    }
+    .theme-swatch span { flex: 1; }
+    .theme-card-name { font-size: 0.78rem; font-weight: 500; }
+    .theme-card-desc { font-size: 0.68rem; color: #6A6560; text-align: center; line-height: 1.3; }
+
+    /* ── REAL LINK ── */
+    .real-link-wrap { text-align: center; }
+    .real-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.82rem; color: #6A6560;
+      text-decoration: none;
+      border-bottom: 1px dashed #3A3830;
+      padding-bottom: 0.1rem;
+      transition: color 0.2s;
+    }
+    .real-link:hover { color: var(--cream); }
+
+    /* ── NOTE ── */
+    .demo-note {
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 8px;
+      padding: 0.9rem 1.1rem;
+      font-size: 0.8rem;
+      color: #9A9080;
+      line-height: 1.6;
+    }
+    .demo-note strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+<div class="demo-wrap">
+
+  <div class="demo-header">
+    <div class="demo-badge">Modo demostración</div>
+    <h1 class="demo-title">Carta Digital<br>La Taberna del Sur</h1>
+    <p class="demo-subtitle">Selecciona una franja horaria para ver cómo queda la carta en ese momento del día.</p>
+  </div>
+
+  <div class="divider">SIMULAR HORARIO</div>
+
+  <div class="cards-grid">
+
+    <a class="franja-card" href="index.html?demo=madrugada" style="--accent:#9D4EDD">
+      <div class="franja-icon">🌙</div>
+      <div class="franja-info">
+        <div class="franja-name">Cerrado (madrugada)</div>
+        <div class="franja-time" style="color:#9D4EDD">00:00 – 08:30</div>
+        <div class="franja-desc">El local está cerrado. Solo se muestra el aviso de apertura.</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+    <a class="franja-card" href="index.html?demo=desayunos" style="--accent:#C9A84C">
+      <div class="franja-icon">☕</div>
+      <div class="franja-info">
+        <div class="franja-name">Desayunos</div>
+        <div class="franja-time" style="color:#C9A84C">08:30 – 12:00</div>
+        <div class="franja-desc">Solo desayunos y bebidas. Cocina principal cerrada.</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+    <a class="franja-card" href="index.html?demo=almuerzo" style="--accent:#7A8C6E">
+      <div class="franja-icon">🍽️</div>
+      <div class="franja-info">
+        <div class="franja-name">Almuerzo / Cocina</div>
+        <div class="franja-time" style="color:#7A8C6E">12:00 – 16:30</div>
+        <div class="franja-desc">Carta completa: entrantes, arroces, carnes, pescados, postres, vinos…</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+    <a class="franja-card" href="index.html?demo=merienda" style="--accent:#8B5E3C">
+      <div class="franja-icon">🧇</div>
+      <div class="franja-info">
+        <div class="franja-name">Merienda / Barra</div>
+        <div class="franja-time" style="color:#8B5E3C">16:30 – 20:30</div>
+        <div class="franja-desc">Cocina descansando. Bebidas, cafés y meriendas disponibles.</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+    <a class="franja-card" href="index.html?demo=cena" style="--accent:#C45C26">
+      <div class="franja-icon">🌙</div>
+      <div class="franja-info">
+        <div class="franja-name">Cena / Noche</div>
+        <div class="franja-time" style="color:#C45C26">20:30 – 00:00</div>
+        <div class="franja-desc">Carta completa de noche: entrantes, carnes, pescados, vinos…</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+    <a class="franja-card" href="index.html?demo=miercoles" style="--accent:#555">
+      <div class="franja-icon">🚫</div>
+      <div class="franja-info">
+        <div class="franja-name">Miércoles (cerrado)</div>
+        <div class="franja-time" style="color:#666">Todo el día</div>
+        <div class="franja-desc">El local cierra los miércoles. Se muestra el aviso de cierre.</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+    <a class="franja-card" href="index.html?demo=completa" style="--accent:#6B9BD1; border-style: dashed;">
+      <div class="franja-icon">📋</div>
+      <div class="franja-info">
+        <div class="franja-name">Carta completa</div>
+        <div class="franja-time" style="color:#6B9BD1">Todos los artículos visibles</div>
+        <div class="franja-desc">Ignora horarios y muestra el 100% del menú configurado. Ideal para revisar el contenido completo.</div>
+      </div>
+      <div class="franja-arrow">›</div>
+    </a>
+
+  </div>
+
+  <div class="divider">PALETA DE COLORES</div>
+
+  <div class="theme-grid">
+
+    <a class="theme-card" href="index.html?demo=almuerzo&theme=mar">
+      <div class="theme-swatch">
+        <span style="background:#0A2540"></span>
+        <span style="background:#1A6FA8"></span>
+        <span style="background:#7EC8E3"></span>
+        <span style="background:#F0F6FF"></span>
+      </div>
+      <div class="theme-card-name">Azul Mar</div>
+      <div class="theme-card-desc">Náutico y fresco</div>
+    </a>
+
+    <a class="theme-card" href="index.html?demo=almuerzo&theme=oliva">
+      <div class="theme-swatch">
+        <span style="background:#2C3320"></span>
+        <span style="background:#5C7A3E"></span>
+        <span style="background:#B8D48A"></span>
+        <span style="background:#F4F1E8"></span>
+      </div>
+      <div class="theme-card-name">Verde Oliva</div>
+      <div class="theme-card-desc">Mediterráneo</div>
+    </a>
+
+    <a class="theme-card" href="index.html?demo=almuerzo&theme=burdeos">
+      <div class="theme-swatch">
+        <span style="background:#1A0808"></span>
+        <span style="background:#8B1A2A"></span>
+        <span style="background:#D4A0A8"></span>
+        <span style="background:#F8F0F0"></span>
+      </div>
+      <div class="theme-card-name">Burdeos</div>
+      <div class="theme-card-desc">Elegante y dramático</div>
+    </a>
+
+    <a class="theme-card" href="index.html?demo=almuerzo&theme=arena">
+      <div class="theme-swatch">
+        <span style="background:#1A1A18"></span>
+        <span style="background:#6B6458"></span>
+        <span style="background:#D8D0C0"></span>
+        <span style="background:#FAFAF8"></span>
+      </div>
+      <div class="theme-card-name">Arena</div>
+      <div class="theme-card-desc">Minimalista neutro</div>
+    </a>
+
+    <a class="theme-card" href="index.html?demo=almuerzo&theme=carbon">
+      <div class="theme-swatch">
+        <span style="background:#0A0A08"></span>
+        <span style="background:#1C1C1A"></span>
+        <span style="background:#D4B060"></span>
+        <span style="background:#F0EBE0"></span>
+      </div>
+      <div class="theme-card-name">Carbón</div>
+      <div class="theme-card-desc">Dark total</div>
+    </a>
+
+    <a class="theme-card" href="index.html?demo=almuerzo" style="border-style:dashed">
+      <div class="theme-swatch">
+        <span style="background:#1C1C1A"></span>
+        <span style="background:#8B5E3C"></span>
+        <span style="background:#C9A84C"></span>
+        <span style="background:#F5F0E8"></span>
+      </div>
+      <div class="theme-card-name">Original</div>
+      <div class="theme-card-desc">Clásico del restaurante</div>
+    </a>
+
+  </div>
+
+  <div class="divider">O BIEN</div>
+
+  <div class="real-link-wrap">
+    <a class="real-link" href="index.html">
+      ↗ Abrir la carta con la hora real del dispositivo
+    </a>
+  </div>
+
+  <div class="demo-note">
+    <strong>Nota:</strong> Todas las simulaciones usan un martes (o miércoles) de ejemplo para respetar la lógica de días. La carta real usará siempre la hora y el día del dispositivo del cliente.
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1807 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta del Restaurante</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F5F0E8;
+      --warm-white: #FDFAF5;
+      --charcoal: #1C1C1A;
+      --brown: #8B5E3C;
+      --gold: #C9A84C;
+      --gold-light: #E8D5A3;
+      --rust: #C45C26;
+      --sage: #7A8C6E;
+      --shadow: rgba(28,28,26,0.12);
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--cream);
+      color: var(--charcoal);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE MODAL ── */
+    #lang-modal {
+      position: fixed; inset: 0; z-index: 9999;
+      background: var(--charcoal);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 2rem;
+      padding: 2rem;
+      transition: opacity 0.5s ease;
+    }
+    #lang-modal.hidden { opacity: 0; pointer-events: none; }
+    .lang-title {
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .lang-subtitle {
+      color: #9A9080;
+      font-size: 0.95rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .lang-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; width: 100%; max-width: 380px;
+    }
+    .lang-btn {
+      background: none; border: 1px solid #3A3830;
+      color: var(--cream); padding: 1.2rem;
+      font-family: var(--font-body); font-size: 1rem;
+      cursor: pointer; border-radius: 4px;
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      transition: all 0.25s;
+    }
+    .lang-btn:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.06); }
+    .lang-btn span:first-child { font-size: 1.8rem; }
+    .lang-btn small { font-size: 0.75rem; opacity: 0.6; letter-spacing: 0.08em; }
+
+    /* ── OFFER MODAL ── */
+    .modal {
+      position: fixed; inset: 0; z-index: 9999;
+      background: rgba(28,28,26,0.8);
+      display: none; align-items: center; justify-content: center;
+      flex-direction: column; gap: 2rem;
+      padding: 2rem;
+    }
+    .modal-content {
+      background: var(--warm-white);
+      padding: 2rem; border-radius: 12px;
+      text-align: center; max-width: 400px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .modal-content h2 {
+      color: var(--rust); margin-bottom: 1rem;
+      font-family: var(--font-display);
+    }
+    .modal-content p {
+      margin-bottom: 1.5rem;
+    }
+    .modal-btn {
+      background: var(--rust); color: white;
+      border: none; padding: 0.8rem 1.5rem;
+      border-radius: 8px; cursor: pointer;
+      font-size: 1rem;
+    }
+    .modal-btn:hover { background: #B84A1F; }
+    .close-modal-btn {
+      position: absolute; top: 10px; right: 10px;
+      background: none; border: none;
+      font-size: 1.5rem; cursor: pointer;
+      color: var(--charcoal);
+    }
+    .close-modal-btn:hover { color: var(--rust); }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--charcoal);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(201,168,76,0.15), transparent 60%);
+    }
+    .header-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+    .restaurant-name {
+      font-family: var(--font-display);
+      color: var(--gold);
+      font-size: clamp(2rem, 8vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+    }
+    .restaurant-tagline {
+      color: #9A9080;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: 0.6rem;
+    }
+    .header-divider {
+      width: 60px; height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 1.2rem auto;
+    }
+
+    /* ── TOP BAR ── */
+    .top-bar {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(139,94,60,0.15);
+      padding: 0.6rem 1rem;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
+    }
+    .lang-change-btn {
+      background: none; border: 1px solid var(--brown);
+      color: var(--brown); padding: 0.35rem 0.8rem;
+      border-radius: 20px; font-size: 0.78rem;
+      cursor: pointer; font-family: var(--font-body);
+      letter-spacing: 0.05em; transition: all 0.2s;
+      display: flex; align-items: center; gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .lang-change-btn:hover { background: var(--brown); color: white; }
+    .filter-btn {
+      background: none; border: 1px solid var(--brown);
+      color: var(--brown); padding: 0.35rem 0.8rem;
+      border-radius: 20px; font-size: 0.78rem;
+      cursor: pointer; font-family: var(--font-body);
+      letter-spacing: 0.05em; transition: all 0.2s;
+      display: flex; align-items: center; gap: 0.4rem;
+      flex-shrink: 0;
+    }
+    .filter-btn:hover { background: var(--brown); color: white; }
+    .category-scroll {
+      display: flex; gap: 0.5rem;
+      overflow-x: auto; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      flex: 1;
+    }
+    .category-scroll::-webkit-scrollbar { display: none; }
+    .cat-pill {
+      flex-shrink: 0;
+      background: none; border: 1px solid transparent;
+      color: var(--charcoal); padding: 0.35rem 0.9rem;
+      border-radius: 20px; font-size: 0.8rem;
+      cursor: pointer; font-family: var(--font-body);
+      white-space: nowrap; transition: all 0.2s;
+    }
+    .cat-pill.active, .cat-pill:hover {
+      background: var(--charcoal); color: var(--cream); border-color: var(--charcoal);
+    }
+
+    /* ── ORDER BADGE ── */
+    .order-fab {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+      background: var(--rust); color: white;
+      border: none; border-radius: 50px;
+      padding: 0.9rem 1.4rem;
+      font-family: var(--font-body); font-size: 0.9rem; font-weight: 500;
+      cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+      box-shadow: 0 4px 20px rgba(196,92,38,0.45);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .order-fab:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(196,92,38,0.5); }
+    .order-fab.hidden { display: none; }
+    .order-badge {
+      background: white; color: var(--rust);
+      border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 700;
+    }
+
+    /* ── MAIN CONTENT ── */
+    main { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 6rem; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.6rem; color: var(--charcoal);
+      margin: 2.5rem 0 1.2rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid rgba(139,94,60,0.2);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-title .emoji { font-size: 1.3rem; }
+
+    /* ── ITEM CARDS ── */
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .item-card {
+      background: var(--warm-white);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .item-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px var(--shadow); }
+    .item-card.unavailable { opacity: 0.5; pointer-events: none; }
+    .item-card.allergic { border: 3px solid var(--rust); background: rgba(196, 92, 38, 0.1); }
+
+    .card-img-wrap { height: 170px; overflow: hidden; position: relative; }
+    .card-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.4s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    .item-card:hover .card-img-wrap img { transform: scale(1.06); }
+    .card-img-placeholder {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, var(--gold-light), var(--cream));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 3rem;
+    }
+
+    .card-body { padding: 1rem 1.1rem 0.9rem; }
+    .card-name {
+      font-family: var(--font-display);
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--charcoal);
+      line-height: 1.3; margin-bottom: 0.35rem;
+    }
+    .card-desc {
+      font-size: 0.8rem; color: #6B6560;
+      line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .card-footer {
+      padding: 0.7rem 1.1rem 1rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-price {
+      font-size: 1.15rem; font-weight: 700; color: var(--brown);
+      font-family: var(--font-display);
+    }
+    .card-tags {
+      display: flex; gap: 0.3rem; flex-wrap: wrap; margin-top: 0.5rem;
+    }
+    .tag {
+      font-size: 0.68rem; padding: 0.2rem 0.5rem;
+      border-radius: 10px; background: var(--gold-light);
+      color: var(--brown); letter-spacing: 0.03em;
+    }
+    .add-btn {
+      background: var(--charcoal); color: var(--cream);
+      border: none; border-radius: 50%; width: 34px; height: 34px;
+      font-size: 1.3rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.15s;
+      flex-shrink: 0;
+    }
+    .add-btn:hover { background: var(--brown); transform: scale(1.12); }
+
+    /* ── DETAIL PANEL ── */
+    #detail-overlay {
+      position: fixed; inset: 0; z-index: 500;
+      background: rgba(28,28,26,0.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    #detail-overlay.open { opacity: 1; pointer-events: all; }
+
+    #detail-panel {
+      background: var(--warm-white);
+      width: 100%; max-width: 640px;
+      border-radius: 20px 20px 0 0;
+      max-height: 92vh; overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.34,1.26,0.64,1);
+      scrollbar-width: thin;
+    }
+    #detail-overlay.open #detail-panel { transform: translateY(0); }
+
+    .detail-img { width: 100%; height: 260px; object-fit: cover; }
+    .detail-img {
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    .detail-img-placeholder {
+      width: 100%; height: 200px;
+      background: linear-gradient(135deg, var(--gold-light), var(--cream));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem;
+    }
+    .detail-content { padding: 1.5rem 1.5rem 2rem; }
+    .detail-handle {
+      width: 40px; height: 4px; background: #DDD;
+      border-radius: 2px; margin: 0 auto 1.5rem;
+    }
+    .detail-name {
+      font-family: var(--font-display);
+      font-size: 1.8rem; color: var(--charcoal);
+      line-height: 1.2; margin-bottom: 0.5rem;
+    }
+    .detail-price {
+      font-size: 1.4rem; color: var(--brown);
+      font-family: var(--font-display); font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .detail-desc {
+      font-size: 0.92rem; line-height: 1.7;
+      color: #4A4540; margin-bottom: 1.2rem;
+    }
+    .detail-section-label {
+      font-size: 0.72rem; text-transform: uppercase;
+      letter-spacing: 0.12em; color: #9A9080;
+      margin-bottom: 0.4rem;
+    }
+    .allergen-list { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 1.2rem; }
+    .allergen-tag {
+      font-size: 0.82rem; padding: 0.35rem 0.7rem;
+      border-radius: 8px; background: #f0f0f0;
+      color: var(--charcoal); display: flex; align-items: center; gap: 0.3rem;
+    }
+    .qty-row {
+      display: flex; align-items: center; gap: 1rem;
+      margin-top: 1.5rem; padding-top: 1.2rem;
+      border-top: 1px solid rgba(139,94,60,0.15);
+    }
+    .qty-ctrl {
+      display: flex; align-items: center; gap: 0.8rem;
+    }
+    .qty-btn {
+      background: var(--cream); border: 1px solid rgba(139,94,60,0.3);
+      border-radius: 50%; width: 36px; height: 36px;
+      font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; color: var(--charcoal);
+    }
+    .qty-btn:hover { background: var(--charcoal); color: white; }
+    .qty-num { font-size: 1.1rem; font-weight: 600; min-width: 20px; text-align: center; }
+    .add-to-order-btn {
+      flex: 1; background: var(--charcoal); color: var(--cream);
+      border: none; border-radius: 50px; padding: 0.9rem 1.5rem;
+      font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .add-to-order-btn:hover { background: var(--brown); }
+    .close-detail-btn {
+      position: absolute; top: 1rem; right: 1rem;
+      background: rgba(28,28,26,0.6); color: white;
+      border: none; border-radius: 50%; width: 36px; height: 36px;
+      font-size: 1.1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── ORDER PANEL ── */
+    #order-overlay {
+      position: fixed; inset: 0; z-index: 600;
+      background: rgba(28,28,26,0.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    #order-overlay.open { opacity: 1; pointer-events: all; }
+
+    #order-panel {
+      background: var(--warm-white);
+      width: 100%; max-width: 640px;
+      border-radius: 20px 20px 0 0;
+      max-height: 85vh; overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.34,1.26,0.64,1);
+      padding: 1.5rem;
+      scrollbar-width: thin;
+    }
+    #order-overlay.open #order-panel { transform: translateY(0); }
+
+    .order-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 1.2rem;
+    }
+    .order-title {
+      font-family: var(--font-display); font-size: 1.5rem;
+    }
+    .close-order-btn {
+      background: var(--cream); border: 1px solid rgba(139,94,60,0.2);
+      border-radius: 50%; width: 36px; height: 36px;
+      font-size: 1rem; cursor: pointer; color: var(--charcoal);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .order-empty {
+      text-align: center; padding: 3rem 1rem;
+      color: #9A9080; font-size: 0.9rem;
+    }
+    .order-empty .empty-icon { font-size: 3rem; display: block; margin-bottom: 0.8rem; }
+
+    .order-item-row {
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid rgba(139,94,60,0.1);
+    }
+    .order-item-img {
+      width: 52px; height: 52px; border-radius: 8px;
+      object-fit: cover; flex-shrink: 0;
+    }
+    .order-item-img-placeholder {
+      width: 52px; height: 52px; border-radius: 8px;
+      background: var(--gold-light); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    }
+    .order-item-info { flex: 1; }
+    .order-item-name { font-size: 0.88rem; font-weight: 500; }
+    .order-item-price { font-size: 0.82rem; color: var(--brown); }
+    .order-item-qty {
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .order-qty-btn {
+      background: var(--cream); border: 1px solid rgba(139,94,60,0.3);
+      border-radius: 50%; width: 28px; height: 28px;
+      font-size: 0.9rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--charcoal); transition: all 0.2s;
+    }
+    .order-qty-btn:hover { background: var(--charcoal); color: white; }
+    .order-qty-num { font-size: 0.9rem; font-weight: 600; min-width: 16px; text-align: center; }
+
+    .order-total-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 0 0.5rem;
+      font-family: var(--font-display); font-size: 1.2rem; font-weight: 700;
+    }
+    .clear-order-btn {
+      width: 100%; background: none;
+      border: 1px solid rgba(196,92,38,0.4);
+      color: var(--rust); border-radius: 50px; padding: 0.75rem;
+      font-family: var(--font-body); font-size: 0.85rem;
+      cursor: pointer; margin-top: 0.7rem; transition: all 0.2s;
+    }
+    .clear-order-btn:hover { background: var(--rust); color: white; }
+
+    .send-whatsapp-btn {
+      background: #25D366; color: white; border: none;
+      padding: 0.8rem 1rem; border-radius: 8px;
+      font-size: 0.9rem; cursor: pointer; margin-top: 1rem;
+      width: 100%; transition: background 0.2s;
+    }
+    .send-whatsapp-btn:hover { background: #128C7E; }
+
+    /* ── FILTER PANEL ── */
+    #filter-overlay {
+      position: fixed; inset: 0; z-index: 400;
+      background: rgba(28,28,26,0.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: flex-end; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s;
+    }
+    #filter-overlay.open { opacity: 1; pointer-events: all; }
+
+    #filter-panel {
+      background: var(--warm-white);
+      width: 100%; max-width: 500px;
+      border-radius: 20px 20px 0 0;
+      max-height: 70vh; overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.34,1.26,0.64,1);
+      scrollbar-width: thin;
+    }
+    #filter-overlay.open #filter-panel { transform: translateY(0); }
+
+    .filter-header {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 1.5rem 1rem;
+      border-bottom: 1px solid rgba(139,94,60,0.2);
+    }
+    .filter-title {
+      font-family: var(--font-display);
+      font-size: 1.4rem; color: var(--charcoal);
+    }
+    .close-filter-btn {
+      background: none; border: none;
+      font-size: 1.5rem; cursor: pointer;
+      color: var(--charcoal); padding: 0.5rem;
+      border-radius: 50%; transition: background 0.2s;
+    }
+    .close-filter-btn:hover { background: rgba(139,94,60,0.1); }
+
+    .allergen-list {
+      padding: 1rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.8rem;
+    }
+    .allergen-list {
+      padding: 0.8rem 1.2rem 1.2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.55rem;
+    }
+    .allergen-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.45rem 0.6rem;
+      border-radius: 8px;
+      border: 1px solid rgba(139,94,60,0.1);
+      background: var(--cream);
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .allergen-item:has(.allergen-checkbox:checked) {
+      background: rgba(196,92,38,0.08);
+      border-color: rgba(196,92,38,0.35);
+    }
+    .allergen-item.allergen-absent { opacity: 0.42; }
+    .allergen-checkbox {
+      width: 16px; height: 16px; flex-shrink: 0;
+      cursor: pointer; accent-color: var(--rust);
+    }
+    .allergen-label {
+      font-size: 0.8rem; cursor: pointer;
+      display: flex; align-items: center; gap: 0.45rem;
+      flex: 1; min-width: 0;
+    }
+    .allergen-icon-pill {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 6px;
+      border: 1px solid; flex-shrink: 0; font-size: 1rem;
+    }
+    .allergen-name-text { font-weight: 500; flex: 1; line-height: 1.2; }
+    .allergen-absent-note {
+      font-size: 0.65rem; color: #AAA; white-space: nowrap;
+      display: none;
+    }
+    body.dark-mode .allergen-item { background: #2A2A28; border-color: rgba(196,144,96,0.15); }
+    body.dark-mode .allergen-item:has(.allergen-checkbox:checked) { background: rgba(196,92,38,0.15); }
+
+    /* ── i18n STRINGS ── */
+    [data-i18n] { }
+
+    @media (max-width: 600px) {
+      .items-grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+      .card-img-wrap { height: 130px; }
+      .card-body { padding: 0.7rem 0.8rem 0.4rem; }
+      .card-footer { padding: 0.5rem 0.8rem 0.8rem; }
+      .card-name { font-size: 0.9rem; }
+      .card-desc { font-size: 0.74rem; }
+    }
+    @media (max-width: 380px) {
+      .items-grid { grid-template-columns: 1fr; }
+    }
+
+
+    /* ── DEVELOPER / CREDITS MODAL ── */
+    #dev-modal .modal-content {
+      text-align: center;
+      max-width: 320px;
+    }
+    .dev-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--gold), var(--brown));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; margin: 0 auto 1rem;
+      color: white; font-weight: 700;
+      font-family: var(--font-display);
+    }
+    .dev-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--charcoal); margin-bottom: 0.2rem;
+    }
+    .dev-tagline {
+      font-size: 0.8rem; color: #9A9080;
+      margin-bottom: 1.2rem; font-style: italic;
+    }
+    .dev-links {
+      display: flex; flex-direction: column; gap: 0.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .dev-link {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      padding: 0.6rem 1rem; border-radius: 8px;
+      font-size: 0.85rem; font-family: var(--font-body);
+      cursor: pointer; text-decoration: none;
+      border: 1px solid rgba(139,94,60,0.25);
+      color: var(--charcoal); background: var(--cream);
+      transition: all 0.2s;
+    }
+    .dev-link:hover { background: var(--charcoal); color: white; border-color: var(--charcoal); }
+    .dev-link.wa  { background: #25D366; color: white; border-color: #25D366; }
+    .dev-link.wa:hover { background: #1ebe5b; }
+    .dev-copyright {
+      font-size: 0.72rem; color: #C0B8B0;
+      border-top: 1px solid rgba(139,94,60,0.1);
+      padding-top: 0.8rem; margin-top: 0.5rem;
+    }
+
+    /* ── LANG MODAL DEVELOPER FOOTER ── */
+    .lang-modal-footer {
+      position: absolute; bottom: 1.5rem;
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem; color: #5A5450; cursor: pointer;
+      transition: color 0.2s;
+    }
+    .lang-modal-footer:hover { color: var(--gold); }
+    .lang-modal-footer span { font-size: 0.8rem; }
+
+    /* ── SHARE LOCATION FAB ── */
+    .share-fab {
+      position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 200;
+      background: var(--charcoal); color: white;
+      border: none; border-radius: 50%;
+      width: 48px; height: 48px;
+      font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(28,28,26,0.35);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .share-fab:hover { transform: scale(1.1); background: var(--brown); }
+
+    /* ── MENU FOOTER ── */
+    .menu-footer {
+      text-align: center;
+      padding: 2rem 1rem 1.5rem;
+      border-top: 1px solid rgba(139,94,60,0.12);
+      margin-top: 1rem;
+    }
+    .menu-footer-dev {
+      font-size: 0.75rem; color: #B0A89A;
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.4rem; cursor: pointer; transition: color 0.2s;
+    }
+    .menu-footer-dev:hover { color: var(--gold); }
+    .menu-footer-dev .dot { width: 3px; height: 3px; border-radius: 50%; background: currentColor; }
+
+
+    /* ── DARK MODE ── */
+    body.dark-mode {
+      --cream: #1A1A18;
+      --warm-white: #222220;
+      --charcoal: #F0EBE0;
+      --brown: #C49060;
+      --gold: #D4B060;
+      --gold-light: #3A3020;
+      --shadow: rgba(0,0,0,0.4);
+    }
+    body.dark-mode .top-bar {
+      background: rgba(26,26,24,0.95);
+      border-bottom-color: rgba(196,144,96,0.2);
+    }
+    body.dark-mode header { background: #111110; }
+    body.dark-mode .item-card { background: #222220; }
+    body.dark-mode #detail-panel,
+    body.dark-mode #order-panel,
+    body.dark-mode #filter-panel { background: #222220; }
+    body.dark-mode .modal-content { background: #222220; color: var(--charcoal); }
+    body.dark-mode .lang-btn { color: #D0C8B8; border-color: #3A3830; }
+    body.dark-mode .cat-pill { color: #D0C8B8; }
+    body.dark-mode .card-desc { color: #9A9080; }
+    body.dark-mode .card-price { color: var(--gold); }
+    body.dark-mode .tag { background: #3A3020; color: var(--gold); }
+    body.dark-mode .menu-footer { border-top-color: rgba(196,144,96,0.15); }
+    body.dark-mode .lang-modal-footer { color: #4A4440; }
+
+    /* ── DARK MODE TOGGLE BUTTON ── */
+    .dark-toggle {
+      background: none; border: 1px solid rgba(139,94,60,0.3);
+      border-radius: 50%; width: 34px; height: 34px;
+      font-size: 0.95rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all 0.2s;
+      color: var(--charcoal);
+    }
+    .dark-toggle:hover { background: var(--charcoal); color: var(--cream); }
+
+    /* ── HEADER WITH COVER IMAGE ── */
+    .header-cover {
+      position: absolute; inset: 0;
+      background-size: cover; background-position: center;
+      opacity: 0.18;
+    }
+    .header-cover-gradient {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(28,28,26,0.4), rgba(28,28,26,0.85));
+    }
+
+    /* ── ITEM BADGES ── */
+    .item-badges {
+      position: absolute; top: 0.6rem; left: 0.6rem;
+      display: flex; flex-direction: column; gap: 0.3rem; z-index: 2;
+    }
+    .item-badge {
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.06em;
+      padding: 0.2rem 0.55rem; border-radius: 20px;
+      text-transform: uppercase; line-height: 1.3;
+    }
+    .item-badge.nuevo    { background: #1D9E75; color: white; }
+    .item-badge.agotado  { background: #C45C26; color: white; }
+    .item-badge.popular  { background: var(--gold); color: #1C1C1A; }
+    .item-badge.especial { background: #9D4EDD; color: white; }
+    .item-card.agotado-card { opacity: 0.55; pointer-events: none; }
+
+    /* ── ALLERGEN NOTICE BANNER ── */
+    #allergen-notice {
+      background: rgba(196,92,38,0.08);
+      border-top: 2px solid rgba(196,92,38,0.3);
+      padding: 0.6rem 1rem;
+      font-size: 0.78rem; color: var(--rust);
+      text-align: center; line-height: 1.5;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    body.dark-mode #allergen-notice { background: rgba(196,92,38,0.12); }
+
+
+    /* ══════════════════════════════════════════════
+       COLOUR THEMES — activated via ?theme=NAME
+       ══════════════════════════════════════════════ */
+
+    /* AZUL MAR — azules y blancos náuticos */
+    body.theme-mar {
+      --cream: #F0F6FF; --warm-white: #FFFFFF;
+      --charcoal: #0A2540; --brown: #1A6FA8;
+      --gold: #1A6FA8; --gold-light: #C8E0F4;
+      --rust: #D04A1E; --sage: #2D8B6F;
+    }
+    body.theme-mar header { background: #0A2540; }
+    body.theme-mar .lang-btn { border-color: #1A4A70; }
+    body.theme-mar .top-bar { background: rgba(240,246,255,0.95); border-bottom-color: rgba(26,111,168,0.2); }
+    body.theme-mar .section-title .emoji { color: #1A6FA8; }
+    body.theme-mar .restaurant-name { color: #7EC8E3; }
+    body.theme-mar .card-price { color: #1A6FA8; }
+    body.theme-mar .order-fab { background: #1A6FA8; box-shadow: 0 4px 20px rgba(26,111,168,0.45); }
+    body.theme-mar .add-btn { background: #0A2540; }
+    body.theme-mar .add-to-order-btn { background: #0A2540; }
+    body.theme-mar .share-fab { background: #0A2540; }
+    body.theme-mar .tag { background: #C8E0F4; color: #0A2540; }
+    body.theme-mar .item-badge.popular { background: #1A6FA8; }
+    body.theme-mar .header-divider { background: linear-gradient(to right, transparent, #7EC8E3, transparent); }
+    body.theme-mar #allergen-notice { background: rgba(26,111,168,0.08); border-color: rgba(26,111,168,0.3); color: #1A6FA8; }
+
+    /* VERDE OLIVA — tonos mediterráneos cálidos */
+    body.theme-oliva {
+      --cream: #F4F1E8; --warm-white: #FDFBF5;
+      --charcoal: #2C3320; --brown: #5C7A3E;
+      --gold: #7A9E4A; --gold-light: #D4E4B8;
+      --rust: #A05030; --sage: #5C7A3E;
+    }
+    body.theme-oliva header { background: #2C3320; }
+    body.theme-oliva .restaurant-name { color: #B8D48A; }
+    body.theme-oliva .top-bar { background: rgba(244,241,232,0.95); border-bottom-color: rgba(92,122,62,0.2); }
+    body.theme-oliva .card-price { color: #5C7A3E; }
+    body.theme-oliva .order-fab { background: #5C7A3E; box-shadow: 0 4px 20px rgba(92,122,62,0.45); }
+    body.theme-oliva .add-btn { background: #2C3320; }
+    body.theme-oliva .add-to-order-btn { background: #2C3320; }
+    body.theme-oliva .share-fab { background: #2C3320; }
+    body.theme-oliva .tag { background: #D4E4B8; color: #2C3320; }
+    body.theme-oliva .item-badge.popular { background: #7A9E4A; }
+    body.theme-oliva .header-divider { background: linear-gradient(to right, transparent, #B8D48A, transparent); }
+    body.theme-oliva #allergen-notice { background: rgba(92,122,62,0.08); border-color: rgba(92,122,62,0.3); color: #5C7A3E; }
+
+    /* ROJO BURDEOS — elegancia oscura y dramática */
+    body.theme-burdeos {
+      --cream: #F8F0F0; --warm-white: #FFF8F8;
+      --charcoal: #2A0D0D; --brown: #8B1A2A;
+      --gold: #8B1A2A; --gold-light: #F4C0C8;
+      --rust: #C0302A; --sage: #6A4A3A;
+    }
+    body.theme-burdeos header { background: #1A0808; }
+    body.theme-burdeos .restaurant-name { color: #D4A0A8; }
+    body.theme-burdeos .top-bar { background: rgba(248,240,240,0.96); border-bottom-color: rgba(139,26,42,0.2); }
+    body.theme-burdeos .card-price { color: #8B1A2A; }
+    body.theme-burdeos .order-fab { background: #8B1A2A; box-shadow: 0 4px 20px rgba(139,26,42,0.45); }
+    body.theme-burdeos .add-btn { background: #2A0D0D; }
+    body.theme-burdeos .add-to-order-btn { background: #2A0D0D; }
+    body.theme-burdeos .share-fab { background: #2A0D0D; }
+    body.theme-burdeos .tag { background: #F4C0C8; color: #2A0D0D; }
+    body.theme-burdeos .item-badge.popular { background: #8B1A2A; }
+    body.theme-burdeos .header-divider { background: linear-gradient(to right, transparent, #D4A0A8, transparent); }
+    body.theme-burdeos #allergen-notice { background: rgba(139,26,42,0.08); border-color: rgba(139,26,42,0.3); color: #8B1A2A; }
+
+    /* ARENA MINIMALISTA — blanco roto y grafito light */
+    body.theme-arena {
+      --cream: #FAFAF8; --warm-white: #FFFFFF;
+      --charcoal: #1A1A18; --brown: #6B6458;
+      --gold: #A89880; --gold-light: #EDE8E0;
+      --rust: #C06040; --sage: #88906A;
+    }
+    body.theme-arena header { background: #1A1A18; }
+    body.theme-arena .restaurant-name { color: #D8D0C0; }
+    body.theme-arena .top-bar { background: rgba(250,250,248,0.97); border-bottom-color: rgba(107,100,88,0.15); }
+    body.theme-arena .card-price { color: #6B6458; }
+    body.theme-arena .order-fab { background: #1A1A18; box-shadow: 0 4px 20px rgba(26,26,24,0.35); }
+    body.theme-arena .add-btn { background: #1A1A18; }
+    body.theme-arena .add-to-order-btn { background: #1A1A18; }
+    body.theme-arena .share-fab { background: #1A1A18; }
+    body.theme-arena .tag { background: #EDE8E0; color: #1A1A18; }
+    body.theme-arena .item-badge.popular { background: #A89880; }
+    body.theme-arena .header-divider { background: linear-gradient(to right, transparent, #D8D0C0, transparent); }
+
+    /* NEGRO CARBÓN — dark mode de base */
+    body.theme-carbon {
+      --cream: #141412; --warm-white: #1C1C1A;
+      --charcoal: #F0EBE0; --brown: #C49060;
+      --gold: #D4B060; --gold-light: #3A3020;
+      --rust: #E07050; --sage: #80A870;
+      --shadow: rgba(0,0,0,0.5);
+    }
+    body.theme-carbon { background: #141412; color: #F0EBE0; }
+    body.theme-carbon header { background: #0A0A08; }
+    body.theme-carbon .restaurant-name { color: #D4B060; }
+    body.theme-carbon .top-bar { background: rgba(20,20,18,0.97); border-bottom-color: rgba(196,144,96,0.2); }
+    body.theme-carbon .item-card { background: #1C1C1A; }
+    body.theme-carbon .card-desc { color: #9A9080; }
+    body.theme-carbon .card-price { color: #D4B060; }
+    body.theme-carbon .tag { background: #3A3020; color: #D4B060; }
+    body.theme-carbon #detail-panel,
+    body.theme-carbon #order-panel,
+    body.theme-carbon #filter-panel { background: #1C1C1A; }
+    body.theme-carbon .modal-content { background: #1C1C1A; color: #F0EBE0; }
+    body.theme-carbon .order-fab { background: #E07050; }
+    body.theme-carbon .add-btn { background: #F0EBE0; color: #141412; }
+    body.theme-carbon .allergen-item { background: #2A2A28; border-color: rgba(196,144,96,0.15); }
+    body.theme-carbon .menu-footer { border-top-color: rgba(196,144,96,0.15); }
+    body.theme-carbon .lang-modal-footer { color: #4A4440; }
+
+    /* ── DEMO BANNER ── */
+    #demo-banner {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9000;
+      background: #9D4EDD;
+      color: white;
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      padding: 0.65rem 1rem;
+      text-align: center;
+      letter-spacing: 0.03em;
+    }
+    #demo-banner a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: underline;
+      margin-left: 1rem;
+    }
+    #demo-banner.visible { display: block; }
+    /* When demo banner is visible, lift all fixed bottom elements above it */
+    body.has-demo-banner .order-fab  { bottom: 3.8rem; }
+    body.has-demo-banner .share-fab  { bottom: 3.8rem; }
+    body.has-demo-banner main        { padding-bottom: 7rem; }
+    body.has-demo-banner #allergen-notice { bottom: 2.6rem; }
+  </style>
+</head>
+<body>
+
+<!-- LANGUAGE MODAL -->
+<div id="lang-modal">
+  <p class="lang-subtitle">Welcome · Bienvenido · Bienvenue · Willkommen</p>
+  <h1 class="lang-title">Choose your language</h1>
+  <div class="lang-grid" id="lang-grid"></div>
+  <div class="lang-modal-footer" id="lang-modal-dev" onclick="openDevModal()"><span>⚡</span><span id="lang-modal-dev-name">Creado por</span></div>
+</div>
+
+
+<!-- DEVELOPER CREDITS MODAL -->
+<div id="dev-modal" class="modal">
+  <div class="modal-content">
+    <button class="close-modal-btn" onclick="closeDevModal()">✕</button>
+    <div class="dev-avatar" id="dev-avatar">D</div>
+    <div class="dev-name" id="dev-name">Desarrollador</div>
+    <div class="dev-tagline" id="dev-tagline"></div>
+    <div class="dev-links" id="dev-links"></div>
+    <div class="dev-copyright" id="dev-copyright"></div>
+  </div>
+</div>
+
+<!-- OFFER MODAL -->
+<div id="offer-modal" class="modal">
+  <div class="modal-content">
+    <button class="close-modal-btn" onclick="closeOfferModal()">✕</button>
+    <h2 id="offer-title">¡Oferta especial!</h2>
+    <p id="offer-message"></p>
+    <button class="modal-btn" onclick="closeOfferModal()">Aceptar</button>
+  </div>
+</div>
+
+<!-- ALERT MODAL -->
+<div id="alert-modal" class="modal">
+  <div class="modal-content">
+    <button class="close-modal-btn" onclick="closeAlertModal()">✕</button>
+    <h2>Atención</h2>
+    <p id="alert-message"></p>
+    <button class="modal-btn" onclick="closeAlertModal()">Aceptar</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header id="site-header">
+  <div class="header-cover" id="header-cover" style="display:none"></div>
+  <div class="header-cover-gradient" id="header-cover-gradient" style="display:none"></div>
+  <div class="header-inner">
+    <h1 class="restaurant-name" id="restaurant-name">—</h1>
+    <div class="header-divider"></div>
+    <p class="restaurant-tagline" id="restaurant-tagline">—</p>
+  </div>
+</header>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <button class="lang-change-btn" id="lang-change-btn">🌐 <span id="current-lang-label">ES</span></button>
+  <div class="category-scroll" id="category-nav"></div>
+  <button class="filter-btn" id="filter-btn">🔍 Filtros</button>
+  <button class="dark-toggle" id="dark-toggle" onclick="toggleDarkMode()" title="Modo oscuro">🌙</button>
+</div>
+
+<!-- MAIN MENU -->
+<main id="menu-main"></main>
+
+<!-- SHARE LOCATION FAB -->
+<button class="share-fab hidden" id="share-fab" onclick="shareLocation()" title="Compartir ubicación">📍</button>
+
+<!-- MENU FOOTER -->
+<footer class="menu-footer">
+  <div class="menu-footer-dev" id="menu-footer-dev" onclick="openDevModal()">
+    <div class="dot"></div>
+    <span id="menu-footer-dev-label">Diseñado por</span>
+    <div class="dot"></div>
+  </div>
+</footer>
+
+<!-- ORDER FAB -->
+<button class="order-fab hidden" id="order-fab">
+  🛒 <span data-i18n="order">Mi pedido</span>
+  <span class="order-badge" id="order-count">0</span>
+</button>
+
+<!-- DETAIL PANEL -->
+<div id="detail-overlay" onclick="closeDetail(event)">
+  <div id="detail-panel">
+    <button class="close-detail-btn" onclick="closeDetail(null, true)">✕</button>
+    <div id="detail-inner"></div>
+  </div>
+</div>
+
+<!-- ORDER PANEL -->
+<div id="order-overlay" onclick="closeOrder(event)">
+  <div id="order-panel">
+    <div class="order-header">
+      <h2 class="order-title" data-i18n="myOrder">Mi pedido</h2>
+      <button class="close-order-btn" onclick="closeOrder(null, true)">✕</button>
+    </div>
+    <div id="order-items-list"></div>
+  </div>
+</div>
+
+<!-- FILTER PANEL -->
+<div id="filter-overlay" onclick="closeFilter(event)">
+  <div id="filter-panel">
+    <div class="filter-header">
+      <h3 class="filter-title">Filtros por Alérgenos</h3>
+      <button class="close-filter-btn" onclick="closeFilter(null, true)">✕</button>
+    </div>
+    <div class="allergen-list" id="allergen-list"></div>
+  </div>
+</div>
+
+<script>
+// ── CONFIG: where is your menu.json? ──────────────────────────────────────
+// If index.html and menu.json are in the same folder, leave this as-is.
+// On GitHub Pages: they should both be in the repo root (or same subfolder).
+const MENU_JSON_PATH = 'menu.json';
+
+// ── DEMO MODE: override current time via URL param ?demo=franja ────────────
+// e.g. ?demo=madrugada | ?demo=desayunos | ?demo=almuerzo | ?demo=merienda | ?demo=cena
+// When active, a banner is shown so it's clear this is a simulated view.
+const DEMO_TIMES = {
+  madrugada: { h: 3,  m: 0,  day: 2 },   // Martes 03:00 (cerrado)
+  desayunos:  { h: 10, m: 0,  day: 2 },   // Martes 10:00
+  almuerzo:   { h: 14, m: 0,  day: 2 },   // Martes 14:00
+  merienda:   { h: 18, m: 0,  day: 2 },   // Martes 18:00
+  cena:       { h: 22, m: 0,  day: 2 },   // Martes 22:00
+  miercoles:  { h: 14, m: 0,  day: 3 },   // Miércoles 14:00 (cerrado)
+  completa:   null,                        // Muestra TODOS los artículos
+};
+const _demoParam = new URLSearchParams(window.location.search).get('demo');
+const _demoTime  = _demoParam ? DEMO_TIMES[_demoParam] : null;
+
+// ── COLOUR THEME — ?theme=NAME ─────────────────────────────────────────────
+const _themeParam = new URLSearchParams(window.location.search).get('theme');
+const VALID_THEMES = ['mar','oliva','burdeos','arena','carbon'];
+if (_themeParam && VALID_THEMES.includes(_themeParam)) {
+  document.body.classList.add('theme-' + _themeParam);
+  // If carbon theme, also mark dark for filter panel styling
+  if (_themeParam === 'carbon') document.body.classList.add('dark-mode');
+}
+
+// isItemVisibleNow reads _DEMO_OVERRIDE instead of the real clock when in demo mode
+if (_demoParam === 'completa') { window._DEMO_COMPLETA = true; }
+if (_demoTime) {
+  window._DEMO_OVERRIDE = { day: _demoTime.day, mins: _demoTime.h * 60 + _demoTime.m };
+}
+// Show demo banner for ALL demo modes (including completa)
+if (_demoParam) {
+  document.addEventListener('DOMContentLoaded', () => {
+    const LABELS = {
+      madrugada: 'Madrugada · 03:00 (Cerrado)',
+      desayunos:  'Desayunos · 10:00',
+      almuerzo:   'Almuerzo · 14:00',
+      merienda:   'Merienda · 18:00',
+      cena:       'Cena · 22:00',
+      miercoles:  'Miércoles · 14:00 (Cerrado)',
+      completa:   'Carta completa — todos los artículos visibles',
+    };
+    const banner = document.getElementById('demo-banner');
+    const label  = document.getElementById('demo-label');
+    if (banner && label) {
+      label.textContent = LABELS[_demoParam] || _demoParam;
+      banner.classList.add('visible');
+      document.body.classList.add('has-demo-banner');
+    }
+  });
+}
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+let lang = 'es';
+let menuData = null;
+let order = {}; // { itemId: { item, qty } }
+let selectedAllergens = []; // Selected allergens to highlight
+let tableNumber = ''; // Table number for orders
+let tableCode = ''; // Table verification code
+
+const LANG_META = {
+  es: { flag: '🇪🇸', label: 'Español', short: 'ES' },
+  en: { flag: '🇬🇧', label: 'English', short: 'EN' },
+  fr: { flag: '🇫🇷', label: 'Français', short: 'FR' },
+  de: { flag: '🇩🇪', label: 'Deutsch', short: 'DE' },
+};
+
+const I18N = {
+  order:        { es:'Mi pedido', en:'My order', fr:'Ma commande', de:'Meine Bestellung' },
+  myOrder:      { es:'Mi pedido', en:'My order', fr:'Ma commande', de:'Meine Bestellung' },
+  addToOrder:   { es:'Añadir al pedido', en:'Add to order', fr:'Ajouter à la commande', de:'Zur Bestellung' },
+  total:        { es:'Total', en:'Total', fr:'Total', de:'Gesamt' },
+  clearOrder:   { es:'Vaciar pedido', en:'Clear order', fr:'Vider la commande', de:'Bestellung löschen' },
+  emptyOrder:   { es:'Tu pedido está vacío', en:'Your order is empty', fr:'Votre commande est vide', de:'Deine Bestellung ist leer' },
+  allergens:    { es:'Alérgenos', en:'Allergens', fr:'Allergènes', de:'Allergene' },
+  noAllergens:  { es:'Sin alérgenos declarados', en:'No declared allergens', fr:'Aucun allergène déclaré', de:'Keine Allergene' },
+  unavailable:  { es:'No disponible', en:'Unavailable', fr:'Indisponible', de:'Nicht verfügbar' },
+  tableNumber: { es:'Mesa', en:'Table', fr:'Table', de:'Tisch' },
+  tableNumberRequired: { es:'Debes indicar tu mesa', en:'Please enter your table number', fr:'Veuillez indiquer votre numéro de table', de:'Bitte geben Sie Ihre Tischnummer ein' },
+  tableCode: { es:'Código de mesa', en:'Table code', fr:'Code de table', de:'Tischcode' },
+  tableCodePlaceholder: { es:'Introduce el código de mesa', en:'Enter table code', fr:'Entrez le code', de:'Code eingeben' },
+  tableCodeInvalid: { es:'Código de mesa incorrecto', en:'Invalid table code', fr:'Code de table invalide', de:'Ungültiger Tischcode' },
+  sendWhatsApp: { es:'Enviar por WhatsApp', en:'Send via WhatsApp', fr:'Envoyer via WhatsApp', de:'Per WhatsApp senden' },
+  tapToChange:  { es:'Cambiar idioma', en:'Change language', fr:'Changer langue', de:'Sprache ändern' },
+};
+
+function t(key) { 
+  if (menuData && menuData.restaurant.translations && menuData.restaurant.translations[lang] && menuData.restaurant.translations[lang][key]) {
+    return menuData.restaurant.translations[lang][key];
+  }
+  return (I18N[key] && I18N[key][lang]) || key; 
+}
+function tField(obj) { return obj && (obj[lang] || obj['es'] || obj['en'] || '') || ''; }
+
+function getUniqueAllergens() {
+  if (!menuData) return [];
+  const all = new Set();
+  menuData.items.forEach(item => {
+    const allergens = item.allergens[lang] || [];
+    allergens.forEach(a => all.add(a));
+  });
+  return Array.from(all).sort();
+}
+
+function buildAllergenFilters() {
+  const list = document.getElementById('allergen-list');
+  const allergenSettings = menuData.restaurant.allergenSettings || {};
+  // Show ALL 14 configured allergens (not just those in current items)
+  const allKeys = Object.keys(allergenSettings);
+  // Which allergens are present in currently visible items (to dim others)
+  const presentInMenu = getUniqueAllergens();
+  list.innerHTML = allKeys.map(a => {
+    const settings = allergenSettings[a] || {};
+    const allergenName = (settings.translations && settings.translations[lang]) || a;
+    const icon    = settings.icon  || '⚠️';
+    const color   = settings.color || '#E8D5A3';
+    const inMenu  = presentInMenu.includes(a);
+    const checked = selectedAllergens.includes(a);
+    return `<div class="allergen-item${inMenu ? '' : ' allergen-absent'}" style="--acolor:${color}">
+      <input type="checkbox" class="allergen-checkbox" id="allergen-${a}" ${checked ? 'checked' : ''} onchange="toggleAllergen('${a}')">
+      <label for="allergen-${a}" class="allergen-label">
+        <span class="allergen-icon-pill" style="background:${color}22;border-color:${color}66">${icon}</span>
+        <span class="allergen-name-text">${allergenName}</span>
+        ${inMenu ? '' : '<span class="allergen-absent-note">sin platos visibles</span>'}
+      </label>
+    </div>`;
+  }).join('');
+}
+
+function toggleAllergen(allergen) {
+  const cb = document.getElementById(`allergen-${allergen}`);
+  if (cb.checked) {
+    selectedAllergens.push(allergen);
+  } else {
+    selectedAllergens = selectedAllergens.filter(a => a !== allergen);
+  }
+  renderMenu();
+}
+
+function openFilter() {
+  buildAllergenFilters();
+  document.getElementById('filter-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFilter(event, force) {
+  if (force || event.target === document.getElementById('filter-overlay')) {
+    document.getElementById('filter-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+function showOfferModal() {
+  document.getElementById('offer-modal').style.display = 'flex';
+}
+
+function closeOfferModal() {
+  document.getElementById('offer-modal').style.display = 'none';
+}
+
+function showAlertModal(message) {
+  document.getElementById('alert-message').textContent = message;
+  document.getElementById('alert-modal').style.display = 'flex';
+}
+
+function closeAlertModal() {
+  document.getElementById('alert-modal').style.display = 'none';
+}
+
+// ── LOAD DATA ──────────────────────────────────────────────────────────────
+async function loadMenu() {
+  try {
+    const res = await fetch(MENU_JSON_PATH);
+    if (!res.ok) throw new Error('Could not load menu.json');
+    menuData = await res.json();
+  } catch(e) {
+    // Fallback: inline demo if fetch fails (e.g. file:// protocol)
+    menuData = null;
+    document.getElementById('menu-main').innerHTML =
+      `<p style="padding:2rem;text-align:center;color:var(--rust)">
+        ⚠️ Could not load <code>menu.json</code>.<br>
+        Make sure it's in the same folder as <code>index.html</code>.<br>
+        If testing locally, use a local server (e.g. <code>npx serve .</code>).
+      </p>`;
+  }
+}
+
+// ── LANGUAGE MODAL ─────────────────────────────────────────────────────────
+function buildLangModal() {
+  const grid = document.getElementById('lang-grid');
+  const langs = (menuData && menuData.restaurant.activeLanguages) || (menuData && menuData.restaurant.languages) || ['es','en','fr','de'];
+  grid.innerHTML = langs.map(l => {
+    const m = LANG_META[l] || { flag:'🌐', label: l.toUpperCase(), short: l.toUpperCase() };
+    return `<button class="lang-btn" onclick="selectLang('${l}')">
+      <span>${m.flag}</span>
+      <span>${m.label}</span>
+      <small>${m.short}</small>
+    </button>`;
+  }).join('');
+}
+
+function selectLang(l) {
+  lang = l;
+  document.getElementById('lang-modal').classList.add('hidden');
+  const m = LANG_META[l] || { short: l.toUpperCase() };
+  document.getElementById('current-lang-label').textContent = m.short;
+  renderAll();
+  // Mostrar el primer mensaje cuyo schedule coincida con el momento actual
+  const messages = (menuData.restaurant.messages || []);
+  const activeMsg = messages.find(m => m.enabled && isItemVisibleNow({ schedule: m.schedule }));
+  if (activeMsg) {
+    const delay = activeMsg.delay || 1500;
+    setTimeout(() => {
+      document.getElementById('offer-title').textContent = tField(activeMsg.title);
+      document.getElementById('offer-message').textContent = tField(activeMsg.message);
+      showOfferModal();
+    }, delay);
+  }
+}
+
+
+
+// ── DARK MODE ───────────────────────────────────────────────────────────────
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('darkMode', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+function initDarkMode() {
+  const saved = localStorage.getItem('darkMode');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved === '1' || (saved === null && prefersDark)) {
+    document.body.classList.add('dark-mode');
+    const btn = document.getElementById('dark-toggle');
+    if (btn) btn.textContent = '☀️';
+  }
+}
+
+// ── HEADER COVER IMAGE ──────────────────────────────────────────────────────
+function renderHeaderCover() {
+  const cfg = menuData.restaurant;
+  if (!cfg.headerImage || cfg.headerImage.trim() === '') return;
+  const cover = document.getElementById('header-cover');
+  const grad  = document.getElementById('header-cover-gradient');
+  if (cover && grad) {
+    cover.style.backgroundImage = `url('${cfg.headerImage}')`;
+    cover.style.display = 'block';
+    grad.style.display  = 'block';
+    // Raise opacity slightly for cover photo
+    cover.style.opacity = cfg.headerImageOpacity || '0.28';
+  }
+}
+
+// ── ALLERGEN NOTICE ──────────────────────────────────────────────────────────
+function renderAllergenNotice() {
+  const cfg = menuData.restaurant.allergenNotice;
+  const el  = document.getElementById('allergen-notice');
+  if (!el) return;
+  if (cfg && cfg.enabled === false) { el.style.display = 'none'; return; }
+  const defaults = {
+    es: '⚠️ Si tiene alguna alergia o intolerancia alimentaria, informe al personal antes de pedir.',
+    en: '⚠️ If you have any food allergies or intolerances, please inform the staff before ordering.',
+    fr: '⚠️ Si vous avez des allergies ou intolérances, veuillez en informer le personnel avant de commander.',
+    de: '⚠️ Bei Lebensmittelallergien informieren Sie bitte das Personal vor der Bestellung.'
+  };
+  const noticeEl = document.getElementById('allergen-notice-text');
+  if (!noticeEl) return;
+  const customText = cfg && cfg.text && (cfg.text[lang] || cfg.text['es']);
+  noticeEl.textContent = customText || defaults[lang] || defaults.es;
+}
+
+// ── GOOGLE ANALYTICS ────────────────────────────────────────────────────────
+function initAnalytics() {
+  const id = menuData.restaurant.googleAnalyticsId;
+  if (!id || id.trim() === '') return;
+  const s1 = document.createElement('script');
+  s1.async = true;
+  s1.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+  document.head.appendChild(s1);
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = function(){ dataLayer.push(arguments); };
+  gtag('js', new Date());
+  gtag('config', id);
+}
+
+// ── DEVELOPER MODAL ────────────────────────────────────────────────────────
+function openDevModal() {
+  const dev = menuData && menuData.restaurant.developer;
+  if (!dev) return;
+  const initials = dev.name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('dev-avatar').textContent = initials;
+  document.getElementById('dev-name').textContent = dev.name;
+  document.getElementById('dev-tagline').textContent = tField(dev.tagline) || '';
+  // Build links
+  const links = [];
+  if (dev.whatsapp) links.push({ icon:'💬', label:'WhatsApp', href:`https://wa.me/${dev.whatsapp.replace(/\D/g,'')}` });
+  if (dev.email)    links.push({ icon:'✉️', label: dev.email, href:`mailto:${dev.email}` });
+  if (dev.website)  links.push({ icon:'🌐', label: dev.website.replace(/https?:\/\//,''), href: dev.website });
+  if (dev.instagram)links.push({ icon:'📷', label:'Instagram', href: dev.instagram });
+  if (dev.phone)    links.push({ icon:'📞', label: dev.phone, href:`tel:${dev.phone}` });
+  const linksHtml = links.map((l, i) =>
+    `<a class="dev-link${i===0&&dev.whatsapp?' wa':''}" href="${l.href}" target="_blank">${l.icon} ${l.label}</a>`
+  ).join('');
+  document.getElementById('dev-links').innerHTML = linksHtml;
+  document.getElementById('dev-copyright').innerHTML =
+    `© ${dev.copyright || new Date().getFullYear()} ${dev.name} · Todos los derechos reservados`;
+  document.getElementById('dev-modal').style.display = 'flex';
+}
+function closeDevModal() {
+  document.getElementById('dev-modal').style.display = 'none';
+}
+
+// ── SHARE LOCATION ─────────────────────────────────────────────────────────
+function shareLocation() {
+  const loc = menuData && menuData.restaurant.location;
+  if (!loc) return;
+  const msg = tField(loc.shareMessage) || loc.name;
+  const url = loc.googleMapsUrl || `https://maps.google.com/?q=${loc.lat},${loc.lng}`;
+  const text = encodeURIComponent(`${msg}\n${url}`);
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+}
+
+// ── UPDATE DEVELOPER UI LABELS ─────────────────────────────────────────────
+function renderDeveloperUI() {
+  const dev = menuData && menuData.restaurant.developer;
+  if (!dev) return;
+  // Lang modal footer
+  const lmDev = document.getElementById('lang-modal-dev-name');
+  if (lmDev) lmDev.textContent = `Creado por ${dev.name}`;
+  // Menu footer
+  const mfDev = document.getElementById('menu-footer-dev-label');
+  if (mfDev) mfDev.textContent = `Carta digital diseñada por ${dev.name}`;
+  // Share FAB
+  const loc = menuData.restaurant.location;
+  const fab = document.getElementById('share-fab');
+  if (fab && loc) fab.classList.remove('hidden');
+  // Show lang modal dev footer only if configured
+  const lmDevWrap = document.getElementById('lang-modal-dev');
+  if (lmDevWrap && dev.showInLangModal === false) lmDevWrap.style.display = 'none';
+}
+
+// ── RENDER ALL ─────────────────────────────────────────────────────────────
+function renderAll() {
+  if (!menuData) return;
+  const r = menuData.restaurant;
+  renderDeveloperUI();
+  renderHeaderCover();
+  renderAllergenNotice();
+  initAnalytics();
+  document.getElementById('restaurant-name').textContent = r.name;
+  document.getElementById('restaurant-tagline').textContent = tField(r.tagline);
+  document.title = r.name;
+  renderCategoryNav();
+  renderMenu();
+  renderI18n();
+}
+
+function renderCategoryNav() {
+  const nav = document.getElementById('category-nav');
+  // Only render pills for categories that currently have at least one visible item
+  const visibleCatIds = new Set(
+    menuData.items.filter(i => isItemVisibleNow(i)).map(i => i.category)
+  );
+  const pills = menuData.categories
+    .filter(cat => visibleCatIds.has(cat.id))
+    .map(cat =>
+      `<button class="cat-pill" data-cat="${cat.id}" onclick="scrollToCategory('${cat.id}')">
+        ${cat.emoji} ${tField(cat.name)}
+      </button>`
+    ).join('');
+  nav.innerHTML = pills;
+}
+
+function scrollToCategory(id) {
+  const el = document.getElementById('cat-' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  const btn = document.querySelector(`[data-cat="${id}"]`);
+  if (btn) btn.classList.add('active');
+}
+
+// ── SCHEDULE VISIBILITY ────────────────────────────────────────────────────
+// Evaluates if an item should be visible right now based on its schedule rules.
+// Rules are evaluated in order; the FIRST matching rule wins.
+// If no rule matches, falls back to schedule.defaultVisible (default: true).
+// Items without a "schedule" key are always visible.
+//
+// Schedule format per item:
+// "schedule": {
+//   "defaultVisible": true,          // shown when no rule matches (default: true)
+//   "rules": [
+//     { "days": [1,2,3,4,5,6,0],    // JS weekday: 0=Sun,1=Mon…6=Sat
+//       "from": "HH:MM",            // 24h start time (inclusive)
+//       "to":   "HH:MM",            // 24h end time (exclusive)
+//       "visible": true|false }      // what to do when this rule matches
+//   ]
+// }
+function isItemVisibleNow(item) {
+  if (window._DEMO_COMPLETA) return true; // demo=completa: show everything
+  if (!item.schedule) return true; // no schedule = always visible
+  // In demo mode, use the overridden day/time instead of the real clock
+  const dayOfWeek = window._DEMO_OVERRIDE ? window._DEMO_OVERRIDE.day  : new Date().getDay();
+  const nowMins   = window._DEMO_OVERRIDE ? window._DEMO_OVERRIDE.mins : new Date().getHours() * 60 + new Date().getMinutes();
+  const rules = item.schedule.rules || [];
+  for (const rule of rules) {
+    const days = rule.days || [];
+    if (!days.includes(dayOfWeek)) continue;
+    const [fH, fM] = (rule.from || '00:00').split(':').map(Number);
+    const [tH, tM] = (rule.to   || '23:59').split(':').map(Number);
+    const fromMins = fH * 60 + fM;
+    const toMins   = tH * 60 + tM;
+    if (nowMins >= fromMins && nowMins < toMins) {
+      return rule.visible !== false; // default true if omitted
+    }
+  }
+  // No rule matched — use defaultVisible (default: true)
+  return item.schedule.defaultVisible !== false;
+}
+
+function renderMenu() {
+  const main = document.getElementById('menu-main');
+  main.innerHTML = menuData.categories.map(cat => {
+    const items = menuData.items.filter(i => i.category === cat.id && isItemVisibleNow(i));
+    if (!items.length) return '';
+    return `
+      <section id="cat-${cat.id}">
+        <h2 class="section-title"><span class="emoji">${cat.emoji}</span> ${tField(cat.name)}</h2>
+        <div class="items-grid">
+          ${items.map(item => renderCard(item)).join('')}
+        </div>
+      </section>`;
+  }).join('');
+
+  // Intersection observer for active category pill
+  const sections = document.querySelectorAll('section[id^="cat-"]');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id.replace('cat-', '');
+        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+        const btn = document.querySelector(`[data-cat="${id}"]`);
+        if (btn) btn.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => obs.observe(s));
+}
+
+
+function renderCard(item) {
+  const img = item.image
+    ? `<img src="${item.image}" alt="${tField(item.name)}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=\'card-img-placeholder\'>${getCatEmoji(item.category)}</div>'">`
+    : `<div class="card-img-placeholder">${getCatEmoji(item.category)}</div>`;
+  const tags = (item.tags && tField(item.tags)) || [];
+  const tagsHtml = Array.isArray(tags) && tags.length
+    ? `<div class="card-tags">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : '';
+  const isAllergic = selectedAllergens.length > 0 && (item.allergens[lang] || []).some(a => selectedAllergens.includes(a));
+  const isAgotado  = item.badge === 'agotado';
+  const BADGE_LABELS = { nuevo:'Nuevo', agotado:'Agotado', popular:'Popular', especial:'Especial' };
+  const badgeHtml = item.badge
+    ? `<div class="item-badges"><span class="item-badge ${item.badge}">${BADGE_LABELS[item.badge] || item.badge}</span></div>` : '';
+  return `
+    <div class="item-card${item.available === false ? ' unavailable' : ''}${isAllergic ? ' allergic' : ''}${isAgotado ? ' agotado-card' : ''}" onclick="${isAgotado ? 'void(0)' : `openDetail('${item.id}')`}">
+      <div class="card-img-wrap" style="position:relative">
+        ${img}${badgeHtml}
+      </div>
+      <div class="card-body">
+        <div class="card-name">${tField(item.name)}</div>
+        <div class="card-desc">${tField(item.description)}</div>
+        ${tagsHtml}
+      </div>
+      <div class="card-footer">
+        <span class="card-price">${menuData.restaurant.currency}${Number(item.price).toFixed(2)}</span>
+        ${isAgotado
+          ? '<span style="font-size:0.72rem;color:var(--rust);font-weight:500">Agotado</span>'
+          : `<button class="add-btn" title="+" onclick="quickAdd(event,'${item.id}')">+</button>`}
+      </div>
+    </div>`;
+}
+
+function getCatEmoji(catId) {
+  const cat = menuData.categories.find(c => c.id === catId);
+  return cat ? cat.emoji : '🍴';
+}
+
+function renderI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = t(key);
+  });
+}
+
+// ── DETAIL PANEL ──────────────────────────────────────────────────────────
+let currentDetailId = null;
+let detailQty = 1;
+
+function openDetail(itemId) {
+  currentDetailId = itemId;
+  detailQty = 1;
+  const item = menuData.items.find(i => i.id === itemId);
+  if (!item) return;
+  const allergens = (item.allergens && tField(item.allergens)) || [];
+  const img = item.image
+    ? `<img class="detail-img" src="${item.image}" alt="${tField(item.name)}" onerror="this.outerHTML='<div class=\\'detail-img-placeholder\\'>${getCatEmoji(item.category)}</div>'">`
+    : `<div class="detail-img-placeholder">${getCatEmoji(item.category)}</div>`;
+  const tags = (item.tags && tField(item.tags)) || [];
+  const tagsHtml = Array.isArray(tags) && tags.length
+    ? `<div class="card-tags" style="margin-bottom:1rem">${tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>` : '';
+  
+  const allergenSettings = menuData.restaurant.allergenSettings || {};
+  const allergenHtml = Array.isArray(allergens) && allergens.length
+    ? allergens.map(a => {
+        const settings = allergenSettings[a] || { icon: '⚠', color: '#FFF0E8' };
+        const allergenName = (settings.translations && settings.translations[lang]) || a;
+        return `<span class="allergen-tag" style="background-color: ${settings.color};">${settings.icon} ${allergenName}</span>`;
+      }).join('')
+    : `<span style="font-size:0.82rem;color:#9A9080">${t('noAllergens')}</span>`;
+
+  document.getElementById('detail-inner').innerHTML = `
+    ${img}
+    <div class="detail-content">
+      <div class="detail-handle"></div>
+      <div class="detail-name">${tField(item.name)}</div>
+      <div class="detail-price">${menuData.restaurant.currency}${Number(item.price).toFixed(2)}</div>
+      ${tagsHtml}
+      <p class="detail-desc">${tField(item.description)}</p>
+      <div class="detail-section-label">${t('allergens')}</div>
+      <div class="allergen-list">${allergenHtml}</div>
+      <div class="qty-row">
+        <div class="qty-ctrl">
+          <button class="qty-btn" onclick="changeDetailQty(-1)">−</button>
+          <span class="qty-num" id="detail-qty">1</span>
+          <button class="qty-btn" onclick="changeDetailQty(1)">+</button>
+        </div>
+        <button class="add-to-order-btn" onclick="addToOrder('${item.id}', true)">
+          ${t('addToOrder')}
+        </button>
+      </div>
+    </div>`;
+
+  document.getElementById('detail-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function changeDetailQty(delta) {
+  detailQty = Math.max(1, detailQty + delta);
+  document.getElementById('detail-qty').textContent = detailQty;
+}
+
+function closeDetail(event, force) {
+  if (force || event.target === document.getElementById('detail-overlay')) {
+    document.getElementById('detail-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+// ── ORDER MANAGEMENT ───────────────────────────────────────────────────────
+function quickAdd(event, itemId) {
+  event.stopPropagation();
+  const item = menuData.items.find(i => i.id === itemId);
+  if (!item) return;
+  if (order[itemId]) order[itemId].qty += 1;
+  else order[itemId] = { item, qty: 1 };
+  updateOrderUI();
+  // Mini bounce feedback on button
+  const btn = event.target;
+  btn.style.transform = 'scale(1.4)';
+  btn.style.background = 'var(--brown)';
+  setTimeout(() => { btn.style.transform = ''; btn.style.background = ''; }, 300);
+}
+
+function addToOrder(itemId, fromDetail) {
+  const item = menuData.items.find(i => i.id === itemId);
+  if (!item) return;
+  const qty = fromDetail ? detailQty : 1;
+  if (order[itemId]) order[itemId].qty += qty;
+  else order[itemId] = { item, qty };
+  updateOrderUI();
+  if (fromDetail) {
+    closeDetail(null, true);
+    setTimeout(() => openOrderPanel(), 400);
+  }
+}
+
+function changeOrderQty(itemId, delta) {
+  if (!order[itemId]) return;
+  order[itemId].qty += delta;
+  if (order[itemId].qty <= 0) delete order[itemId];
+  updateOrderUI();
+  renderOrderPanel();
+}
+
+function clearOrder() {
+  order = {};
+  updateOrderUI();
+  renderOrderPanel();
+}
+
+function sendOrderWhatsApp() {
+  const items = Object.values(order);
+  if (!items.length) return;
+  
+  const whatsappConfig = menuData.restaurant.whatsapp;
+  if (!whatsappConfig || !whatsappConfig.phoneNumber) return;
+  
+  const totalPrice = items.reduce((s, { item, qty }) => s + item.price * qty, 0);
+  const restaurantName = menuData.restaurant.name;
+  
+  const tableConfig = menuData.restaurant.tableCodes || {};
+  const tableAuthEnabled = !!(tableConfig.enabled && tableConfig.tables && Object.keys(tableConfig.tables).length);
+  const expectedCode = tableAuthEnabled ? (tableConfig.tables[tableNumber] || '') : '';
+  const isTableSet = tableNumber && Number(tableNumber) > 0;
+  const isTableCodeValid = !tableAuthEnabled || (isTableSet && tableCode && expectedCode && tableCode.trim().toUpperCase() === expectedCode.trim().toUpperCase());
+  if (!isTableSet) {
+    showAlertModal(t('tableNumberRequired'));
+    return;
+  }
+  if (tableAuthEnabled && !isTableCodeValid) {
+    showAlertModal(t('tableCodeInvalid'));
+    return;
+  }
+  const itemsList = items.map(o => `- ${o.qty}x ${o.item.name.es || tField(o.item.name)}`).join('\n');
+  const tableInfo = `Mesa: ${tableNumber}${tableCode ? ` (código: ${tableCode})` : ''}\n`;
+  const text = `Nuevo pedido para ${restaurantName}:\n\n${tableInfo}${itemsList}\n\nTotal: ${menuData.restaurant.currency}${totalPrice.toFixed(2)}`;
+  
+  const phoneNumber = whatsappConfig.phoneNumber.replace(/\D/g, '');
+  const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+
+function updateOrderUI() {
+  const total = Object.values(order).reduce((s, o) => s + o.qty, 0);
+  const fab = document.getElementById('order-fab');
+  const badge = document.getElementById('order-count');
+  badge.textContent = total;
+  fab.classList.toggle('hidden', total === 0);
+}
+
+function openOrderPanel() {
+  renderOrderPanel();
+  document.getElementById('order-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeOrder(event, force) {
+  if (force || event.target === document.getElementById('order-overlay')) {
+    document.getElementById('order-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+function renderOrderPanel() {
+  const list = document.getElementById('order-items-list');
+  const items = Object.values(order);
+  if (!items.length) {
+    list.innerHTML = `<div class="order-empty"><span class="empty-icon">🍽️</span>${t('emptyOrder')}</div>`;
+    return;
+  }
+  const rows = items.map(({ item, qty }) => {
+    const img = item.image
+      ? `<img class="order-item-img" src="${item.image}" alt="" onerror="this.outerHTML='<div class=\\'order-item-img-placeholder\\'>${getCatEmoji(item.category)}</div>'">`
+      : `<div class="order-item-img-placeholder">${getCatEmoji(item.category)}</div>`;
+    return `<div class="order-item-row">
+      ${img}
+      <div class="order-item-info">
+        <div class="order-item-name">${tField(item.name)}</div>
+        <div class="order-item-price">${menuData.restaurant.currency}${(item.price * qty).toFixed(2)}</div>
+      </div>
+      <div class="order-item-qty">
+        <button class="order-qty-btn" onclick="changeOrderQty('${item.id}',-1)">−</button>
+        <span class="order-qty-num">${qty}</span>
+        <button class="order-qty-btn" onclick="changeOrderQty('${item.id}',1)">+</button>
+      </div>
+    </div>`;
+  }).join('');
+  const totalPrice = items.reduce((s, { item, qty }) => s + item.price * qty, 0);
+  const tableConfig = menuData.restaurant.tableCodes || {};
+  const tableAuthEnabled = !!(tableConfig.enabled && tableConfig.tables && Object.keys(tableConfig.tables).length);
+  const tableOptions = tableAuthEnabled ? Object.keys(tableConfig.tables) : [];
+  const isTableSet = Number(tableNumber) > 0;
+  const expectedCode = tableAuthEnabled ? (tableConfig.tables[tableNumber] || '') : '';
+  const isTableCodeValid = !tableAuthEnabled || (isTableSet && tableCode && expectedCode && tableCode.trim().toUpperCase() === expectedCode.trim().toUpperCase());
+  const whatsappBtn = menuData.restaurant.whatsapp && menuData.restaurant.whatsapp.enabled 
+    ? `<button class="send-whatsapp-btn" onclick="sendOrderWhatsApp()" ${isTableCodeValid ? '' : 'disabled'}>${t('sendWhatsApp') || 'WhatsApp'}</button>`
+    : '';
+  const tableWarningHtml = !isTableSet ? `<div id="table-warning" class="table-warning">${t('tableNumberRequired')}</div>` : '';
+  const codeWarningHtml = tableAuthEnabled && isTableSet && tableCode && !isTableCodeValid ? `<div id="code-warning" class="table-warning">${t('tableCodeInvalid')}</div>` : '';
+  const tableInput = tableAuthEnabled
+    ? `<select id="table-input" onchange="tableNumber = this.value; renderOrderPanel();" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-top: .5rem;">
+        <option value="">${t('tableNumber') || 'Mesa'}...</option>
+        ${tableOptions.map(num => `<option value="${num}" ${tableNumber === num ? 'selected' : ''}>${t('tableNumber') || 'Mesa'} ${num}</option>`).join('')}
+      </select>`
+    : `<input type="number" id="table-input" min="1" value="${tableNumber}" oninput="tableNumber = this.value; renderOrderPanel();" placeholder="1" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-top: .5rem;">`;
+  const tableCodeFields = tableAuthEnabled
+    ? `<div style="margin-top: 1rem;">
+         <label>${t('tableCode') || 'Código de mesa'}:</label>
+         <input type="text" id="table-code-input" value="${tableCode}" oninput="tableCode = this.value.trim(); updateTableValidation();" placeholder="${t('tableCodePlaceholder') || 'Introduce el código de mesa'}" style="width: 100%; padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; margin-top: .25rem; text-transform: uppercase;">
+         ${codeWarningHtml}
+       </div>`
+    : '';
+  list.innerHTML = `
+    ${rows}
+    <div class="order-total-row">
+      <span>${t('total')}</span>
+      <span>${menuData.restaurant.currency}${totalPrice.toFixed(2)}</span>
+    </div>
+    <div class="table-input-row">
+      <label>${t('tableNumber') || 'Mesa / Table'}:</label>
+      ${tableInput}
+      ${tableWarningHtml}
+      ${tableCodeFields}
+    </div>
+    <button class="clear-order-btn" onclick="clearOrder()">${t('clearOrder')}</button>
+    ${whatsappBtn}`;
+}
+
+function updateTableValidation() {
+  const tableConfig = menuData.restaurant.tableCodes || {};
+  const tableAuthEnabled = !!(tableConfig.enabled && tableConfig.tables && Object.keys(tableConfig.tables).length);
+  const isTableSet = Number(tableNumber) > 0;
+  const expectedCode = tableAuthEnabled ? (tableConfig.tables[tableNumber] || '') : '';
+  const isTableCodeValid = !tableAuthEnabled || (isTableSet && tableCode && expectedCode && tableCode.trim().toUpperCase() === expectedCode.trim().toUpperCase());
+  
+  const tableWarningEl = document.getElementById('table-warning');
+  if (tableWarningEl) {
+    tableWarningEl.innerHTML = !isTableSet ? t('tableNumberRequired') : '';
+  }
+  
+  const codeWarningEl = document.getElementById('code-warning');
+  if (codeWarningEl) {
+    codeWarningEl.innerHTML = tableAuthEnabled && isTableSet && tableCode && !isTableCodeValid ? t('tableCodeInvalid') : '';
+  } else if (tableAuthEnabled && isTableSet && tableCode && !isTableCodeValid) {
+    // If code warning doesn't exist but should, add it
+    const tableCodeFields = document.querySelector('.table-input-row div[style*="margin-top: 1rem"]');
+    if (tableCodeFields) {
+      const newWarning = document.createElement('div');
+      newWarning.id = 'code-warning';
+      newWarning.className = 'table-warning';
+      newWarning.innerHTML = t('tableCodeInvalid');
+      tableCodeFields.appendChild(newWarning);
+    }
+  }
+  
+  const whatsappBtn = document.querySelector('.send-whatsapp-btn');
+  if (whatsappBtn) {
+    whatsappBtn.disabled = !isTableCodeValid;
+  }
+}
+
+document.getElementById('order-fab').addEventListener('click', openOrderPanel);
+document.getElementById('lang-change-btn').addEventListener('click', () => {
+  document.getElementById('lang-modal').classList.remove('hidden');
+});
+document.getElementById('filter-btn').addEventListener('click', openFilter);
+
+// ── PROTECCIÓN DE IMÁGENES ──────────────────────────────────────────────
+// Desabilitar clic derecho en toda la página
+document.addEventListener('contextmenu', (e) => {
+  e.preventDefault();
+});
+
+// Desabilitar tap prolongado (hold) en mobile
+let touchTimer;
+document.addEventListener('touchstart', (e) => {
+  if (e.target.closest('img')) {
+    touchTimer = setTimeout(() => {
+      e.preventDefault();
+    }, 500);
+  }
+});
+
+document.addEventListener('touchend', () => {
+  clearTimeout(touchTimer);
+});
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+(async () => {
+  initDarkMode();
+  await loadMenu();
+  buildLangModal();
+  // Don't auto-render — wait for lang selection
+})();
+</script>
+
+
+<!-- ALLERGEN NOTICE BANNER -->
+<div id="allergen-notice">
+  ⚠️ <span id="allergen-notice-text">Si tiene alguna alergia o intolerancia alimentaria, informe al personal antes de pedir.</span>
+</div>
+
+<!-- DEMO BANNER -->
+<div id="demo-banner">
+  🎭 <strong>MODO DEMO</strong> — Simulando franja: <span id="demo-label"></span>
+  <a href="demo.html">← Volver al selector</a>
+</div>
+</body>
+</html>

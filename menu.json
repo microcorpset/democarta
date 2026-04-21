@@ -1,0 +1,3266 @@
+{
+  "restaurant": {
+    "name": "La Taberna del Sur",
+    "tagline": {
+      "es": "Cocina auténtica con alma",
+      "en": "Authentic cuisine with soul",
+      "fr": "Cuisine authentique avec âme",
+      "de": "Authentische Küche mit Seele"
+    },
+    "logo": "",
+    "currency": "€",
+    "languages": [
+      "es",
+      "en",
+      "fr",
+      "de"
+    ],
+    "activeLanguages": [
+      "es",
+      "en",
+      "fr",
+      "de"
+    ],
+    "whatsapp": {
+      "enabled": true,
+      "phoneNumber": "+34684003699"
+    },
+    "tableCodes": {
+      "enabled": false,
+      "tables": {
+        "1": "MESA01",
+        "2": "MESA02",
+        "3": "MESA03",
+        "4": "MESA04"
+      },
+      "hint": {
+        "es": "Introduce el código impreso en tu mesa",
+        "en": "Enter the code printed on your table",
+        "fr": "Entrez le code imprimé sur votre table",
+        "de": "Geben Sie den auf Ihrem Tisch aufgedruckten Code ein"
+      }
+    },
+    "allergenSettings": {
+      "Gluten": {
+        "icon": "🌾",
+        "color": "#D4A574",
+        "translations": {
+          "es": "Gluten",
+          "en": "Gluten",
+          "fr": "Gluten",
+          "de": "Gluten"
+        }
+      },
+      "Crustáceos": {
+        "icon": "🦐",
+        "color": "#FF6B6B",
+        "translations": {
+          "es": "Crustáceos",
+          "en": "Shellfish",
+          "fr": "Crustacés",
+          "de": "Krebstiere"
+        }
+      },
+      "Huevo": {
+        "icon": "🥚",
+        "color": "#FFD93D",
+        "translations": {
+          "es": "Huevo",
+          "en": "Egg",
+          "fr": "Œuf",
+          "de": "Ei"
+        }
+      },
+      "Pescado": {
+        "icon": "🐟",
+        "color": "#6B9BD1",
+        "translations": {
+          "es": "Pescado",
+          "en": "Fish",
+          "fr": "Poisson",
+          "de": "Fisch"
+        }
+      },
+      "Cacahuetes": {
+        "icon": "🥜",
+        "color": "#B8860B",
+        "translations": {
+          "es": "Cacahuetes",
+          "en": "Peanuts",
+          "fr": "Arachides",
+          "de": "Erdnüsse"
+        }
+      },
+      "Frutos secos": {
+        "icon": "🌰",
+        "color": "#8B6914",
+        "translations": {
+          "es": "Frutos secos",
+          "en": "Nuts",
+          "fr": "Fruits à coque",
+          "de": "Nüsse"
+        }
+      },
+      "Apio": {
+        "icon": "🌿",
+        "color": "#52B788",
+        "translations": {
+          "es": "Apio",
+          "en": "Celery",
+          "fr": "Céleri",
+          "de": "Sellerie"
+        }
+      },
+      "Mostaza": {
+        "icon": "🟡",
+        "color": "#FFB703",
+        "translations": {
+          "es": "Mostaza",
+          "en": "Mustard",
+          "fr": "Moutarde",
+          "de": "Senf"
+        }
+      },
+      "Sésamo": {
+        "icon": "⭕",
+        "color": "#C4A747",
+        "translations": {
+          "es": "Sésamo",
+          "en": "Sesame",
+          "fr": "Sésame",
+          "de": "Sesam"
+        }
+      },
+      "Sulfitos": {
+        "icon": "⚗️",
+        "color": "#9D4EDD",
+        "translations": {
+          "es": "Sulfitos",
+          "en": "Sulphites",
+          "fr": "Sulfites",
+          "de": "Sulfite"
+        }
+      },
+      "Altramuces": {
+        "icon": "🌺",
+        "color": "#FF006E",
+        "translations": {
+          "es": "Altramuces",
+          "en": "Lupin",
+          "fr": "Lupin",
+          "de": "Lupinen"
+        }
+      },
+      "Moluscos": {
+        "icon": "🦪",
+        "color": "#FF99C8",
+        "translations": {
+          "es": "Moluscos",
+          "en": "Molluscs",
+          "fr": "Mollusques",
+          "de": "Weichtiere"
+        }
+      },
+      "Lácteos": {
+        "icon": "🥛",
+        "color": "#E0E0E0",
+        "translations": {
+          "es": "Lácteos",
+          "en": "Dairy",
+          "fr": "Laitier",
+          "de": "Milch"
+        }
+      },
+      "Soja": {
+        "icon": "🫘",
+        "color": "#D4A373",
+        "translations": {
+          "es": "Soja",
+          "en": "Soya",
+          "fr": "Soja",
+          "de": "Soja"
+        }
+      }
+    },
+    "translations": {
+      "es": {
+        "tableNumber": "Mesa",
+        "tableNumberRequired": "Por favor, selecciona tu número de mesa",
+        "tableCode": "Código de mesa",
+        "tableCodePlaceholder": "Introduce el código de mesa",
+        "tableCodeInvalid": "Código incorrecto. Verifica el código en tu mesa.",
+        "sendWhatsApp": "Enviar por WhatsApp",
+        "clearOrder": "Vaciar pedido",
+        "total": "Total",
+        "emptyOrder": "Tu pedido está vacío"
+      },
+      "en": {
+        "tableNumber": "Table",
+        "tableNumberRequired": "Please select your table number",
+        "tableCode": "Table code",
+        "tableCodePlaceholder": "Enter the table code",
+        "tableCodeInvalid": "Invalid code. Check the code on your table.",
+        "sendWhatsApp": "Send via WhatsApp",
+        "clearOrder": "Clear order",
+        "total": "Total",
+        "emptyOrder": "Your order is empty"
+      },
+      "fr": {
+        "tableNumber": "Table",
+        "tableNumberRequired": "Veuillez sélectionner votre numéro de table",
+        "tableCode": "Code de table",
+        "tableCodePlaceholder": "Entrez le code de table",
+        "tableCodeInvalid": "Code invalide. Vérifiez le code sur votre table.",
+        "sendWhatsApp": "Envoyer via WhatsApp",
+        "clearOrder": "Vider la commande",
+        "total": "Total",
+        "emptyOrder": "Votre commande est vide"
+      },
+      "de": {
+        "tableNumber": "Tisch",
+        "tableNumberRequired": "Bitte wählen Sie Ihre Tischnummer",
+        "tableCode": "Tischcode",
+        "tableCodePlaceholder": "Geben Sie den Tischcode ein",
+        "tableCodeInvalid": "Ungültiger Code. Überprüfen Sie den Code auf Ihrem Tisch.",
+        "sendWhatsApp": "Über WhatsApp senden",
+        "clearOrder": "Bestellung leeren",
+        "total": "Gesamt",
+        "emptyOrder": "Ihre Bestellung ist leer"
+      }
+    },
+    "messages": [
+      {
+        "id": "msg_cerrado_madrugada",
+        "enabled": true,
+        "delay": 1200,
+        "title": {
+          "es": "🌙 Estamos cerrados",
+          "en": "🌙 We are closed",
+          "fr": "🌙 Nous sommes fermés",
+          "de": "🌙 Wir haben geschlossen"
+        },
+        "message": {
+          "es": "El local está cerrado en este momento. Abrimos a las 8:30 con los desayunos. ¡Te esperamos!",
+          "en": "We are currently closed. We open at 8:30 for breakfast. See you soon!",
+          "fr": "Nous sommes fermés pour le moment. Nous ouvrons à 8h30 pour le petit-déjeuner. À bientôt !",
+          "de": "Wir haben gerade geschlossen. Wir öffnen um 8:30 Uhr zum Frühstück. Bis bald!"
+        },
+        "schedule": {
+          "defaultVisible": false,
+          "rules": [
+            {
+              "days": [
+                1,
+                2,
+                4,
+                5,
+                6,
+                0
+              ],
+              "from": "00:00",
+              "to": "08:30",
+              "visible": true
+            },
+            {
+              "days": [
+                3
+              ],
+              "from": "00:00",
+              "to": "23:59",
+              "visible": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "msg_desayunos",
+        "enabled": true,
+        "delay": 1200,
+        "title": {
+          "es": "☕ Servicio de desayunos",
+          "en": "☕ Breakfast service",
+          "fr": "☕ Service petit-déjeuner",
+          "de": "☕ Frühstücksservice"
+        },
+        "message": {
+          "es": "¡Buenos días! Ahora mismo solo servimos desayunos y bebidas. La cocina principal abre a las 12:00.",
+          "en": "Good morning! We are currently serving breakfast and drinks only. The main kitchen opens at 12:00.",
+          "fr": "Bonjour ! Nous servons uniquement les petits-déjeuners et boissons. La cuisine principale ouvre à 12h00.",
+          "de": "Guten Morgen! Wir servieren derzeit nur Frühstück und Getränke. Die Hauptküche öffnet um 12:00 Uhr."
+        },
+        "schedule": {
+          "defaultVisible": false,
+          "rules": [
+            {
+              "days": [
+                1,
+                2,
+                4,
+                5,
+                6,
+                0
+              ],
+              "from": "08:30",
+              "to": "12:00",
+              "visible": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "msg_cocina_principal",
+        "enabled": true,
+        "delay": 1200,
+        "title": {
+          "es": "🍽️ Cocina abierta",
+          "en": "🍽️ Kitchen open",
+          "fr": "🍽️ Cuisine ouverte",
+          "de": "🍽️ Küche geöffnet"
+        },
+        "message": {
+          "es": "¡Bienvenido! La cocina está en pleno servicio hasta las 16:30. Hoy tenemos secreto ibérico y arroz negro como especialidades.",
+          "en": "Welcome! The kitchen is in full service until 16:30. Today's specials: Iberian secret and black rice.",
+          "fr": "Bienvenue ! La cuisine est en plein service jusqu'à 16h30. Spécialités du jour : secret ibérique et riz noir.",
+          "de": "Willkommen! Die Küche ist bis 16:30 Uhr in vollem Betrieb. Tagesspecials: Iberisches Geheimstück und schwarzer Reis."
+        },
+        "schedule": {
+          "defaultVisible": false,
+          "rules": [
+            {
+              "days": [
+                1,
+                2,
+                4,
+                5,
+                6,
+                0
+              ],
+              "from": "12:00",
+              "to": "16:30",
+              "visible": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "msg_merienda",
+        "enabled": true,
+        "delay": 1200,
+        "title": {
+          "es": "☕ Merienda y bebidas",
+          "en": "☕ Snacks & drinks",
+          "fr": "☕ Goûter et boissons",
+          "de": "☕ Snacks & Getränke"
+        },
+        "message": {
+          "es": "La cocina está descansando hasta las 20:30. Puedes tomar algo de la barra: bebidas, cafés y meriendas disponibles.",
+          "en": "The kitchen is resting until 20:30. You can enjoy drinks, coffees and snacks at the bar.",
+          "fr": "La cuisine se repose jusqu'à 20h30. Profitez de nos boissons, cafés et collations au bar.",
+          "de": "Die Küche macht bis 20:30 Uhr Pause. Am Tresen sind Getränke, Kaffees und Snacks erhältlich."
+        },
+        "schedule": {
+          "defaultVisible": false,
+          "rules": [
+            {
+              "days": [
+                1,
+                2,
+                4,
+                5,
+                6,
+                0
+              ],
+              "from": "16:30",
+              "to": "20:30",
+              "visible": true
+            }
+          ]
+        }
+      },
+      {
+        "id": "msg_cena",
+        "enabled": true,
+        "delay": 1200,
+        "title": {
+          "es": "🌙 Servicio de cenas",
+          "en": "🌙 Dinner service",
+          "fr": "🌙 Service du dîner",
+          "de": "🌙 Abendservice"
+        },
+        "message": {
+          "es": "¡Buenas noches! La cocina está abierta hasta las 00:00. Esta noche recomendamos el solomillo y el bacalao al pil-pil.",
+          "en": "Good evening! The kitchen is open until midnight. Tonight we recommend the tenderloin and cod pil-pil.",
+          "fr": "Bonsoir ! La cuisine est ouverte jusqu'à minuit. Ce soir nous recommandons le filet et la morue pil-pil.",
+          "de": "Guten Abend! Die Küche ist bis Mitternacht geöffnet. Heute Abend empfehlen wir Filet und Kabeljau Pil-Pil."
+        },
+        "schedule": {
+          "defaultVisible": false,
+          "rules": [
+            {
+              "days": [
+                1,
+                2,
+                4,
+                5,
+                6,
+                0
+              ],
+              "from": "20:30",
+              "to": "23:59",
+              "visible": true
+            }
+          ]
+        }
+      }
+    ],
+    "developer": {
+      "name": "Tu Nombre",
+      "tagline": {
+        "es": "Desarrollo web y cartas digitales para hostelería",
+        "en": "Web development & digital menus for hospitality",
+        "fr": "Développement web et menus numériques",
+        "de": "Webentwicklung und digitale Speisekarten"
+      },
+      "email": "tu@email.com",
+      "phone": "+34600000000",
+      "whatsapp": "+34600000000",
+      "website": "https://tuwebsite.com",
+      "instagram": "https://instagram.com/tuperfil",
+      "copyright": "2025",
+      "showInLangModal": true
+    },
+    "location": {
+      "name": "La Taberna del Sur",
+      "address": "Calle Ejemplo 12, Huelva",
+      "lat": 37.2614,
+      "lng": -6.9447,
+      "googleMapsUrl": "https://maps.google.com/?q=37.2614,-6.9447",
+      "shareMessage": {
+        "es": "¡Te comparto la ubicación de La Taberna del Sur! Ven a vernos 😊📍",
+        "en": "Here's the location of La Taberna del Sur! Come visit us 😊📍",
+        "fr": "Voici l'adresse de La Taberna del Sur ! Venez nous voir 😊📍",
+        "de": "Hier ist die Adresse der La Taberna del Sur! Kommen Sie uns besuchen 😊📍"
+      }
+    },
+    "headerImage": "",
+    "headerImageOpacity": "0.28",
+    "allergenNotice": {
+      "enabled": true,
+      "text": {
+        "es": "⚠️ Si tiene alguna alergia o intolerancia alimentaria, infórmenos antes de pedir. Podemos contener trazas.",
+        "en": "⚠️ If you have any food allergy or intolerance, please inform our staff before ordering. May contain traces.",
+        "fr": "⚠️ Si vous avez des allergies ou intolérances, informez notre personnel avant de commander. Peut contenir des traces.",
+        "de": "⚠️ Bei Lebensmittelallergien oder Unverträglichkeiten informieren Sie bitte unser Personal. Kann Spuren enthalten."
+      }
+    },
+    "googleAnalyticsId": ""
+  },
+  "categories": [
+    {
+      "id": "desayunos",
+      "name": {
+        "es": "Desayunos",
+        "en": "Breakfasts",
+        "fr": "Petits-déjeuners",
+        "de": "Frühstück"
+      },
+      "emoji": "☕"
+    },
+    {
+      "id": "entrantes",
+      "name": {
+        "es": "Entrantes",
+        "en": "Starters",
+        "fr": "Entrées",
+        "de": "Vorspeisen"
+      },
+      "emoji": "🥗"
+    },
+    {
+      "id": "ensaladas",
+      "name": {
+        "es": "Ensaladas",
+        "en": "Salads",
+        "fr": "Salades",
+        "de": "Salate"
+      },
+      "emoji": "🥬"
+    },
+    {
+      "id": "sopas",
+      "name": {
+        "es": "Sopas y cremas",
+        "en": "Soups",
+        "fr": "Soupes",
+        "de": "Suppen"
+      },
+      "emoji": "🍲"
+    },
+    {
+      "id": "arroces",
+      "name": {
+        "es": "Arroces",
+        "en": "Rice dishes",
+        "fr": "Plats de riz",
+        "de": "Reisgerichte"
+      },
+      "emoji": "🍚"
+    },
+    {
+      "id": "carnes",
+      "name": {
+        "es": "Carnes",
+        "en": "Meat",
+        "fr": "Viandes",
+        "de": "Fleisch"
+      },
+      "emoji": "🥩"
+    },
+    {
+      "id": "pescados",
+      "name": {
+        "es": "Pescados",
+        "en": "Fish",
+        "fr": "Poissons",
+        "de": "Fisch"
+      },
+      "emoji": "🐟"
+    },
+    {
+      "id": "postres",
+      "name": {
+        "es": "Postres",
+        "en": "Desserts",
+        "fr": "Desserts",
+        "de": "Nachspeisen"
+      },
+      "emoji": "🍮"
+    },
+    {
+      "id": "bebidas",
+      "name": {
+        "es": "Bebidas",
+        "en": "Drinks",
+        "fr": "Boissons",
+        "de": "Getränke"
+      },
+      "emoji": "🥤"
+    },
+    {
+      "id": "vinos",
+      "name": {
+        "es": "Vinos y Cavas",
+        "en": "Wines & Cavas",
+        "fr": "Vins et Cavas",
+        "de": "Weine"
+      },
+      "emoji": "🍷"
+    }
+  ],
+  "items": [
+    {
+      "id": "d1",
+      "category": "desayunos",
+      "name": {
+        "es": "Tostada con Tomate y AOVE",
+        "en": "Toast with Tomato & Olive Oil",
+        "fr": "Toast Tomate Huile d'Olive",
+        "de": "Toast mit Tomate und Olivenöl"
+      },
+      "description": {
+        "es": "Pan de masa madre tostado con tomate rallado fresco, aceite de oliva virgen extra y sal en escamas. Un clásico andaluz.",
+        "en": "Sourdough toast with fresh grated tomato, extra virgin olive oil and sea salt flakes. An Andalusian classic.",
+        "fr": "Pain au levain grillé avec tomate râpée fraîche, huile d'olive extra vierge et sel en flocons.",
+        "de": "Geröstetes Sauerteigbrot mit frisch geriebenem Tomaten, nativem Olivenöl extra und Meersalzflocken."
+      },
+      "price": 3.5,
+      "image": "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800&q=80",
+      "tags": {
+        "es": [
+          "Vegano",
+          "Popular"
+        ],
+        "en": [
+          "Vegan",
+          "Popular"
+        ],
+        "fr": [
+          "Végétalien",
+          "Populaire"
+        ],
+        "de": [
+          "Vegan",
+          "Beliebt"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten"
+        ],
+        "en": [
+          "Gluten"
+        ],
+        "fr": [
+          "Gluten"
+        ],
+        "de": [
+          "Gluten"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "08:30",
+            "to": "12:00",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "16:30",
+            "to": "20:30",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "d2",
+      "category": "desayunos",
+      "name": {
+        "es": "Huevos Benedictinos",
+        "en": "Eggs Benedict",
+        "fr": "Œufs Bénédicte",
+        "de": "Eier Benedikt"
+      },
+      "description": {
+        "es": "Dos huevos pochados sobre pan inglés tostado con jamón serrano, salsa holandesa casera y cebollino. Servido con ensalada verde.",
+        "en": "Two poached eggs on toasted English muffin with serrano ham, homemade hollandaise and chives. Served with green salad.",
+        "fr": "Deux œufs pochés sur muffin anglais grillé avec jambon serrano, sauce hollandaise maison et ciboulette.",
+        "de": "Zwei pochierte Eier auf geröstetem English Muffin mit Serranoschinken, hausgemachter Sauce hollandaise und Schnittlauch."
+      },
+      "price": 9.5,
+      "image": "https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=800&q=80",
+      "tags": {
+        "es": [
+          "Casero",
+          "Recomendado"
+        ],
+        "en": [
+          "Homemade",
+          "Recommended"
+        ],
+        "fr": [
+          "Fait maison",
+          "Recommandé"
+        ],
+        "de": [
+          "Hausgemacht",
+          "Empfohlen"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "en": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "fr": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "de": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "08:30",
+            "to": "12:00",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "16:30",
+            "to": "20:30",
+            "visible": true
+          }
+        ]
+      },
+      "badge": "agotado"
+    },
+    {
+      "id": "e1",
+      "category": "entrantes",
+      "name": {
+        "es": "Jamón Ibérico de Bellota",
+        "en": "Acorn-Fed Iberian Ham",
+        "fr": "Jambon Ibérique de Gland",
+        "de": "Eichel-Iberischer Schinken"
+      },
+      "description": {
+        "es": "Jamón ibérico de bellota 100% curado 48 meses. Cortado a cuchillo al momento. Servido con pan con tomate y AOVE de primera prensa.",
+        "en": "100% acorn-fed Iberian ham, 48-month cured. Hand-carved to order. With tomato bread and first-press extra virgin olive oil.",
+        "fr": "Jambon ibérique de gland 100% affiné 48 mois. Découpé au couteau à la commande. Servi avec pain à la tomate.",
+        "de": "100% Eichel-Iberischer Schinken, 48 Monate gereift. Handgeschnitten auf Bestellung. Mit Tomatenbrot und Olivenöl."
+      },
+      "price": 18.5,
+      "image": "https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Artesanal",
+          "Premium"
+        ],
+        "en": [
+          "Gluten free",
+          "Artisan",
+          "Premium"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Artisanal",
+          "Premium"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Handwerklich",
+          "Premium"
+        ]
+      },
+      "allergens": {
+        "es": [],
+        "en": [],
+        "fr": [],
+        "de": []
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      },
+      "badge": "popular"
+    },
+    {
+      "id": "e2",
+      "category": "entrantes",
+      "name": {
+        "es": "Croquetas de la Abuela",
+        "en": "Grandma's Croquettes",
+        "fr": "Croquettes Maison",
+        "de": "Omas Kroketten"
+      },
+      "description": {
+        "es": "Croquetas caseras de jamón ibérico y pollo de corral con bechamel cremosa. Crujientes por fuera, melosas por dentro. 6 unidades.",
+        "en": "Homemade Iberian ham and free-range chicken croquettes with creamy béchamel. Crispy outside, silky inside. 6 pieces.",
+        "fr": "Croquettes maison au jambon ibérique et poulet fermier avec béchamel crémeuse. Croustillantes dehors, fondantes dedans. 6 pièces.",
+        "de": "Hausgemachte iberische Schinken-Landhuhn-Kroketten mit cremiger Béchamel. Außen knusprig, innen zart. 6 Stück."
+      },
+      "price": 9.0,
+      "image": "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=800&q=80",
+      "tags": {
+        "es": [
+          "Casero",
+          "Popular"
+        ],
+        "en": [
+          "Homemade",
+          "Popular"
+        ],
+        "fr": [
+          "Fait maison",
+          "Populaire"
+        ],
+        "de": [
+          "Hausgemacht",
+          "Beliebt"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten",
+          "Lácteos",
+          "Huevo"
+        ],
+        "en": [
+          "Gluten",
+          "Lácteos",
+          "Huevo"
+        ],
+        "fr": [
+          "Gluten",
+          "Lácteos",
+          "Huevo"
+        ],
+        "de": [
+          "Gluten",
+          "Lácteos",
+          "Huevo"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "e3",
+      "category": "entrantes",
+      "name": {
+        "es": "Patatas Bravas con Alioli",
+        "en": "Patatas Bravas with Aioli",
+        "fr": "Patatas Bravas et Aïoli",
+        "de": "Patatas Bravas mit Aioli"
+      },
+      "description": {
+        "es": "Patatas fritas en aceite de oliva con salsa brava picante casera y alioli suave. Un clásico de las tapas españolas.",
+        "en": "Potatoes fried in olive oil with homemade spicy brava sauce and smooth aioli. A Spanish tapas classic.",
+        "fr": "Pommes de terre frites à l'huile d'olive avec sauce épicée maison et aïoli. Un classique des tapas.",
+        "de": "In Olivenöl frittierte Kartoffeln mit hausgemachter scharfer Brava-Sauce und Aioli."
+      },
+      "price": 6.5,
+      "image": "https://images.unsplash.com/photo-1541014741259-de529411b96a?w=800&q=80",
+      "tags": {
+        "es": [
+          "Tapas",
+          "Popular"
+        ],
+        "en": [
+          "Tapas",
+          "Popular"
+        ],
+        "fr": [
+          "Tapas",
+          "Populaire"
+        ],
+        "de": [
+          "Tapas",
+          "Beliebt"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Huevo"
+        ],
+        "en": [
+          "Huevo"
+        ],
+        "fr": [
+          "Huevo"
+        ],
+        "de": [
+          "Huevo"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "e4",
+      "category": "entrantes",
+      "name": {
+        "es": "Tabla de Quesos Ibéricos",
+        "en": "Iberian Cheese Board",
+        "fr": "Plateau de Fromages Ibériques",
+        "de": "Iberische Käseplatte"
+      },
+      "description": {
+        "es": "Selección de quesos artesanales: manchego curado, cabrales azul, idiazábal ahumado y queso de cabra. Con membrillo, nueces y pan de semillas.",
+        "en": "Selection of artisan cheeses: cured manchego, cabrales blue, smoked idiazábal and goat cheese. With quince jelly, walnuts and seed bread.",
+        "fr": "Sélection de fromages artisanaux: manchego affiné, cabrales, idiazábal fumé et fromage de chèvre. Avec gelée de coing, noix et pain.",
+        "de": "Auswahl handwerklicher Käse: gereifter Manchego, Cabrales, geräucherter Idiazábal und Ziegenkäse. Mit Quittengelee und Walnüssen."
+      },
+      "price": 14.0,
+      "image": "https://images.unsplash.com/photo-1452195100486-9cc805987862?w=800&q=80",
+      "tags": {
+        "es": [
+          "Para compartir",
+          "Artesanal"
+        ],
+        "en": [
+          "To share",
+          "Artisan"
+        ],
+        "fr": [
+          "À partager",
+          "Artisanal"
+        ],
+        "de": [
+          "Zum Teilen",
+          "Handwerklich"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Lácteos",
+          "Frutos secos",
+          "Gluten"
+        ],
+        "en": [
+          "Lácteos",
+          "Frutos secos",
+          "Gluten"
+        ],
+        "fr": [
+          "Lácteos",
+          "Frutos secos",
+          "Gluten"
+        ],
+        "de": [
+          "Lácteos",
+          "Frutos secos",
+          "Gluten"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "e5",
+      "category": "entrantes",
+      "name": {
+        "es": "Boquerones en Vinagre",
+        "en": "Marinated Anchovies",
+        "fr": "Anchois Marinés au Vinaigre",
+        "de": "Marinierte Sardellen"
+      },
+      "description": {
+        "es": "Boquerones frescos marinados en vinagre de manzana con ajo laminado, perejil y aceite de oliva. Servidos fríos sobre pan tostado con tomate.",
+        "en": "Fresh anchovies marinated in apple cider vinegar with sliced garlic, parsley and olive oil. Served cold on tomato toast.",
+        "fr": "Anchois frais marinés dans le vinaigre de cidre avec ail, persil et huile d'olive. Servis froids sur pain à la tomate.",
+        "de": "Frische Sardellen in Apfelessig mariniert mit Knoblauch, Petersilie und Olivenöl. Kalt auf Tomatenbrot serviert."
+      },
+      "price": 8.0,
+      "image": "https://images.unsplash.com/photo-1551781151-3a30eb5d0a4b?w=800&q=80",
+      "tags": {
+        "es": [
+          "Tradicional"
+        ],
+        "en": [
+          "Traditional"
+        ],
+        "fr": [
+          "Traditionnel"
+        ],
+        "de": [
+          "Traditionell"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Pescado",
+          "Gluten"
+        ],
+        "en": [
+          "Pescado",
+          "Gluten"
+        ],
+        "fr": [
+          "Pescado",
+          "Gluten"
+        ],
+        "de": [
+          "Pescado",
+          "Gluten"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "s1",
+      "category": "ensaladas",
+      "name": {
+        "es": "Ensalada César con Pollo",
+        "en": "Caesar Salad with Chicken",
+        "fr": "Salade César au Poulet",
+        "de": "Caesar-Salat mit Hähnchen"
+      },
+      "description": {
+        "es": "Lechuga romana, pollo a la plancha, picatostes artesanos, parmesano rallado y aderezo César casero con anchoa.",
+        "en": "Romaine lettuce, grilled chicken, homemade croutons, shaved parmesan and homemade Caesar dressing with anchovy.",
+        "fr": "Laitue romaine, poulet grillé, croûtons maison, parmesan râpé et vinaigrette César maison à l'anchois.",
+        "de": "Römersalat, gegrilltes Hähnchen, hausgemachte Croutons, gehobelter Parmesan und hausgemachtes Caesar-Dressing mit Anchovis."
+      },
+      "price": 11.5,
+      "image": "https://images.unsplash.com/photo-1546793665-c74683f339c1?w=800&q=80",
+      "tags": {
+        "es": [
+          "Popular",
+          "Ligero"
+        ],
+        "en": [
+          "Popular",
+          "Light"
+        ],
+        "fr": [
+          "Populaire",
+          "Léger"
+        ],
+        "de": [
+          "Beliebt",
+          "Leicht"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten",
+          "Huevo",
+          "Pescado",
+          "Lácteos",
+          "Mostaza"
+        ],
+        "en": [
+          "Gluten",
+          "Huevo",
+          "Pescado",
+          "Lácteos",
+          "Mostaza"
+        ],
+        "fr": [
+          "Gluten",
+          "Huevo",
+          "Pescado",
+          "Lácteos",
+          "Mostaza"
+        ],
+        "de": [
+          "Gluten",
+          "Huevo",
+          "Pescado",
+          "Lácteos",
+          "Mostaza"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "s2",
+      "category": "ensaladas",
+      "name": {
+        "es": "Ensalada de Temporada",
+        "en": "Seasonal Salad",
+        "fr": "Salade de Saison",
+        "de": "Saisonsalat"
+      },
+      "description": {
+        "es": "Brotes verdes, tomate cherry, aguacate, pepino, zanahoria rallada y granada. Aliñada con vinagreta de mostaza y miel.",
+        "en": "Mixed baby greens, cherry tomatoes, avocado, cucumber, grated carrot and pomegranate. With honey mustard vinaigrette.",
+        "fr": "Jeunes pousses, tomates cerises, avocat, concombre, carotte râpée et grenade. Vinaigrette miel-moutarde.",
+        "de": "Blattsalat, Kirschtomaten, Avocado, Gurke, geriebene Karotte und Granatapfel. Mit Honigsenf-Vinaigrette."
+      },
+      "price": 9.5,
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&q=80",
+      "tags": {
+        "es": [
+          "Vegano",
+          "Sin gluten",
+          "Temporada"
+        ],
+        "en": [
+          "Vegan",
+          "Gluten free",
+          "Seasonal"
+        ],
+        "fr": [
+          "Végétalien",
+          "Sans gluten",
+          "Saison"
+        ],
+        "de": [
+          "Vegan",
+          "Glutenfrei",
+          "Saison"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Mostaza"
+        ],
+        "en": [
+          "Mostaza"
+        ],
+        "fr": [
+          "Mostaza"
+        ],
+        "de": [
+          "Mostaza"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "sp1",
+      "category": "sopas",
+      "name": {
+        "es": "Gazpacho Andaluz",
+        "en": "Andalusian Gazpacho",
+        "fr": "Gaspacho Andalou",
+        "de": "Andalusischer Gazpacho"
+      },
+      "description": {
+        "es": "Sopa fría de tomate con pepino, pimiento verde, cebolla y ajo. Receta tradicional servida con tropezones y un chorrito de AOVE.",
+        "en": "Cold tomato soup with cucumber, green pepper, onion and garlic. Traditional recipe with garnish and a drizzle of olive oil.",
+        "fr": "Soupe froide de tomate avec concombre, poivron vert, oignon et ail. Recette traditionnelle servie avec garniture.",
+        "de": "Kalte Tomatensuppe mit Gurke, grüner Paprika, Zwiebel und Knoblauch. Traditionelles Rezept mit Einlage."
+      },
+      "price": 7.5,
+      "image": "https://images.unsplash.com/photo-1578020190125-f4f7c18bc9cb?w=800&q=80",
+      "tags": {
+        "es": [
+          "Vegano",
+          "Sin gluten",
+          "Temporada"
+        ],
+        "en": [
+          "Vegan",
+          "Gluten free",
+          "Seasonal"
+        ],
+        "fr": [
+          "Végétalien",
+          "Sans gluten",
+          "Saison"
+        ],
+        "de": [
+          "Vegan",
+          "Glutenfrei",
+          "Saison"
+        ]
+      },
+      "allergens": {
+        "es": [],
+        "en": [],
+        "fr": [],
+        "de": []
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "sp2",
+      "category": "sopas",
+      "name": {
+        "es": "Crema de Calabaza y Jengibre",
+        "en": "Pumpkin & Ginger Soup",
+        "fr": "Velouté de Potiron Gingembre",
+        "de": "Kürbis-Ingwer-Cremesuppe"
+      },
+      "description": {
+        "es": "Crema suave de calabaza asada con jengibre fresco, leche de coco y semillas de calabaza tostadas. Servida caliente con pan artesano.",
+        "en": "Smooth roasted pumpkin cream with fresh ginger, coconut milk and toasted pumpkin seeds. Served hot with artisan bread.",
+        "fr": "Crème de potiron rôti avec gingembre frais, lait de coco et graines de potiron grillées. Servie avec pain artisanal.",
+        "de": "Cremige geröstete Kürbissuppe mit frischem Ingwer, Kokosmilch und gerösteten Kürbiskernen. Mit handwerklichem Brot."
+      },
+      "price": 8.5,
+      "image": "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=800&q=80",
+      "tags": {
+        "es": [
+          "Vegano",
+          "Sin gluten"
+        ],
+        "en": [
+          "Vegan",
+          "Gluten free"
+        ],
+        "fr": [
+          "Végétalien",
+          "Sans gluten"
+        ],
+        "de": [
+          "Vegan",
+          "Glutenfrei"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Frutos secos"
+        ],
+        "en": [
+          "Frutos secos"
+        ],
+        "fr": [
+          "Frutos secos"
+        ],
+        "de": [
+          "Frutos secos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "a1",
+      "category": "arroces",
+      "name": {
+        "es": "Paella Valenciana",
+        "en": "Valencian Paella",
+        "fr": "Paella Valencienne",
+        "de": "Valencianische Paella"
+      },
+      "description": {
+        "es": "Paella tradicional con pollo de corral, conejo, judías verdes y garrofón. Elaborada en leña. Mínimo 2 personas. 25 min de preparación.",
+        "en": "Traditional paella with free-range chicken, rabbit, green beans and garrofón. Wood-fired. Min. 2 persons. 25 min preparation.",
+        "fr": "Paella traditionnelle avec poulet fermier, lapin, haricots verts et garrofón. Cuite au feu de bois. Min. 2 personnes. 25 min.",
+        "de": "Traditionelle Paella mit Freilandhuhn, Kaninchen, grünen Bohnen und Garrofón. Holzfeuer. Min. 2 Personen. 25 Min."
+      },
+      "price": 16.0,
+      "image": "https://images.unsplash.com/photo-1534080564583-6be75777b70a?w=800&q=80",
+      "tags": {
+        "es": [
+          "Para compartir",
+          "Sin gluten",
+          "Leña"
+        ],
+        "en": [
+          "To share",
+          "Gluten free",
+          "Wood-fired"
+        ],
+        "fr": [
+          "À partager",
+          "Sans gluten",
+          "Feu de bois"
+        ],
+        "de": [
+          "Zum Teilen",
+          "Glutenfrei",
+          "Holzfeuer"
+        ]
+      },
+      "allergens": {
+        "es": [],
+        "en": [],
+        "fr": [],
+        "de": []
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "a2",
+      "category": "arroces",
+      "name": {
+        "es": "Arroz Negro con Sepia",
+        "en": "Black Rice with Cuttlefish",
+        "fr": "Riz Noir à la Seiche",
+        "de": "Schwarzer Reis mit Tintenfisch"
+      },
+      "description": {
+        "es": "Arroz meloso cocinado con tinta de calamar y sepia fresca. Servido con alioli casero. Sabor intenso a mar.",
+        "en": "Creamy rice cooked with squid ink and fresh cuttlefish. Served with homemade aioli. Intense sea flavour.",
+        "fr": "Riz crémeux cuit avec encre de calmar et seiche fraîche. Servi avec aïoli maison. Saveur marine intense.",
+        "de": "Cremiger Reis mit Tintenfischtinte und frischem Sepiafisch. Mit hausgemachtem Aioli. Intensiver Meeresgeschmack."
+      },
+      "price": 18.5,
+      "image": "https://images.unsplash.com/photo-1559742811-822873691df8?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Mar"
+        ],
+        "en": [
+          "Gluten free",
+          "Seafood"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Mer"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Meeresfrüchte"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Moluscos",
+          "Huevo",
+          "Crustáceos"
+        ],
+        "en": [
+          "Moluscos",
+          "Huevo",
+          "Crustáceos"
+        ],
+        "fr": [
+          "Moluscos",
+          "Huevo",
+          "Crustáceos"
+        ],
+        "de": [
+          "Moluscos",
+          "Huevo",
+          "Crustáceos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "c1",
+      "category": "carnes",
+      "name": {
+        "es": "Secreto Ibérico a la Brasa",
+        "en": "Grilled Iberian Secret",
+        "fr": "Secret Ibérique Grillé",
+        "de": "Iberisches Geheimstück vom Grill"
+      },
+      "description": {
+        "es": "Secreto ibérico de bellota a la brasa de carbón vegetal en su punto. Guarnición de patatas panadera y pimientos de padrón asados.",
+        "en": "Acorn-fed Iberian secret cut grilled over charcoal to perfection. Served with baker's potatoes and roasted padron peppers.",
+        "fr": "Filet secret ibérique de gland grillé au charbon. Servi avec pommes de terre boulangère et piments de padrón rôtis.",
+        "de": "Eichel-Iberisches Geheimstück vom Holzkohlegrill. Mit Ofenkartoffeln und gebratenen Padron-Paprika."
+      },
+      "price": 22.0,
+      "image": "https://images.unsplash.com/photo-1558030006-450675393462?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Chef recomienda"
+        ],
+        "en": [
+          "Gluten free",
+          "Chef's pick"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Choix du chef"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Empfehlung"
+        ]
+      },
+      "allergens": {
+        "es": [],
+        "en": [],
+        "fr": [],
+        "de": []
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      },
+      "badge": "especial"
+    },
+    {
+      "id": "c2",
+      "category": "carnes",
+      "name": {
+        "es": "Solomillo a la Pimienta Verde",
+        "en": "Peppercorn Beef Tenderloin",
+        "fr": "Filet Mignon au Poivre Vert",
+        "de": "Rinderfilet mit grünem Pfeffer"
+      },
+      "description": {
+        "es": "Solomillo de ternera gallega a la plancha con salsa de pimienta verde, patatas gratinadas al queso y espárragos trigueros. Punto de cocción al gusto.",
+        "en": "Galician beef tenderloin with green peppercorn sauce, cheese gratin potatoes and wild asparagus. Cooked to your preference.",
+        "fr": "Filet de bœuf galicien avec sauce poivre vert, gratin dauphinois au fromage et asperges sauvages.",
+        "de": "Galizisches Rinderfilet mit grüner Pfeffersauce, Käse-Kartoffelgratin und wildem Spargel."
+      },
+      "price": 27.0,
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Premium"
+        ],
+        "en": [
+          "Gluten free",
+          "Premium"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Premium"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Premium"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Lácteos"
+        ],
+        "en": [
+          "Lácteos"
+        ],
+        "fr": [
+          "Lácteos"
+        ],
+        "de": [
+          "Lácteos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "c3",
+      "category": "carnes",
+      "name": {
+        "es": "Carrillada de Cerdo Ibérico",
+        "en": "Iberian Pork Cheeks",
+        "fr": "Joues de Porc Ibérique",
+        "de": "Iberische Schweinebacken"
+      },
+      "description": {
+        "es": "Carrillada de cerdo ibérico estofada 8 horas en vino Pedro Ximénez con puré de patata trufado y reducción de la cocción.",
+        "en": "Iberian pork cheeks braised 8 hours in Pedro Ximénez wine with truffle mashed potato and cooking reduction.",
+        "fr": "Joues de porc ibérique braisées 8 heures au vin Pedro Ximénez avec purée de pomme de terre truffée.",
+        "de": "Iberische Schweinebacken 8 Stunden in Pedro Ximénez-Wein geschmort mit Trüffelkartoffelpüree."
+      },
+      "price": 19.5,
+      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Cocción lenta"
+        ],
+        "en": [
+          "Gluten free",
+          "Slow cooked"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Mijotés"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Schmorbraten"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Sulfitos",
+          "Lácteos"
+        ],
+        "en": [
+          "Sulfitos",
+          "Lácteos"
+        ],
+        "fr": [
+          "Sulfitos",
+          "Lácteos"
+        ],
+        "de": [
+          "Sulfitos",
+          "Lácteos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "p1",
+      "category": "pescados",
+      "name": {
+        "es": "Merluza a la Vasca",
+        "en": "Basque-Style Hake",
+        "fr": "Merlu à la Basque",
+        "de": "Baskischer Seehecht"
+      },
+      "description": {
+        "es": "Merluza fresca del día en salsa verde de perejil con almejas al vapor, guisantes frescos y espárragos blancos. Receta auténtica.",
+        "en": "Fresh daily hake in parsley green sauce with steamed clams, fresh peas and white asparagus. Authentic Basque recipe.",
+        "fr": "Merlu frais du jour en sauce verte persillée avec palourdes vapeur, petits pois frais et asperges blanches.",
+        "de": "Tagesfrischer Seehecht in Petersilien-Grünsauce mit gedämpften Muscheln, frischen Erbsen und weißem Spargel."
+      },
+      "price": 19.5,
+      "image": "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=800&q=80",
+      "tags": {
+        "es": [
+          "Fresco del día",
+          "Sin gluten"
+        ],
+        "en": [
+          "Fresh daily",
+          "Gluten free"
+        ],
+        "fr": [
+          "Frais du jour",
+          "Sans gluten"
+        ],
+        "de": [
+          "Tagesfrisch",
+          "Glutenfrei"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Pescado",
+          "Moluscos"
+        ],
+        "en": [
+          "Pescado",
+          "Moluscos"
+        ],
+        "fr": [
+          "Pescado",
+          "Moluscos"
+        ],
+        "de": [
+          "Pescado",
+          "Moluscos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "p2",
+      "category": "pescados",
+      "name": {
+        "es": "Bacalao al Pil-Pil",
+        "en": "Cod Pil-Pil",
+        "fr": "Morue Pil-Pil",
+        "de": "Kabeljau Pil-Pil"
+      },
+      "description": {
+        "es": "Lomo de bacalao desalado cocinado a baja temperatura en aceite de oliva con ajo y guindilla. Emulsión pil-pil artesanal.",
+        "en": "Desalted cod loin slow-cooked in olive oil with garlic and chili. Artisanal pil-pil emulsion.",
+        "fr": "Cabillaud dessalé cuit à basse température dans l'huile d'olive avec ail et piment. Émulsion pil-pil artisanale.",
+        "de": "Entsalzter Kabeljauloin bei niedriger Temperatur in Olivenöl mit Knoblauch und Chili. Handwerkliche Pil-Pil-Emulsion."
+      },
+      "price": 21.0,
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Artesanal"
+        ],
+        "en": [
+          "Gluten free",
+          "Artisan"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Artisanal"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Handwerklich"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Pescado"
+        ],
+        "en": [
+          "Pescado"
+        ],
+        "fr": [
+          "Pescado"
+        ],
+        "de": [
+          "Pescado"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "p3",
+      "category": "pescados",
+      "name": {
+        "es": "Gambas al Ajillo",
+        "en": "Garlic Prawns",
+        "fr": "Crevettes à l'Ail",
+        "de": "Knoblauchgarnelen"
+      },
+      "description": {
+        "es": "Gambas frescas salteadas en cazuela de barro con AOVE, ajos laminados, guindilla y perejil fresco. Servidas con pan artesano.",
+        "en": "Fresh prawns sautéed in clay pot with olive oil, sliced garlic, chili and fresh parsley. Served with artisan bread.",
+        "fr": "Crevettes fraîches poêlées en terrine avec huile d'olive, ail émincé, piment et persil frais. Servies avec pain artisanal.",
+        "de": "Frische Garnelen in Tontopf mit Olivenöl, geschnittenem Knoblauch, Chili und frischer Petersilie. Mit handwerklichem Brot."
+      },
+      "price": 13.0,
+      "image": "https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Tapas"
+        ],
+        "en": [
+          "Gluten free",
+          "Tapas"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Tapas"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Tapas"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Crustáceos",
+          "Gluten"
+        ],
+        "en": [
+          "Crustáceos",
+          "Gluten"
+        ],
+        "fr": [
+          "Crustáceos",
+          "Gluten"
+        ],
+        "de": [
+          "Crustáceos",
+          "Gluten"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "po1",
+      "category": "postres",
+      "name": {
+        "es": "Crema Catalana",
+        "en": "Catalan Cream",
+        "fr": "Crème Catalane",
+        "de": "Katalanische Creme"
+      },
+      "description": {
+        "es": "Crema catalana clásica con costra de azúcar quemado al momento. Infusionada con canela, vainilla y ralladura de limón. Receta de la casa.",
+        "en": "Classic Catalan cream with freshly caramelized sugar crust. Infused with cinnamon, vanilla and lemon zest.",
+        "fr": "Crème catalane classique avec croûte de sucre caramélisé à l'instant. Infusée à la cannelle, vanille et citron.",
+        "de": "Klassische katalanische Creme mit frisch karamellisierter Zuckerkruste. Mit Zimt, Vanille und Zitronenschale."
+      },
+      "price": 6.5,
+      "image": "https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=800&q=80",
+      "tags": {
+        "es": [
+          "Vegetariano",
+          "Clásico"
+        ],
+        "en": [
+          "Vegetarian",
+          "Classic"
+        ],
+        "fr": [
+          "Végétarien",
+          "Classique"
+        ],
+        "de": [
+          "Vegetarisch",
+          "Klassisch"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Lácteos",
+          "Huevo"
+        ],
+        "en": [
+          "Lácteos",
+          "Huevo"
+        ],
+        "fr": [
+          "Lácteos",
+          "Huevo"
+        ],
+        "de": [
+          "Lácteos",
+          "Huevo"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "po2",
+      "category": "postres",
+      "name": {
+        "es": "Tarta de Santiago",
+        "en": "Santiago Tart",
+        "fr": "Tarte de Santiago",
+        "de": "Santiagokuchen"
+      },
+      "description": {
+        "es": "Tarta de almendra tradicional gallega con azúcar glas y la Cruz de Santiago. Sin harina de trigo, naturalmente sin gluten. Con helado de vainilla.",
+        "en": "Traditional Galician almond tart with powdered sugar and Santiago Cross. Wheat-free, naturally gluten-free. With vanilla ice cream.",
+        "fr": "Tarte aux amandes traditionnelle galicienne. Naturellement sans gluten. Accompagnée de glace à la vanille.",
+        "de": "Traditioneller galizischer Mandelkuchen, von Natur aus glutenfrei. Mit Vanilleeis."
+      },
+      "price": 5.5,
+      "image": "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Vegetariano"
+        ],
+        "en": [
+          "Gluten free",
+          "Vegetarian"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Végétarien"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Vegetarisch"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Frutos secos",
+          "Huevo",
+          "Lácteos"
+        ],
+        "en": [
+          "Frutos secos",
+          "Huevo",
+          "Lácteos"
+        ],
+        "fr": [
+          "Frutos secos",
+          "Huevo",
+          "Lácteos"
+        ],
+        "de": [
+          "Frutos secos",
+          "Huevo",
+          "Lácteos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "po3",
+      "category": "postres",
+      "name": {
+        "es": "Coulant de Chocolate Negro",
+        "en": "Dark Chocolate Lava Cake",
+        "fr": "Coulant au Chocolat Noir",
+        "de": "Dunkler Schokoladenkuchen"
+      },
+      "description": {
+        "es": "Bizcocho de chocolate negro 70% con corazón fundido. Servido caliente con helado de vainilla y frambuesas frescas. Para los amantes del chocolate.",
+        "en": "70% dark chocolate cake with molten center. Served warm with vanilla ice cream and fresh raspberries. For chocolate lovers.",
+        "fr": "Gâteau au chocolat noir 70% avec cœur fondant. Servi chaud avec glace vanille et framboises fraîches.",
+        "de": "Dunkler 70% Schokoladenkuchen mit flüssigem Kern. Warm serviert mit Vanilleeis und frischen Himbeeren."
+      },
+      "price": 7.0,
+      "image": "https://images.unsplash.com/photo-1624353365286-3f8d62daad51?w=800&q=80",
+      "tags": {
+        "es": [
+          "Vegetariano",
+          "Imprescindible"
+        ],
+        "en": [
+          "Vegetarian",
+          "Must-try"
+        ],
+        "fr": [
+          "Végétarien",
+          "Incontournable"
+        ],
+        "de": [
+          "Vegetarisch",
+          "Pflichtprogramm"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten",
+          "Huevo",
+          "Lácteos",
+          "Soja"
+        ],
+        "en": [
+          "Gluten",
+          "Huevo",
+          "Lácteos",
+          "Soja"
+        ],
+        "fr": [
+          "Gluten",
+          "Huevo",
+          "Lácteos",
+          "Soja"
+        ],
+        "de": [
+          "Gluten",
+          "Huevo",
+          "Lácteos",
+          "Soja"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      },
+      "badge": "nuevo"
+    },
+    {
+      "id": "po4",
+      "category": "postres",
+      "name": {
+        "es": "Torrijas de Fin de Semana",
+        "en": "Weekend Spanish French Toast",
+        "fr": "Pain Perdu du Week-end",
+        "de": "Wochenend-Arme-Ritter"
+      },
+      "description": {
+        "es": "Torrijas clásicas en leche aromatizada con canela y vainilla, rebozadas y fritas. Con helado de vainilla y miel de romero. Solo fines de semana.",
+        "en": "Classic torrijas soaked in cinnamon-vanilla milk, battered and fried. With vanilla ice cream and rosemary honey. Weekends only.",
+        "fr": "Torrijas classiques imbibées de lait cannelle-vanille, panées et frites. Avec glace vanille et miel de romarin. Week-ends uniquement.",
+        "de": "Klassische Torrijas in Zimt-Vanille-Milch getränkt, paniert und frittiert. Mit Vanilleeis und Rosmarinhonig. Nur am Wochenende."
+      },
+      "price": 6.0,
+      "image": "https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=800&q=80",
+      "tags": {
+        "es": [
+          "Fin de semana",
+          "Tradicional"
+        ],
+        "en": [
+          "Weekends only",
+          "Traditional"
+        ],
+        "fr": [
+          "Week-ends",
+          "Traditionnel"
+        ],
+        "de": [
+          "Nur Wochenende",
+          "Traditionell"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "en": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "fr": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ],
+        "de": [
+          "Gluten",
+          "Huevo",
+          "Lácteos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "b1",
+      "category": "bebidas",
+      "name": {
+        "es": "Agua Mineral",
+        "en": "Mineral Water",
+        "fr": "Eau Minérale",
+        "de": "Mineralwasser"
+      },
+      "description": {
+        "es": "Agua mineral natural de manantial andaluz. Con o sin gas. Botella 500ml.",
+        "en": "Natural Andalusian spring mineral water. Still or sparkling. 500ml bottle.",
+        "fr": "Eau minérale naturelle de source andalouse. Plate ou gazeuse. Bouteille 500ml.",
+        "de": "Natürliches andalusisches Quellwasser. Still oder Sprudelwasser. 500ml Flasche."
+      },
+      "price": 2.0,
+      "image": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Vegano"
+        ],
+        "en": [
+          "Gluten free",
+          "Vegan"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Végétalien"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Vegan"
+        ]
+      },
+      "allergens": {
+        "es": [],
+        "en": [],
+        "fr": [],
+        "de": []
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "08:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "b2",
+      "category": "bebidas",
+      "name": {
+        "es": "Refrescos",
+        "en": "Soft Drinks",
+        "fr": "Boissons Fraîches",
+        "de": "Erfrischungsgetränke"
+      },
+      "description": {
+        "es": "Coca-Cola, Fanta naranja/limón, Sprite, agua tónica, limonada artesana de temporada. Consulta disponibilidad.",
+        "en": "Coca-Cola, Fanta orange/lemon, Sprite, tonic water, seasonal homemade lemonade. Ask for availability.",
+        "fr": "Coca-Cola, Fanta orange/citron, Sprite, eau tonique, limonade maison de saison. Demandez disponibilité.",
+        "de": "Coca-Cola, Fanta Orange/Zitrone, Sprite, Tonic, saisonale hausgemachte Limonade."
+      },
+      "price": 2.5,
+      "image": "https://images.unsplash.com/photo-1581636625402-29b2a704ef13?w=800&q=80",
+      "tags": {
+        "es": [
+          "Frío"
+        ],
+        "en": [
+          "Cold"
+        ],
+        "fr": [
+          "Froid"
+        ],
+        "de": [
+          "Kalt"
+        ]
+      },
+      "allergens": {
+        "es": [],
+        "en": [],
+        "fr": [],
+        "de": []
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "08:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "b3",
+      "category": "bebidas",
+      "name": {
+        "es": "Cerveza Artesana Local",
+        "en": "Local Craft Beer",
+        "fr": "Bière Artisanale Locale",
+        "de": "Lokales Craftbier"
+      },
+      "description": {
+        "es": "Cerveza artesana de elaboración local. Disponible en rubia, tostada o negra. Botella 33cl. Pregunta por las variedades del día.",
+        "en": "Locally brewed craft beer. Available as lager, amber or stout. 33cl bottle. Ask for today's varieties.",
+        "fr": "Bière artisanale brassée localement. Disponible en blonde, ambrée ou brune. Bouteille 33cl.",
+        "de": "Lokal gebrautes Craftbier. Als Lager, Amber oder Stout. 33cl Flasche. Fragen Sie nach den Tagesangeboten."
+      },
+      "price": 4.0,
+      "image": "https://images.unsplash.com/photo-1567529684892-09290a1b2d05?w=800&q=80",
+      "tags": {
+        "es": [
+          "Local",
+          "Artesana"
+        ],
+        "en": [
+          "Local",
+          "Craft"
+        ],
+        "fr": [
+          "Local",
+          "Artisanale"
+        ],
+        "de": [
+          "Lokal",
+          "Handwerklich"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Gluten"
+        ],
+        "en": [
+          "Gluten"
+        ],
+        "fr": [
+          "Gluten"
+        ],
+        "de": [
+          "Gluten"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "08:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "b4",
+      "category": "bebidas",
+      "name": {
+        "es": "Café de Especialidad",
+        "en": "Specialty Coffee",
+        "fr": "Café de Spécialité",
+        "de": "Specialty Coffee"
+      },
+      "description": {
+        "es": "Café de origen único, tostado artesanalmente. Espresso, americano, cortado, con leche, capuccino o latte. Leche de avena disponible.",
+        "en": "Single-origin artisan roasted coffee. Espresso, americano, cortado, latte, cappuccino. Oat milk available.",
+        "fr": "Café d'origine unique torréfié artisanalement. Espresso, americano, cortado, latte, cappuccino. Lait d'avoine disponible.",
+        "de": "Single-Origin handwerklich gerösteter Kaffee. Espresso, Americano, Cortado, Latte, Cappuccino. Hafermilch verfügbar."
+      },
+      "price": 1.8,
+      "image": "https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80",
+      "tags": {
+        "es": [
+          "Artesanal"
+        ],
+        "en": [
+          "Artisan"
+        ],
+        "fr": [
+          "Artisanal"
+        ],
+        "de": [
+          "Handwerklich"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Lácteos"
+        ],
+        "en": [
+          "Lácteos"
+        ],
+        "fr": [
+          "Lácteos"
+        ],
+        "de": [
+          "Lácteos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "08:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "v1",
+      "category": "vinos",
+      "name": {
+        "es": "Vino de la Casa (copa)",
+        "en": "House Wine (glass)",
+        "fr": "Vin de la Maison (verre)",
+        "de": "Hauswein (Glas)"
+      },
+      "description": {
+        "es": "Selección de vino tinto, blanco o rosado de bodegas del Marco de Jerez. El camarero te informará de la selección del día.",
+        "en": "Red, white or rosé wine from Jerez wineries. Ask the waiter for today's selection.",
+        "fr": "Vin rouge, blanc ou rosé de vignobles du Marco de Jerez. Le serveur vous informera de la sélection du jour.",
+        "de": "Rot-, Weiß- oder Roséwein von Weingütern im Marco de Jerez. Der Kellner informiert Sie über die Tagesauswahl."
+      },
+      "price": 3.5,
+      "image": "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?w=800&q=80",
+      "tags": {
+        "es": [
+          "Local",
+          "Sin gluten"
+        ],
+        "en": [
+          "Local",
+          "Gluten free"
+        ],
+        "fr": [
+          "Local",
+          "Sans gluten"
+        ],
+        "de": [
+          "Lokal",
+          "Glutenfrei"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Sulfitos"
+        ],
+        "en": [
+          "Sulfitos"
+        ],
+        "fr": [
+          "Sulfitos"
+        ],
+        "de": [
+          "Sulfitos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "v2",
+      "category": "vinos",
+      "name": {
+        "es": "Manzanilla de Sanlúcar",
+        "en": "Manzanilla Sherry",
+        "fr": "Manzanilla de Sanlúcar",
+        "de": "Manzanilla Sherry"
+      },
+      "description": {
+        "es": "Manzanilla fina criada bajo velo de flor en Sanlúcar de Barrameda. Seca, salina, con notas de almendra y manzanilla. Copa fría.",
+        "en": "Fine manzanilla aged under flor yeast in Sanlúcar de Barrameda. Dry, saline with almond and chamomile notes. Served cold.",
+        "fr": "Manzanilla fine élevée sous voile à Sanlúcar de Barrameda. Sèche, saline avec notes d'amande et camomille.",
+        "de": "Feine Manzanilla unter Hefeschleier in Sanlúcar gereift. Trocken, salzig mit Mandel- und Kamillenoten."
+      },
+      "price": 2.8,
+      "image": "https://images.unsplash.com/photo-1474722883778-792e7990302f?w=800&q=80",
+      "tags": {
+        "es": [
+          "Local",
+          "D.O."
+        ],
+        "en": [
+          "Local",
+          "Protected Origin"
+        ],
+        "fr": [
+          "Local",
+          "A.O.P."
+        ],
+        "de": [
+          "Lokal",
+          "g.U."
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Sulfitos"
+        ],
+        "en": [
+          "Sulfitos"
+        ],
+        "fr": [
+          "Sulfitos"
+        ],
+        "de": [
+          "Sulfitos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "v3",
+      "category": "vinos",
+      "name": {
+        "es": "Cava Brut Nature (copa)",
+        "en": "Cava Brut Nature (glass)",
+        "fr": "Cava Brut Nature (verre)",
+        "de": "Cava Brut Nature (Glas)"
+      },
+      "description": {
+        "es": "Cava brut nature con Macabeo, Xarel·lo y Parellada. Sin azúcares añadidos. Burbujas finas y persistentes, fresco y elegante.",
+        "en": "Brut nature cava with Macabeo, Xarel·lo and Parellada. No added sugars. Fine persistent bubbles, fresh and elegant.",
+        "fr": "Cava brut nature Macabeo, Xarel·lo et Parellada. Sans sucres ajoutés. Bulles fines et persistantes, frais et élégant.",
+        "de": "Brut Nature Cava aus Macabeo, Xarel·lo und Parellada. Ohne zugesetzten Zucker. Feine, anhaltende Blasen."
+      },
+      "price": 5.0,
+      "image": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+      "tags": {
+        "es": [
+          "Sin gluten",
+          "Celebración"
+        ],
+        "en": [
+          "Gluten free",
+          "Celebration"
+        ],
+        "fr": [
+          "Sans gluten",
+          "Célébration"
+        ],
+        "de": [
+          "Glutenfrei",
+          "Feier"
+        ]
+      },
+      "allergens": {
+        "es": [
+          "Sulfitos"
+        ],
+        "en": [
+          "Sulfitos"
+        ],
+        "fr": [
+          "Sulfitos"
+        ],
+        "de": [
+          "Sulfitos"
+        ]
+      },
+      "available": true,
+      "schedule": {
+        "defaultVisible": false,
+        "rules": [
+          {
+            "days": [
+              3
+            ],
+            "from": "00:00",
+            "to": "23:59",
+            "visible": false
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "12:00",
+            "to": "16:30",
+            "visible": true
+          },
+          {
+            "days": [
+              1,
+              2,
+              4,
+              5,
+              6,
+              0
+            ],
+            "from": "20:30",
+            "to": "23:59",
+            "visible": true
+          }
+        ]
+      }
+    }
+  ]
+}

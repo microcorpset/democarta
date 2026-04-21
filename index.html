@@ -1239,7 +1239,7 @@ function toggleDarkMode() {
 function initDarkMode() {
   const saved = localStorage.getItem('darkMode');
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  if (saved === '1' || (saved === null && prefersDark)) {
+  if (saved === '1') {
     document.body.classList.add('dark-mode');
     const btn = document.getElementById('dark-toggle');
     if (btn) btn.textContent = '☀️';

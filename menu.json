@@ -493,10 +493,10 @@
         "enabled": true,
         "icon": "🔍",
         "text": {
-          "es": "¿Tienes alguna alergia? Pulsa el botón <strong>Filtros</strong> para ver y filtrar los alérgenos de cada plato.",
-          "en": "Do you have any allergies? Tap the <strong>Filters</strong> button to view and filter allergens in each dish.",
-          "fr": "Vous avez des allergies ? Appuyez sur le bouton <strong>Filtres</strong> pour voir et filtrer les allergènes.",
-          "de": "Haben Sie Allergien? Tippen Sie auf <strong>Filter</strong>, um Allergene in jedem Gericht anzuzeigen und zu filtern."
+          "es": "¿Tienes alguna alergia? Pulsa el botón <strong>Alérgenos</strong> para ver y filtrar los alérgenos de cada plato.",
+          "en": "Do you have any allergies? Tap the <strong>Allergens</strong> button to view and filter allergens in each dish.",
+          "fr": "Vous avez des allergies ? Appuyez sur le bouton <strong>Allergènes</strong> pour voir et filtrer les allergènes.",
+          "de": "Haben Sie Allergien? Tippen Sie auf <strong>Allergene</strong>, um Allergene in jedem Gericht anzuzeigen und zu filtern."
         }
       },
       "orderHint": {

@@ -434,7 +434,7 @@
         {
           "label": "Telegram",
           "icon": "✈️",
-          "url": "https://t.me/Jon_Glez",
+          "url": "https://t.me/jon_glez",
           "style": "normal",
           "enabled": true
         },
@@ -485,7 +485,7 @@
         "de": "⚠️ Bei Lebensmittelallergien oder Unverträglichkeiten informieren Sie bitte unser Personal. Kann Spuren enthalten."
       }
     },
-    "googleAnalyticsId": "G-N5STYBC6VE",
+    "googleAnalyticsId": "",
     "onboardingHints": {
       "enabled": true,
       "delayAfterLangSelect": 800,

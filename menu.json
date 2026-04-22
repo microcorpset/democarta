@@ -434,14 +434,14 @@
         {
           "label": "Telegram",
           "icon": "✈️",
-          "url": "https://t.me/jon_glez",
+          "url": "https://t.me/Jon_Glez",
           "style": "normal",
           "enabled": true
         },
         {
           "label": "Mi web",
           "icon": "🌐",
-          "url": "https://github.com/microcorpset/tarjeta",
+          "url": "https://microcorpset.github.io/tarjeta/",
           "style": "normal",
           "enabled": true
         },

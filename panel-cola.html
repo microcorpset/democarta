@@ -1,13 +1,46 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Mi Aplicación</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-        iframe { width: 100%; height: 100vh; border: none; }
+        /* Eliminamos cualquier margen por defecto */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Evita que el usuario haga scroll fuera del iframe */
+            background-color: #ffffff;
+        }
+        
+        /* Forzamos el iframe a cubrir toda la pantalla */
+        #app-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <iframe src="https://script.google.com/macros/s/AKfycbzWDG_JNkMFieiikczAFKvbaqJVJ3vufcxfLZjj7488ADWgakEOT0EgKZqwbVO3XRz0HQ/exec?admin=taberna24" title="Mi App"></iframe>
+
+    <iframe 
+        id="app-frame" 
+        src="https://script.google.com/macros/s/AKfycbzWDG_JNkMFieiikczAFKvbaqJVJ3vufcxfLZjj7488ADWgakEOT0EgKZqwbVO3XRz0HQ/exec?admin=taberna24"" 
+        allow="camera; microphone; geolocation; clipboard-write"
+        allowfullscreen>
+    </iframe>
+
+    <script>
+        // Pequeño script para asegurar que el iframe reciba el foco
+        window.onload = function() {
+            document.getElementById('app-frame').focus();
+        };
+    </script>
 </body>
 </html>

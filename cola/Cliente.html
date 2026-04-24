@@ -5,12 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Lista de Espera</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
-<!-- ── CONFIGURACIÓN ── Pon aquí la URL de tu Apps Script desplegado ── -->
 <script>
-  var API_URL = 'https://script.google.com/macros/s/AKfycbzJ-Yem-qyeu-xygxdAEsskh1IW_55i5R95ek-HUWBVnF3jlPz35G5B5D79yxbnxafd/exec';
+  var API_URL      = 'https://script.google.com/macros/s/AKfycbzJ-Yem-qyeu-xygxdAEsskh1IW_55i5R95ek-HUWBVnF3jlPz35G5B5D79yxbnxafd/exec';
+  var VAPID_PUBLIC = 'BKxFmUQ0hX8Za1ZsIhqrAr4pBDD9uXa7IBd4PKdzJ7EUA9TSc281F506Iu2eumqpVSyA5-ZYwNG1FrikX8M9IkY';
 </script>
-
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -27,17 +25,23 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 .page-title{font-family:var(--ff);font-size:2rem;color:#fff;text-align:center;line-height:1.15}
 .page-sub{font-size:0.85rem;color:#6A6560;text-align:center;line-height:1.6;margin-top:0.4rem}
 .hidden{display:none!important}
-.card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:1.8rem 1.5rem}
-
-/* LOADING */
 #view-loading{text-align:center;padding:3rem 0}
 .spin{display:inline-block;width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.9s linear infinite;margin-bottom:1rem}
 @keyframes spin{to{transform:rotate(360deg)}}
 .spin-label{font-size:0.85rem;color:#5A5450}
-
-/* FORM */
+/* PRE-JOIN BANNER */
+.qsb{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:1rem}
+.qsb-num{font-family:var(--ff);font-size:2.8rem;font-weight:700;color:var(--gold);line-height:1;min-width:48px;text-align:center;flex-shrink:0}
+.qsb-num.ok{color:var(--sage);font-size:2rem}
+.qsb-num.busy{color:var(--rust)}
+.qsb-info{flex:1}
+.qsb-title{font-size:0.9rem;font-weight:500;color:var(--cream);margin-bottom:0.15rem}
+.qsb-sub{font-size:0.75rem;color:#6A6560;line-height:1.5}
+.qsb-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2s ease-in-out infinite;flex-shrink:0}
+/* NOTIF HINT */
 .notif-hint{background:rgba(90,122,80,0.12);border:1px solid rgba(90,122,80,0.3);border-radius:8px;padding:0.7rem 0.9rem;margin-bottom:1rem;font-size:0.78rem;color:#5A7A50;line-height:1.5}
 .notif-hint strong{display:block;margin-bottom:0.2rem;font-size:0.82rem}
+/* FORM */
 .field{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1.1rem}
 .field label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#6A6560}
 .field input{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--cream);font-family:var(--ffb);font-size:0.95rem;outline:none;transition:border-color 0.2s}
@@ -47,7 +51,6 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 .field-codigo label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.35rem}
 .field-codigo p{font-size:0.75rem;color:#6A6560;margin-bottom:0.5rem}
 .field-codigo input{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:0.65rem 0.9rem;width:100%;color:var(--cream);font-family:var(--ffb);font-size:0.95rem;outline:none}
-.field-codigo input:focus{border-color:var(--gold)}
 .btn{width:100%;background:var(--gold);color:var(--charcoal);border:none;border-radius:8px;padding:1rem;font-family:var(--ffb);font-size:1rem;font-weight:500;cursor:pointer;transition:background 0.2s}
 .btn:hover{background:#E8D5A3}
 .btn:disabled{opacity:0.5;pointer-events:none}
@@ -55,13 +58,22 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 .closed-msg{text-align:center;padding:1.5rem 0}
 .closed-msg .icon{font-size:2.5rem;margin-bottom:0.8rem}
 .closed-msg p{color:var(--rust);font-weight:500;font-size:1rem;line-height:1.6}
-
+/* WAKE LOCK */
+.wkbar{border-radius:10px;padding:0.9rem 1rem;margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25)}
+.wkbar.warn{background:rgba(196,92,38,0.06);border-color:rgba(196,92,38,0.25)}
+.wk-icon{font-size:1.3rem;flex-shrink:0}
+.wk-info{flex:1}
+.wk-title{font-size:0.82rem;font-weight:500;color:var(--cream);margin-bottom:0.15rem}
+.wk-sub{font-size:0.72rem;color:#6A6560;line-height:1.4}
+.wk-btn{background:var(--gold);color:var(--charcoal);border:none;border-radius:6px;padding:0.5rem 0.8rem;font-family:var(--ffb);font-size:0.75rem;font-weight:500;cursor:pointer;white-space:nowrap;flex-shrink:0}
+.wk-btn.active{background:var(--sage);color:#fff}
+.wk-btn.info{background:rgba(196,92,38,0.15);color:var(--rust);border:1px solid rgba(196,92,38,0.3)}
 /* STATUS */
 .status-badge{width:160px;height:160px;border-radius:50%;border:2px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.2rem;padding:0.5rem;text-align:center;transition:border-color 0.4s,box-shadow 0.4s}
-.status-badge.siguiente{border-color:#5A7A50;box-shadow:0 0 0 8px rgba(90,122,80,0.12);animation:pulse 1.8s ease-in-out infinite}
+.status-badge.siguiente{border-color:var(--sage);box-shadow:0 0 0 8px rgba(90,122,80,0.12);animation:pulse 1.8s ease-in-out infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
 .badge-num{font-family:var(--ff);font-size:3.6rem;font-weight:700;color:var(--gold);line-height:1}
-.badge-sig-txt{font-family:var(--ff);font-size:1.15rem;color:#5A7A50;font-style:italic;line-height:1.2;margin-bottom:0.2rem}
+.badge-sig-txt{font-family:var(--ff);font-size:1.15rem;color:var(--sage);font-style:italic;line-height:1.2;margin-bottom:0.2rem}
 .badge-label{font-size:0.62rem;color:#5A5450;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.15rem;line-height:1.3}
 .status-cards{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1.2rem}
 .stat-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.9rem;text-align:center}
@@ -73,16 +85,14 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 .refresh-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:0.3}50%{opacity:1}}
 .refresh-txt{font-size:0.72rem;color:#4A4440}
-.carta-btn{margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;text-decoration:none;color:var(--gold);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:0.75rem;font-size:0.88rem;transition:background 0.2s;cursor:pointer;background:none;width:100%;font-family:var(--ffb)}
+.carta-btn{margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;color:var(--gold);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:0.75rem;font-size:0.88rem;transition:background 0.2s;cursor:pointer;background:none;width:100%;font-family:var(--ffb)}
 .carta-btn:hover{background:rgba(201,168,76,0.08)}
-
 /* LLAMADO */
 .llamado-box{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.4);border-radius:10px;padding:1.2rem;text-align:center;margin-bottom:1rem}
 .llamado-icon{font-size:2.5rem;margin-bottom:0.5rem}
 .llamado-title{font-family:var(--ff);font-size:1.5rem;color:var(--gold);margin-bottom:0.3rem}
 .llamado-sub{font-size:0.82rem;color:#9A9080;line-height:1.5}
 .llamado-timer{font-family:var(--ff);font-size:1rem;color:var(--rust);margin-top:0.6rem;font-style:italic}
-
 /* DONE */
 .done-icon{font-size:3.5rem;text-align:center;margin-bottom:1rem}
 .done-title{font-family:var(--ff);font-size:2rem;color:#fff;text-align:center;margin-bottom:0.5rem}
@@ -93,78 +103,90 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 <body>
 <div class="container">
 
-  <!-- LOADING -->
   <div id="view-loading">
     <div class="spin"></div>
     <div class="spin-label">Cargando...</div>
   </div>
 
-  <!-- JOIN FORM -->
+  <!-- FORMULARIO -->
   <div id="view-join" class="hidden">
     <div class="logo-name" id="rest-name">La Taberna del Sur</div>
     <div class="logo-sub" id="rest-eslogan"></div>
     <div class="gold-line"></div>
     <div class="page-title">Lista de espera</div>
-    <div class="page-sub">Apúntate y te avisamos cuando sea tu turno</div>
+    <div class="page-sub">Apuntate y te avisamos cuando sea tu turno</div>
     <div class="gold-line"></div>
+
+    <!-- Estado de la cola antes de apuntarse -->
+    <div class="qsb" id="pre-join-banner" style="display:none">
+      <div class="qsb-num" id="pjb-num">...</div>
+      <div class="qsb-info">
+        <div class="qsb-title" id="pjb-title">Consultando...</div>
+        <div class="qsb-sub" id="pjb-sub"></div>
+      </div>
+      <div class="qsb-dot"></div>
+    </div>
 
     <div id="notif-hint" class="notif-hint hidden">
       <strong>Para no perderte el aviso:</strong>
-      Acepta las notificaciones y mantén la pantalla encendida mientras esperas.
+      Acepta las notificaciones y manten la pantalla encendida mientras esperas.
     </div>
 
     <div id="form-area">
       <div class="field">
         <label>Tu nombre o apellido</label>
-        <input type="text" id="inp-nombre" placeholder="Ej. Familia García" autocapitalize="words" autocomplete="name">
+        <input type="text" id="inp-nombre" placeholder="Ej. Familia Garcia" autocapitalize="words" autocomplete="name">
       </div>
       <div class="field">
-        <label>Número de personas</label>
+        <label>Numero de personas</label>
         <input type="number" id="inp-personas" placeholder="4" min="1" max="20">
       </div>
       <div id="campo-codigo" class="field-codigo hidden">
-        <label>Código del local</label>
-        <p>Búscalo en la entrada o en la barra</p>
-        <input type="text" id="inp-codigo" placeholder="Introduce el código...">
+        <label>Codigo del local</label>
+        <p>Buscalo en la entrada o en la barra</p>
+        <input type="text" id="inp-codigo" placeholder="Introduce el codigo...">
       </div>
       <div class="err-msg" id="form-error"></div>
       <button class="btn" id="btn-join" onclick="solicitarTurno()">Apuntarme a la lista</button>
     </div>
 
     <div id="closed-area" class="closed-msg hidden">
-      <div class="icon">🔒</div>
-      <p id="closed-msg-txt">La lista de espera está cerrada.</p>
+      <div class="icon">&#128274;</div>
+      <p id="closed-msg-txt">La lista de espera esta cerrada.</p>
     </div>
   </div>
 
-  <!-- STATUS -->
+  <!-- ESTADO DE ESPERA -->
   <div id="view-status" class="hidden">
     <div class="logo-name" id="rest-name-2"></div>
     <div class="gold-line"></div>
 
+    <div class="wkbar" id="wakelock-bar" style="display:none">
+      <div class="wk-icon" id="wk-icon">&#128241;</div>
+      <div class="wk-info">
+        <div class="wk-title" id="wk-title">Manten la pantalla encendida</div>
+        <div class="wk-sub" id="wk-sub">Para garantizar el aviso cuando sea tu turno.</div>
+      </div>
+      <button class="wk-btn" id="wk-btn" onclick="toggleWakeLock()">Activar</button>
+    </div>
+
     <div class="llamado-box hidden" id="llamado-box">
-      <div class="llamado-icon">📣</div>
-      <div class="llamado-title">¡Te están llamando!</div>
-      <div class="llamado-sub">Dirígete a la entrada del local.<br>El camarero te está esperando.</div>
+      <div class="llamado-icon">&#128227;</div>
+      <div class="llamado-title">&#161;Te estan llamando!</div>
+      <div class="llamado-sub">Dirigete a la entrada del local.<br>El camarero te esta esperando.</div>
       <div class="llamado-timer" id="llamado-timer"></div>
     </div>
 
     <div id="status-espera">
-      <div class="page-sub" style="margin-bottom:1.2rem">Actualización automática cada 10 segundos</div>
+      <div class="page-sub" style="margin-bottom:1.2rem">Actualizacion automatica cada 10 segundos</div>
       <div class="status-badge" id="status-badge">
-        <span class="badge-sig-txt" id="badge-sig-txt" style="display:none">¡Siguiente!</span>
-        <span class="badge-num" id="badge-num">–</span>
+        <span class="badge-sig-txt" id="badge-sig-txt" style="display:none">&#161;Siguiente!</span>
+        <span class="badge-num" id="badge-num">-</span>
         <span class="badge-label" id="badge-label">por delante</span>
       </div>
       <div class="status-cards">
-        <div class="stat-card">
-          <div class="stat-val" id="stat-tiempo">–</div>
-          <div class="stat-lbl">Minutos aprox.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val" id="stat-turno">–</div>
-          <div class="stat-lbl">Tu número</div>
-        </div>
+        <div class="stat-card"><div class="stat-val" id="stat-tiempo">-</div><div class="stat-lbl">Minutos aprox.</div></div>
+        <div class="stat-card"><div class="stat-val" id="stat-turno">-</div><div class="stat-lbl">Tu numero</div></div>
       </div>
       <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
       <div id="btn-carta-wrap"></div>
@@ -176,11 +198,11 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
     </div>
   </div>
 
-  <!-- DONE -->
+  <!-- FINALIZADO -->
   <div id="view-done" class="hidden">
-    <div class="done-icon" id="done-icon">✅</div>
-    <div class="done-title" id="done-title">¡A comer!</div>
-    <div class="done-msg" id="done-msg">Tu mesa ya está lista. ¡Pasa dentro!</div>
+    <div class="done-icon" id="done-icon">&#9989;</div>
+    <div class="done-title" id="done-title">A comer!</div>
+    <div class="done-msg" id="done-msg">Tu mesa ya esta lista. Pasa dentro!</div>
     <button class="btn" onclick="reiniciar()">Volver al inicio</button>
   </div>
 
@@ -188,90 +210,281 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 <div class="footer">Sistema de cola · La Taberna del Sur</div>
 
 <script>
-// ── STATE ────────────────────────────────────────────────────────────────────
+// ── ESTADO ────────────────────────────────────────────────────────────────────
 var deviceId = localStorage.getItem('cola_deviceId');
 if (!deviceId) {
   deviceId = 'dev_' + Math.random().toString(36).substr(2,12) + Date.now().toString(36);
   localStorage.setItem('cola_deviceId', deviceId);
 }
-var myQueueId  = localStorage.getItem('cola_queueId');
-var myTurno    = localStorage.getItem('cola_turno') || '?';
-var pollTimer  = null;
-var enlaceCarta = '';
+var myQueueId    = localStorage.getItem('cola_queueId');
+var myTurno      = localStorage.getItem('cola_turno') || '?';
+var pollTimer    = null;
+var preJoinTimer = null;
+var enlaceCarta  = '';
+var _llamadoSince       = null;
+var _llamadoNotifSent   = false;
+var _siguienteNotifSent = false;
 
-// ── API HELPERS ───────────────────────────────────────────────────────────────
-// All calls use GET to avoid CORS issues with Apps Script
+// ── API ───────────────────────────────────────────────────────────────────────
 function api(params) {
-  var url = API_URL + '?';
   var parts = [];
   Object.keys(params).forEach(function(k) {
-    if (params[k] !== undefined && params[k] !== null) {
+    if (params[k] !== undefined && params[k] !== null)
       parts.push(k + '=' + encodeURIComponent(params[k]));
+  });
+  return fetch(API_URL + '?' + parts.join('&')).then(function(r) { return r.json(); });
+}
+function apiGet(action, params) { var p = params || {}; p.action = action; return api(p); }
+
+// ── WAKE LOCK ─────────────────────────────────────────────────────────────────
+var wakeLock = null;
+var wakeLockWanted = false;
+
+function setWK(icon, title, sub, btnTxt, btnCls) {
+  var bar = document.getElementById('wakelock-bar');
+  if (!bar) return;
+  bar.style.display = 'flex';
+  bar.className = btnCls === 'info' ? 'wkbar warn' : 'wkbar';
+  document.getElementById('wk-icon').innerHTML  = icon;
+  document.getElementById('wk-title').textContent = title;
+  document.getElementById('wk-sub').textContent   = sub;
+  var btn = document.getElementById('wk-btn');
+  btn.textContent = btnTxt;
+  btn.className   = 'wk-btn ' + btnCls;
+}
+
+async function requestWakeLock() {
+  if (!('wakeLock' in navigator)) {
+    setWK('&#9888;', 'Manten la pantalla encendida',
+      'Tu navegador no soporta el bloqueo automatico. No apagues la pantalla.',
+      'Entendido', 'info');
+    document.getElementById('wk-btn').onclick = function() {
+      document.getElementById('wakelock-bar').style.display = 'none';
+    };
+    return;
+  }
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLockWanted = true;
+    setWK('&#128241;', 'Pantalla activa',
+      'Recibiras el aviso cuando sea tu turno. No cierres el navegador.',
+      'Activa ✓', 'active');
+    document.getElementById('wk-btn').onclick = toggleWakeLock;
+    wakeLock.addEventListener('release', function() {
+      if (wakeLockWanted)
+        document.addEventListener('visibilitychange', reacquireWakeLock, { once: true });
+    });
+  } catch(e) {
+    setWK('&#9888;', 'Pantalla activa no disponible',
+      'El ahorro de bateria bloquea esta funcion. Manten la pantalla encendida manualmente.',
+      'Entendido', 'info');
+    document.getElementById('wk-btn').onclick = function() {
+      document.getElementById('wakelock-bar').style.display = 'none';
+    };
+  }
+}
+
+async function reacquireWakeLock() {
+  if (wakeLockWanted && document.visibilityState === 'visible') {
+    try { wakeLock = await navigator.wakeLock.request('screen'); } catch(e) {}
+  }
+}
+
+function releaseWakeLock() {
+  wakeLockWanted = false;
+  if (wakeLock) { wakeLock.release(); wakeLock = null; }
+}
+
+function toggleWakeLock() {
+  if (wakeLock) {
+    releaseWakeLock();
+    setWK('&#128241;', 'Manten la pantalla encendida',
+      'Para garantizar el aviso cuando sea tu turno.',
+      'Activar', '');
+    document.getElementById('wk-btn').onclick = requestWakeLock;
+  } else {
+    requestWakeLock();
+  }
+}
+
+// ── VIBRATION ─────────────────────────────────────────────────────────────────
+var vibTimer = null;
+
+function startVibration(pattern) {
+  stopVibration();
+  if (!navigator.vibrate) return;
+  navigator.vibrate(pattern);
+  function next() {
+    vibTimer = setTimeout(function() {
+      if (vibTimer === null) return;
+      navigator.vibrate(pattern);
+      next();
+    }, 3000);
+  }
+  next();
+}
+
+function stopVibration() {
+  if (vibTimer) { clearTimeout(vibTimer); vibTimer = null; }
+  if (navigator.vibrate) navigator.vibrate(0);
+}
+
+// ── NOTIFICACIONES ────────────────────────────────────────────────────────────
+var swReg = null;
+
+function urlBase64ToUint8Array(b64) {
+  var pad = '='.repeat((4 - b64.length % 4) % 4);
+  var raw = window.atob((b64 + pad).replace(/-/g, '+').replace(/_/g, '/'));
+  var arr = new Uint8Array(raw.length);
+  for (var i = 0; i < raw.length; i++) arr[i] = raw.charCodeAt(i);
+  return arr;
+}
+
+function initServiceWorker() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  navigator.serviceWorker.register('/democarta/sw.js')
+    .then(function(reg) { swReg = reg; })
+    .catch(function(e) { console.log('SW:', e); });
+}
+
+function requestNotifPermission() {
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') { subscribePush(); return; }
+  if (Notification.permission === 'denied')  return;
+  Notification.requestPermission().then(function(r) {
+    if (r === 'granted') {
+      document.getElementById('notif-hint').classList.add('hidden');
+      subscribePush();
+      showNotif('Notificaciones activadas', 'Te avisaremos cuando sea tu turno.');
     }
   });
-  url += parts.join('&');
-  return fetch(url).then(function(r) { return r.json(); });
 }
-// Aliases for backwards compatibility
-function apiGet(action, params) {
-  var p = params || {};
-  p.action = action;
-  return api(p);
+
+function subscribePush() {
+  if (!swReg) return;
+  swReg.pushManager.getSubscription().then(function(existing) {
+    if (existing) { sendSubToServer(existing); return; }
+    swReg.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC),
+    }).then(sendSubToServer).catch(function(e) { console.log('Push sub:', e); });
+  });
 }
-function apiPost(data) { return api(data); }
+
+function sendSubToServer(sub) {
+  if (!myQueueId) return;
+  apiGet('save_player', { queueId: myQueueId, playerId: encodeURIComponent(JSON.stringify(sub)) });
+}
+
+// Push una sola vez; vibra cada 3s de forma continua
+function notifyLlamado() {
+  if (!vibTimer) startVibration([500, 150, 500, 150, 500]);
+  if (!_llamadoNotifSent) {
+    _llamadoNotifSent = true;
+    _llamadoSince = new Date();
+    showNotif('Es tu turno!', 'El camarero te espera. Dirigete a la entrada.');
+  }
+}
+function notifySiguiente() {
+  if (!vibTimer) startVibration([400, 150, 400]);
+  if (!_siguienteNotifSent) {
+    _siguienteNotifSent = true;
+    showNotif('Eres el siguiente!', 'Acercate a la puerta del local.');
+  }
+}
+
+function showNotif(title, body) {
+  if (!('Notification' in window) || Notification.permission !== 'granted') return;
+  try {
+    if (swReg) {
+      swReg.showNotification(title, {
+        body: body, tag: 'cola-turno', renotify: true,
+        requireInteraction: true, vibrate: [300, 100, 300],
+      });
+    } else {
+      var n = new Notification(title, { body: body, tag: 'cola-turno', renotify: true });
+      n.onclick = function() { window.focus(); n.close(); };
+      setTimeout(function() { n.close(); }, 12000);
+    }
+  } catch(e) {}
+}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 window.addEventListener('load', function() {
+  initServiceWorker();
   apiGet('config').then(function(cfg) {
     document.getElementById('rest-name').innerText   = cfg.nombre || 'Restaurante';
     document.getElementById('rest-name-2').innerText = cfg.nombre || 'Restaurante';
     if (cfg.eslogan) document.getElementById('rest-eslogan').innerText = cfg.eslogan;
     if (cfg.pedirCodigo) document.getElementById('campo-codigo').classList.remove('hidden');
     document.getElementById('view-loading').classList.add('hidden');
-
-    // Show notification hint if supported
-    if ('Notification' in window && Notification.permission === 'default') {
+    if ('Notification' in window && Notification.permission === 'default')
       document.getElementById('notif-hint').classList.remove('hidden');
-    }
 
     if (myQueueId) {
       mostrarStatus();
     } else {
       document.getElementById('view-join').classList.remove('hidden');
+      loadPreJoinStatus();
+      preJoinTimer = setInterval(loadPreJoinStatus, 15000);
       if (!cfg.colaAbierta) {
         document.getElementById('form-area').classList.add('hidden');
         document.getElementById('closed-area').classList.remove('hidden');
-        document.getElementById('closed-msg-txt').innerText = cfg.mensajeCierre || 'La lista de espera está cerrada.';
+        document.getElementById('closed-msg-txt').innerText = cfg.mensajeCierre || 'La lista de espera esta cerrada.';
       }
     }
   }).catch(function(err) {
     document.getElementById('view-loading').innerHTML =
-      '<p style="color:var(--rust);text-align:center">Error de conexión.<br><small>' + err.message + '</small></p>';
+      '<p style="color:var(--rust);text-align:center">Error de conexion.<br><small>' + err.message + '</small></p>';
   });
 });
+
+// ── BANNER PRE-JOIN ───────────────────────────────────────────────────────────
+function loadPreJoinStatus() {
+  apiGet('queue_status').then(function(data) {
+    var banner  = document.getElementById('pre-join-banner');
+    var numEl   = document.getElementById('pjb-num');
+    var titleEl = document.getElementById('pjb-title');
+    var subEl   = document.getElementById('pjb-sub');
+    if (!banner) return;
+    banner.style.display = 'flex';
+    var espera   = (data.stats && data.stats.enEspera)    || 0;
+    var llamados = (data.llamados && data.llamados.length) || 0;
+    var total    = espera + llamados;
+    var cfg      = data.config || {};
+    var mins     = (cfg.minPorGrupo || 5) * total;
+    if (!cfg.colaAbierta) {
+      numEl.innerHTML     = '&#128274;'; numEl.className = 'qsb-num ok';
+      titleEl.textContent = 'La cola esta cerrada';
+      subEl.textContent   = cfg.mensajeCierre || 'Vuelve mas tarde.';
+    } else if (total === 0) {
+      numEl.innerHTML     = '&#10003;'; numEl.className = 'qsb-num ok';
+      titleEl.textContent = 'No hay nadie esperando';
+      subEl.textContent   = 'Si te apuntas seras el primero.';
+    } else {
+      numEl.textContent   = total; numEl.className = 'qsb-num' + (total >= 5 ? ' busy' : '');
+      titleEl.textContent = total === 1 ? '1 grupo por delante' : total + ' grupos por delante';
+      var t = mins >= 60 ? Math.round(mins/60) + 'h aprox.' : 'unos ' + mins + ' min aprox.';
+      subEl.textContent   = 'Espera estimada: ' + t;
+    }
+  }).catch(function() {});
+}
 
 // ── REGISTRO ──────────────────────────────────────────────────────────────────
 function solicitarTurno() {
   var nombre   = document.getElementById('inp-nombre').value.trim();
   var personas = document.getElementById('inp-personas').value.trim();
   var codigo   = document.getElementById('inp-codigo').value.trim();
-
   if (!nombre)   { document.getElementById('form-error').innerText = 'Escribe tu nombre o apellido.'; return; }
-  if (!personas) { document.getElementById('form-error').innerText = 'Indica cuántas personas sois.'; return; }
-
+  if (!personas) { document.getElementById('form-error').innerText = 'Indica cuantas personas sois.'; return; }
   var btn = document.getElementById('btn-join');
-  btn.innerText = 'Verificando...';
-  btn.disabled  = true;
+  btn.innerText = 'Verificando...'; btn.disabled = true;
   document.getElementById('form-error').innerText = '';
-
-  // Request notification permission BEFORE joining (needs user gesture)
   requestNotifPermission();
-
-  apiPost({ action: 'join', nombre: nombre, personas: Number(personas), codigo: codigo, deviceId: deviceId })
+  apiGet('join', { nombre: nombre, personas: Number(personas), codigo: codigo, deviceId: deviceId })
     .then(function(res) {
       if (res.ok) {
-        myQueueId = res.queueId;
-        myTurno   = res.turno;
+        myQueueId = res.queueId; myTurno = res.turno;
         localStorage.setItem('cola_queueId', myQueueId);
         localStorage.setItem('cola_turno', myTurno);
         mostrarStatus();
@@ -281,22 +494,25 @@ function solicitarTurno() {
         mostrarStatus();
       } else {
         document.getElementById('form-error').innerText = res.error || 'Error al unirse.';
-        btn.innerText = 'Apuntarme a la lista';
-        btn.disabled  = false;
+        btn.innerText = 'Apuntarme a la lista'; btn.disabled = false;
       }
-    })
-    .catch(function(err) {
-      document.getElementById('form-error').innerText = 'Error de conexión.';
-      btn.innerText = 'Apuntarme a la lista';
-      btn.disabled  = false;
+    }).catch(function() {
+      document.getElementById('form-error').innerText = 'Error de conexion.';
+      btn.innerText = 'Apuntarme a la lista'; btn.disabled = false;
     });
 }
 
 // ── STATUS ────────────────────────────────────────────────────────────────────
 function mostrarStatus() {
+  if (preJoinTimer) { clearInterval(preJoinTimer); preJoinTimer = null; }
   document.getElementById('view-join').classList.add('hidden');
   document.getElementById('view-status').classList.remove('hidden');
   document.getElementById('stat-turno').innerText = myTurno || '?';
+  document.getElementById('wakelock-bar').style.display = 'flex';
+  requestWakeLock();
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'visible' && myQueueId) actualizarEstado();
+  });
   actualizarEstado();
   pollTimer = setInterval(actualizarEstado, 10000);
 }
@@ -308,59 +524,47 @@ function actualizarEstado() {
       'Actualizado ' + ahora.getHours() + ':' +
       String(ahora.getMinutes()).padStart(2,'0') + ':' +
       String(ahora.getSeconds()).padStart(2,'0');
-
     if (res.error) { finalizarTurno('error'); return; }
 
     if (res.estado === 'espera') {
-      var pd    = res.porDelante;
-      var badge = document.getElementById('status-badge');
-      badge.classList.remove('siguiente');
       document.getElementById('llamado-box').classList.add('hidden');
       document.getElementById('status-espera').style.display = '';
-
+      if (_llamadoNotifSent) { stopVibration(); _llamadoNotifSent = false; _llamadoSince = null; }
+      var pd = res.porDelante;
+      var badge = document.getElementById('status-badge');
       if (pd === 0) {
         badge.classList.add('siguiente');
-        document.getElementById('badge-num').style.display    = 'none';
+        document.getElementById('badge-num').style.display     = 'none';
         document.getElementById('badge-sig-txt').style.display = '';
-        document.getElementById('badge-label').innerText = 'Acércate a la puerta';
-        document.getElementById('stat-tiempo').innerText = '0';
-        if (navigator.vibrate) navigator.vibrate([400, 200, 400]);
-        if (!window._siguienteNotif) {
-          window._siguienteNotif = true;
-          showNotif('¡Eres el siguiente!', 'Acércate a la puerta del local, te atenderán enseguida.');
-        }
+        document.getElementById('badge-label').innerText       = 'Acercate a la puerta';
+        document.getElementById('stat-tiempo').innerText       = '0';
+        notifySiguiente();
       } else {
-        window._siguienteNotif = false;
         badge.classList.remove('siguiente');
         document.getElementById('badge-num').style.display     = '';
         document.getElementById('badge-sig-txt').style.display = 'none';
         document.getElementById('badge-num').innerText   = pd;
         document.getElementById('badge-label').innerText = pd === 1 ? 'grupo delante' : 'grupos delante';
         document.getElementById('stat-tiempo').innerText = res.tiempo;
+        if (_siguienteNotifSent) { stopVibration(); _siguienteNotifSent = false; }
       }
-
-      // Carta link
       if (res.urlCarta && !document.getElementById('btn-carta-wrap').innerHTML) {
         enlaceCarta = res.urlCarta;
         document.getElementById('btn-carta-wrap').innerHTML =
-          '<button class="carta-btn" onclick="window.open(\'' + enlaceCarta + '\',\'_blank\')">🍽️ Ver la carta mientras esperas</button>';
+          '<button class="carta-btn" onclick="window.open(\'' + enlaceCarta + '\',\'_blank\')">&#127869; Ver la carta mientras esperas</button>';
       }
-
-      // Progress bar
       var pct = res.tiempo > 0 ? Math.min(100, (1 - res.tiempo / 30) * 100) : 100;
       document.getElementById('progress-fill').style.width = pct + '%';
 
     } else if (res.estado === 'llamado') {
       document.getElementById('status-espera').style.display = 'none';
       document.getElementById('llamado-box').classList.remove('hidden');
-      if (!window._llamadoSince) {
-        window._llamadoSince = new Date();
-        if (navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 500]);
-        showNotif('¡Es tu turno! 📣', 'El camarero te está esperando. Dirígete a la entrada.');
+      notifyLlamado();
+      if (_llamadoSince) {
+        var mins = Math.floor((new Date() - _llamadoSince) / 60000);
+        document.getElementById('llamado-timer').innerText =
+          mins <= 0 ? 'Ahora mismo' : 'Hace ' + mins + ' minuto' + (mins > 1 ? 's' : '');
       }
-      var mins = Math.floor((new Date() - window._llamadoSince) / 60000);
-      document.getElementById('llamado-timer').innerText =
-        mins <= 0 ? 'Ahora mismo' : 'Hace ' + mins + ' minuto' + (mins > 1 ? 's' : '');
 
     } else if (res.estado === 'sentado') {
       finalizarTurno('sentado');
@@ -368,70 +572,47 @@ function actualizarEstado() {
       finalizarTurno('cancelado');
     }
   }).catch(function() {
-    document.getElementById('refresh-txt').innerText = 'Sin conexión, reintentando...';
+    document.getElementById('refresh-txt').innerText = 'Sin conexion, reintentando...';
   });
 }
 
-// ── DONE ──────────────────────────────────────────────────────────────────────
+// ── FIN ───────────────────────────────────────────────────────────────────────
 function finalizarTurno(tipo) {
   clearInterval(pollTimer);
+  stopVibration();
+  releaseWakeLock();
   localStorage.removeItem('cola_queueId');
   localStorage.removeItem('cola_turno');
+  var llamadoRef = _llamadoSince;
+  _llamadoSince = null; _llamadoNotifSent = false; _siguienteNotifSent = false;
   document.getElementById('view-status').classList.add('hidden');
   document.getElementById('view-done').classList.remove('hidden');
-
   var icon  = document.getElementById('done-icon');
   var title = document.getElementById('done-title');
   var msg   = document.getElementById('done-msg');
-
   if (tipo === 'sentado') {
-    icon.innerText  = '🎉';
-    title.innerText = '¡Mesa lista!';
-    msg.innerText   = 'Tu mesa ya está preparada. ¡Pasa dentro y buen provecho!';
+    icon.innerHTML  = '&#127881;';
+    title.innerText = 'Mesa lista!';
+    msg.innerText   = 'Tu mesa ya esta preparada. Pasa dentro y buen provecho!';
   } else if (tipo === 'cancelado') {
-    icon.innerText  = '❌';
-    if (window._llamadoSince) {
-      title.innerText = '¡Lo sentimos!';
-      var m = Math.floor((new Date() - window._llamadoSince) / 60000);
-      msg.innerText = 'Esperamos ' + (m > 0 ? m + ' minuto' + (m > 1 ? 's' : '') : 'un momento') +
-        ' y no te encontramos. Tu turno ha pasado al siguiente. ¡Vuelve cuando quieras!';
+    icon.innerHTML = '&#10060;';
+    if (llamadoRef) {
+      var m = Math.floor((new Date() - llamadoRef) / 60000);
+      title.innerText = 'Lo sentimos!';
+      msg.innerText   = 'Esperamos ' + (m > 0 ? m + ' minuto' + (m > 1 ? 's' : '') : 'un momento') +
+        ' y no te encontramos. Tu turno ha pasado al siguiente. Vuelve cuando quieras!';
     } else {
       title.innerText = 'Turno cancelado';
-      msg.innerText   = 'Tu turno ha sido cancelado. Acércate a la barra si crees que es un error.';
+      msg.innerText   = 'Tu turno ha sido cancelado. Acercate a la barra si crees que es un error.';
     }
   } else {
-    icon.innerText  = '⚠️';
+    icon.innerHTML  = '&#9888;&#65039;';
     title.innerText = 'Turno no encontrado';
-    msg.innerText   = 'No hemos podido localizar tu turno. Acércate a la barra.';
+    msg.innerText   = 'No hemos podido localizar tu turno. Acercate a la barra.';
   }
 }
 
 function reiniciar() { window.location.reload(); }
-
-// ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
-function requestNotifPermission() {
-  if (!('Notification' in window) || Notification.permission !== 'default') return;
-  Notification.requestPermission().then(function(result) {
-    if (result === 'granted') {
-      document.getElementById('notif-hint').classList.add('hidden');
-      showNotif('Notificaciones activadas ✅', 'Te avisaremos cuando sea tu turno.');
-    }
-  });
-}
-
-function showNotif(title, body) {
-  if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  try {
-    var n = new Notification(title, {
-      body:    body,
-      icon:    'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',
-      tag:     'cola-turno',
-      renotify: true,
-    });
-    n.onclick = function() { window.focus(); n.close(); };
-    setTimeout(function() { n.close(); }, 12000);
-  } catch(e) {}
-}
 </script>
 </body>
 </html>

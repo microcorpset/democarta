@@ -8,7 +8,7 @@
 
 <!-- ── CONFIGURACIÓN ── Pon aquí la URL de tu Apps Script desplegado ── -->
 <script>
-  var API_URL = 'https://script.google.com/macros/s/AKfycbwAEmiqAHiNPiyToBFqu7vaXQg7Xe4dnnt42tUnNbJHEhZjshQ6NrPY5CsBUOYVTy-F/exec';
+  var API_URL = 'https://script.google.com/macros/s/AKfycbzJ-Yem-qyeu-xygxdAEsskh1IW_55i5R95ek-HUWBVnF3jlPz35G5B5D79yxbnxafd/exec';
   var VAPID_PUBLIC = 'BKxFmUQ0hX8Za1ZsIhqrAr4pBDD9uXa7IBd4PKdzJ7EUA9TSc281F506Iu2eumqpVSyA5-ZYwNG1FrikX8M9IkY';
 </script>
 
@@ -29,6 +29,35 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
 .page-sub{font-size:0.85rem;color:#6A6560;text-align:center;line-height:1.6;margin-top:0.4rem}
 .hidden{display:none!important}
 .card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:1.8rem 1.5rem}
+
+
+/* ── PRE-JOIN STATUS BANNER ── */
+.queue-status-banner{
+  background:rgba(255,255,255,0.04);
+  border:1px solid var(--border);
+  border-radius:10px;
+  padding:1rem 1.2rem;
+  margin-bottom:1.2rem;
+  display:flex;
+  align-items:center;
+  gap:1rem;
+}
+.qsb-num{
+  font-family:var(--ff);
+  font-size:2.8rem;
+  font-weight:700;
+  color:var(--gold);
+  line-height:1;
+  min-width:48px;
+  text-align:center;
+  flex-shrink:0;
+}
+.qsb-num.empty{color:var(--sage);font-size:2rem}
+.qsb-info{flex:1}
+.qsb-title{font-size:0.9rem;font-weight:500;color:var(--cream);margin-bottom:0.15rem}
+.qsb-sub{font-size:0.75rem;color:#6A6560;line-height:1.5}
+.qsb-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2s ease-in-out infinite;flex-shrink:0}
+.qsb-dot.busy{background:var(--rust)}
 
 /* LOADING */
 #view-loading{text-align:center;padding:3rem 0}
@@ -108,6 +137,16 @@ body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-he
     <div class="page-title">Lista de espera</div>
     <div class="page-sub">Apúntate y te avisamos cuando sea tu turno</div>
     <div class="gold-line"></div>
+
+    <!-- Live queue status — shown before joining -->
+    <div class="queue-status-banner" id="pre-join-banner" style="display:none">
+      <div class="qsb-num" id="pjb-num">–</div>
+      <div class="qsb-info">
+        <div class="qsb-title" id="pjb-title">Consultando la cola...</div>
+        <div class="qsb-sub" id="pjb-sub"></div>
+      </div>
+      <div class="qsb-dot" id="pjb-dot"></div>
+    </div>
 
     <div id="notif-hint" class="notif-hint hidden">
       <strong>Activa las notificaciones</strong>
@@ -240,6 +279,9 @@ window.addEventListener('load', function() {
       mostrarStatus();
     } else {
       document.getElementById('view-join').classList.remove('hidden');
+      // Load live queue status before user joins
+      loadPreJoinStatus();
+      preJoinTimer = setInterval(loadPreJoinStatus, 15000);
       if (!cfg.colaAbierta) {
         document.getElementById('form-area').classList.add('hidden');
         document.getElementById('closed-area').classList.remove('hidden');
@@ -298,6 +340,7 @@ function solicitarTurno() {
 
 // ── STATUS ────────────────────────────────────────────────────────────────────
 function mostrarStatus() {
+  if (preJoinTimer) { clearInterval(preJoinTimer); preJoinTimer = null; }
   document.getElementById('view-join').classList.add('hidden');
   document.getElementById('view-status').classList.remove('hidden');
   document.getElementById('stat-turno').innerText = myTurno || '?';
@@ -411,6 +454,58 @@ function finalizarTurno(tipo) {
 }
 
 function reiniciar() { window.location.reload(); }
+
+// ── PRE-JOIN QUEUE STATUS ─────────────────────────────────────────────────────
+var preJoinTimer = null;
+
+function loadPreJoinStatus() {
+  apiGet('queue_status').then(function(data) {
+    var banner  = document.getElementById('pre-join-banner');
+    var numEl   = document.getElementById('pjb-num');
+    var titleEl = document.getElementById('pjb-title');
+    var subEl   = document.getElementById('pjb-sub');
+    var dotEl   = document.getElementById('pjb-dot');
+    if (!banner) return;
+
+    banner.style.display = 'flex';
+
+    var espera  = (data.stats && data.stats.enEspera) || 0;
+    var llamados = (data.llamados && data.llamados.length) || 0;
+    var total   = espera + llamados;
+    var cfg     = data.config || {};
+    var mins    = (cfg.minPorGrupo || 5) * total;
+
+    if (!data.config || !cfg.colaAbierta) {
+      numEl.textContent   = String.fromCharCode(0x1F512);
+      numEl.className     = 'qsb-num empty';
+      titleEl.textContent = 'La cola está cerrada';
+      subEl.textContent   = cfg.mensajeCierre || 'Vuelve más tarde.';
+      dotEl.className     = 'qsb-dot busy';
+    } else if (total === 0) {
+      numEl.textContent   = String.fromCharCode(0x2713);
+      numEl.className     = 'qsb-num empty';
+      titleEl.textContent = 'No hay nadie esperando';
+      subEl.textContent   = 'Si te apuntas serás el primero.';
+      dotEl.className     = 'qsb-dot';
+    } else {
+      numEl.textContent   = total;
+      numEl.className     = 'qsb-num' + (total >= 5 ? ' busy' : '');
+      if (total === 1) {
+        titleEl.textContent = '1 grupo por delante';
+      } else {
+        titleEl.textContent = total + ' grupos por delante';
+      }
+      var timeStr = mins >= 60
+        ? Math.round(mins / 60) + 'h aprox.'
+        : 'unos ' + mins + ' min aprox.';
+      subEl.textContent = 'Tiempo estimado de espera: ' + timeStr;
+      dotEl.className   = 'qsb-dot' + (total >= 5 ? ' busy' : '');
+    }
+  }).catch(function() {
+    var banner = document.getElementById('pre-join-banner');
+    if (banner) banner.style.display = 'none';
+  });
+}
 
 // ── WEB PUSH NOTIFICATIONS (Service Worker) ──────────────────────────────────
 // Works on Android even with screen off.

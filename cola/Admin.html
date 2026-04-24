@@ -294,20 +294,20 @@ function renderConfig() {
 function toggleCola() {
   var nuevo = configData.colaAbierta ? 'NO' : 'SI';
   document.getElementById('btn-cola').innerText = '...';
-  apiPost({ action: 'config_set', key: 'cola_abierta', value: nuevo }).then(cargarTodo);
+  apiGet('config_set', { key: 'cola_abierta', value: nuevo }).then(cargarTodo);
 }
 function toggleCodigo() {
   var nuevo = configData.pedirCodigo ? 'NO' : 'SI';
   document.getElementById('btn-codigo').innerText = '...';
-  apiPost({ action: 'config_set', key: 'pedir_codigo', value: nuevo }).then(cargarTodo);
+  apiGet('config_set', { key: 'pedir_codigo', value: nuevo }).then(cargarTodo);
 }
 function guardarCodigo() {
   var val = document.getElementById('inp-codigo').value.trim();
-  if (val) apiPost({ action: 'config_set', key: 'codigo_actual', value: val }).then(cargarTodo);
+  if (val) apiGet('config_set', { key: 'codigo_actual', value: val }).then(cargarTodo);
 }
 function guardarMinutos() {
   var val = Number(document.getElementById('inp-minutos').value);
-  if (val > 0) apiPost({ action: 'config_set', key: 'min_por_grupo', value: val }).then(cargarTodo);
+  if (val > 0) apiGet('config_set', { key: 'min_por_grupo', value: val }).then(cargarTodo);
 }
 
 // ── STATS ─────────────────────────────────────────────────────────────────────
@@ -397,7 +397,9 @@ function renderHistorial(historial) {
 function actualizarEstado(id, accion) {
   var card = document.getElementById('card-' + id);
   if (card) card.classList.add('fading');
-  apiPost({ action: accion, id: id }).then(function(res) {
+  // Map UI action names to API action names
+  var apiAction = accion === 'sentado' ? 'atender' : accion;
+  apiGet(apiAction, { id: id }).then(function(res) {
     if (res.ok) cargarTodo();
     else { if (card) card.classList.remove('fading'); alert(res.error || 'Error'); }
   });
@@ -406,7 +408,7 @@ function actualizarEstado(id, accion) {
 function llamarSiguiente() {
   var btn = document.getElementById('btn-llamar');
   btn.disabled = true; btn.innerText = 'Llamando...';
-  apiPost({ action: 'llamar' }).then(function(res) {
+  apiGet('llamar', {}).then(function(res) {
     if (res.ok) {
       btn.innerText = '✓ Llamado: ' + res.nombre;
       setTimeout(function() { btn.innerText = '📣 Llamar siguiente'; cargarTodo(); }, 2000);
@@ -419,7 +421,7 @@ function llamarSiguiente() {
 
 function resetearCola() {
   showModal('🗑', 'Vaciar la cola', '¿Seguro que quieres eliminar todos los turnos de hoy?', 'Sí, vaciar', function() {
-    apiPost({ action: 'reset' }).then(function(res) { if (res.ok) cargarTodo(); });
+    apiGet('reset', {}).then(function(res) { if (res.ok) cargarTodo(); });
   });
 }
 

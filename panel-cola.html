@@ -1,1 +1,46 @@
-<script>document.write(decodeURIComponent(escape(atob("PCFET0NUWVBFIGh0bWw+DQo8aHRtbCBsYW5nPSJlcyI+DQo8aGVhZD4NCiAgICA8bWV0YSBjaGFyc2V0PSJVVEYtOCI+DQogICAgPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAsIG1heGltdW0tc2NhbGU9MS4wLCB1c2VyLXNjYWxhYmxlPW5vIj4NCiAgICA8dGl0bGU+UGFuZWwgZGUgY29udHJvbCAtIExhIFRhYmVybmEgZGVsIFN1cjwvdGl0bGU+DQogICAgPHN0eWxlPg0KICAgICAgICAvKiBFbGltaW5hbW9zIGN1YWxxdWllciBtYXJnZW4gcG9yIGRlZmVjdG8gKi8NCiAgICAgICAgYm9keSwgaHRtbCB7DQogICAgICAgICAgICBtYXJnaW46IDA7DQogICAgICAgICAgICBwYWRkaW5nOiAwOw0KICAgICAgICAgICAgaGVpZ2h0OiAxMDAlOw0KICAgICAgICAgICAgd2lkdGg6IDEwMCU7DQogICAgICAgICAgICBvdmVyZmxvdzogaGlkZGVuOyAvKiBFdml0YSBxdWUgZWwgdXN1YXJpbyBoYWdhIHNjcm9sbCBmdWVyYSBkZWwgaWZyYW1lICovDQogICAgICAgICAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZmZmZmZmOw0KICAgICAgICB9DQogICAgICAgIA0KICAgICAgICAvKiBGb3J6YW1vcyBlbCBpZnJhbWUgYSBjdWJyaXIgdG9kYSBsYSBwYW50YWxsYSAqLw0KICAgICAgICAjYXBwLWZyYW1lIHsNCiAgICAgICAgICAgIHBvc2l0aW9uOiBhYnNvbHV0ZTsNCiAgICAgICAgICAgIHRvcDogMDsNCiAgICAgICAgICAgIGxlZnQ6IDA7DQogICAgICAgICAgICB3aWR0aDogMTAwJTsNCiAgICAgICAgICAgIGhlaWdodDogMTAwJTsNCiAgICAgICAgICAgIGJvcmRlcjogbm9uZTsNCiAgICAgICAgICAgIGRpc3BsYXk6IGJsb2NrOw0KICAgICAgICB9DQogICAgPC9zdHlsZT4NCjwvaGVhZD4NCjxib2R5Pg0KDQogICAgPGlmcmFtZSANCiAgICAgICAgaWQ9ImFwcC1mcmFtZSIgDQogICAgICAgIHNyYz0iaHR0cHM6Ly9zY3JpcHQuZ29vZ2xlLmNvbS9tYWNyb3Mvcy9BS2Z5Y2J6V0RHX0pOa01GaWVpaWtjekFGS3ZiYXFKVkozdnVmY3hmTFpqajc0ODhBRFdnYWtFT1QwRWdLWnF3YlZPM1hSejBIUS9leGVjP2FkbWluPXRhYmVybmEyNCIiIA0KICAgICAgICBhbGxvdz0iY2FtZXJhOyBtaWNyb3Bob25lOyBnZW9sb2NhdGlvbjsgY2xpcGJvYXJkLXdyaXRlIg0KICAgICAgICBhbGxvd2Z1bGxzY3JlZW4+DQogICAgPC9pZnJhbWU+DQoNCiAgICA8c2NyaXB0Pg0KICAgICAgICAvLyBQZXF1ZcOxbyBzY3JpcHQgcGFyYSBhc2VndXJhciBxdWUgZWwgaWZyYW1lIHJlY2liYSBlbCBmb2NvDQogICAgICAgIHdpbmRvdy5vbmxvYWQgPSBmdW5jdGlvbigpIHsNCiAgICAgICAgICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdhcHAtZnJhbWUnKS5mb2N1cygpOw0KICAgICAgICB9Ow0KICAgIDwvc2NyaXB0Pg0KPC9ib2R5Pg0KPC9odG1sPg=="))));</script>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Panel de control - La Taberna del Sur</title>
+    <style>
+        /* Eliminamos cualquier margen por defecto */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden; /* Evita que el usuario haga scroll fuera del iframe */
+            background-color: #ffffff;
+        }
+        
+        /* Forzamos el iframe a cubrir toda la pantalla */
+        #app-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <iframe 
+        id="app-frame" 
+        src="https://script.google.com/macros/s/AKfycbzWDG_JNkMFieiikczAFKvbaqJVJ3vufcxfLZjj7488ADWgakEOT0EgKZqwbVO3XRz0HQ/exec?admin=taberna24"" 
+        allow="camera; microphone; geolocation; clipboard-write"
+        allowfullscreen>
+    </iframe>
+
+    <script>
+        // Pequeño script para asegurar que el iframe reciba el foco
+        window.onload = function() {
+            document.getElementById('app-frame').focus();
+        };
+    </script>
+</body>
+</html>

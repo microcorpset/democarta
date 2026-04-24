@@ -3,430 +3,449 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Lista de Espera</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Panel de Cola — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
 <!-- ── CONFIGURACIÓN ── Pon aquí la URL de tu Apps Script desplegado ── -->
 <script>
-  var API_URL = 'https://script.google.com/macros/s/AKfycbzkLnd659kzvDciKeBJFFz7Cn_Liwx4XVy5zdbIb7dRTvv75jRKvbefX6524IiU732e/exec?admin=taberna24';
+  var API_URL = 'https://script.google.com/macros/s/AKfycbzkVLctJefTcUFhLwiJt6YvmuFS5g0leq2L92rJspU9T_Ku5cqafD0vcIiAeDgnkPyZ/exec?admin=taberna24';
 </script>
 
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#C9A84C;--rust:#C45C26;--sage:#5A7A50;
-  --charcoal:#1C1C1A;--cream:#F5F0E8;--border:#3A3830;
-  --ff:'Cormorant Garamond',Georgia,serif;
-  --ffb:'DM Sans',sans-serif;
+  --gold:#C9A84C;--rust:#C45C26;--sage:#5A7A50;--sage2:#3D5437;
+  --charcoal:#1C1C1A;--cream:#F5F0E8;--ink:#0D0D0B;
+  --bg:#F0EDE4;--surface:#FFFFFF;--border:#E0D8C8;
+  --ff:'Cormorant Garamond',Georgia,serif;--ffb:'DM Sans',sans-serif;
 }
-body{font-family:var(--ffb);background:var(--charcoal);color:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1rem}
-.container{width:100%;max-width:400px}
-.logo-name{font-family:var(--ff);color:var(--gold);font-size:1.6rem;font-weight:700;text-align:center;letter-spacing:0.04em;line-height:1.1}
-.logo-sub{font-size:0.72rem;color:#5A5450;letter-spacing:0.18em;text-transform:uppercase;text-align:center;margin-top:0.3rem}
-.gold-line{width:48px;height:1px;background:linear-gradient(to right,transparent,var(--gold),transparent);margin:1.2rem auto}
-.page-title{font-family:var(--ff);font-size:2rem;color:#fff;text-align:center;line-height:1.15}
-.page-sub{font-size:0.85rem;color:#6A6560;text-align:center;line-height:1.6;margin-top:0.4rem}
-.hidden{display:none!important}
-.card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:12px;padding:1.8rem 1.5rem}
+body{font-family:var(--ffb);background:var(--bg);color:var(--charcoal);min-height:100vh}
 
-/* LOADING */
-#view-loading{text-align:center;padding:3rem 0}
-.spin{display:inline-block;width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin 0.9s linear infinite;margin-bottom:1rem}
-@keyframes spin{to{transform:rotate(360deg)}}
-.spin-label{font-size:0.85rem;color:#5A5450}
-
-/* FORM */
-.notif-hint{background:rgba(90,122,80,0.12);border:1px solid rgba(90,122,80,0.3);border-radius:8px;padding:0.7rem 0.9rem;margin-bottom:1rem;font-size:0.78rem;color:#5A7A50;line-height:1.5}
-.notif-hint strong{display:block;margin-bottom:0.2rem;font-size:0.82rem}
-.field{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1.1rem}
-.field label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#6A6560}
-.field input{background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:8px;padding:0.75rem 1rem;color:var(--cream);font-family:var(--ffb);font-size:0.95rem;outline:none;transition:border-color 0.2s}
+/* LOGIN */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:2rem}
+.login-box{background:white;border-radius:16px;padding:2.5rem;width:100%;max-width:340px;box-shadow:0 4px 24px rgba(28,28,26,0.1)}
+.login-title{font-family:var(--ff);font-size:1.8rem;color:var(--ink);margin-bottom:0.3rem}
+.login-sub{font-size:0.82rem;color:#9A9080;margin-bottom:1.5rem}
+.field{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1rem}
+.field label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:#9A9080}
+.field input{border:1px solid var(--border);border-radius:8px;padding:0.7rem 0.9rem;font-family:var(--ffb);font-size:0.95rem;outline:none}
 .field input:focus{border-color:var(--gold)}
-.field input::placeholder{color:#3A3830}
-.field-codigo{border:1px solid rgba(201,168,76,0.4);border-radius:8px;padding:0.9rem 1rem;background:rgba(201,168,76,0.05);margin-bottom:1.1rem}
-.field-codigo label{font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:0.35rem}
-.field-codigo p{font-size:0.75rem;color:#6A6560;margin-bottom:0.5rem}
-.field-codigo input{background:rgba(255,255,255,0.05);border:1px solid rgba(201,168,76,0.3);border-radius:6px;padding:0.65rem 0.9rem;width:100%;color:var(--cream);font-family:var(--ffb);font-size:0.95rem;outline:none}
-.field-codigo input:focus{border-color:var(--gold)}
-.btn{width:100%;background:var(--gold);color:var(--charcoal);border:none;border-radius:8px;padding:1rem;font-family:var(--ffb);font-size:1rem;font-weight:500;cursor:pointer;transition:background 0.2s}
-.btn:hover{background:#E8D5A3}
-.btn:disabled{opacity:0.5;pointer-events:none}
-.err-msg{font-size:0.8rem;color:var(--rust);text-align:center;min-height:1.2rem;margin-top:0.4rem}
-.closed-msg{text-align:center;padding:1.5rem 0}
-.closed-msg .icon{font-size:2.5rem;margin-bottom:0.8rem}
-.closed-msg p{color:var(--rust);font-weight:500;font-size:1rem;line-height:1.6}
+.btn{background:var(--charcoal);color:var(--cream);border:none;border-radius:8px;padding:0.85rem;width:100%;font-family:var(--ffb);font-size:0.95rem;cursor:pointer;transition:background 0.2s}
+.btn:hover{background:#3A3830}
+.btn.gold{background:var(--gold);color:var(--charcoal)}
+.btn.gold:hover{background:#D4B060}
+.btn.danger{background:none;border:1px solid rgba(196,92,38,0.3);color:var(--rust)}
+.btn.danger:hover{background:var(--rust);color:white}
+.err-txt{font-size:0.8rem;color:var(--rust);margin-top:0.5rem;min-height:1rem}
 
-/* STATUS */
-.status-badge{width:160px;height:160px;border-radius:50%;border:2px solid var(--gold);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 1.2rem;padding:0.5rem;text-align:center;transition:border-color 0.4s,box-shadow 0.4s}
-.status-badge.siguiente{border-color:#5A7A50;box-shadow:0 0 0 8px rgba(90,122,80,0.12);animation:pulse 1.8s ease-in-out infinite}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-.badge-num{font-family:var(--ff);font-size:3.6rem;font-weight:700;color:var(--gold);line-height:1}
-.badge-sig-txt{font-family:var(--ff);font-size:1.15rem;color:#5A7A50;font-style:italic;line-height:1.2;margin-bottom:0.2rem}
-.badge-label{font-size:0.62rem;color:#5A5450;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.15rem;line-height:1.3}
-.status-cards{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;margin-bottom:1.2rem}
-.stat-card{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:8px;padding:0.9rem;text-align:center}
-.stat-val{font-family:var(--ff);font-size:1.6rem;font-weight:700;color:var(--cream);line-height:1}
-.stat-lbl{font-size:0.7rem;color:#5A5450;margin-top:0.2rem;letter-spacing:0.08em;text-transform:uppercase}
-.progress-bar{background:var(--border);border-radius:4px;height:4px;margin-bottom:1.2rem;overflow:hidden}
-.progress-fill{height:100%;background:linear-gradient(to right,var(--gold),var(--rust));border-radius:4px;transition:width 0.5s ease}
-.refresh-row{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:0.8rem}
-.refresh-dot{width:6px;height:6px;border-radius:50%;background:var(--sage);animation:blink 2s ease-in-out infinite}
+/* PANEL */
+.panel{display:none;max-width:800px;margin:0 auto;padding:1.5rem}
+.panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:0.8rem}
+.panel-title{font-family:var(--ff);font-size:1.8rem;color:var(--ink)}
+.header-actions{display:flex;gap:0.6rem;align-items:center}
+.refresh-indicator{display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;color:#4A4440}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--sage);animation:blink 2s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:0.3}50%{opacity:1}}
-.refresh-txt{font-size:0.72rem;color:#4A4440}
-.carta-btn{margin-top:0.8rem;display:flex;align-items:center;justify-content:center;gap:0.5rem;text-decoration:none;color:var(--gold);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:0.75rem;font-size:0.88rem;transition:background 0.2s;cursor:pointer;background:none;width:100%;font-family:var(--ffb)}
-.carta-btn:hover{background:rgba(201,168,76,0.08)}
 
-/* LLAMADO */
-.llamado-box{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.4);border-radius:10px;padding:1.2rem;text-align:center;margin-bottom:1rem}
-.llamado-icon{font-size:2.5rem;margin-bottom:0.5rem}
-.llamado-title{font-family:var(--ff);font-size:1.5rem;color:var(--gold);margin-bottom:0.3rem}
-.llamado-sub{font-size:0.82rem;color:#9A9080;line-height:1.5}
-.llamado-timer{font-family:var(--ff);font-size:1rem;color:var(--rust);margin-top:0.6rem;font-style:italic}
+/* CONFIG */
+.config-panel{background:var(--charcoal);border-radius:12px;padding:1.2rem 1.4rem;margin-bottom:1.4rem;color:var(--cream)}
+.config-title{font-family:var(--ff);font-size:1.2rem;color:var(--gold);margin-bottom:1rem;padding-bottom:0.6rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.config-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0.8rem}
+.config-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,0.05);border-radius:8px;padding:0.7rem 0.9rem}
+.config-label{font-size:0.82rem;color:#9A9080}
+.toggle{padding:0.4rem 0.9rem;border:none;border-radius:6px;font-family:var(--ffb);font-size:0.8rem;font-weight:500;cursor:pointer;min-width:80px;transition:all 0.2s}
+.toggle-on{background:var(--sage);color:#fff}
+.toggle-off{background:rgba(196,92,38,0.8);color:#fff}
+.config-inline{display:flex;align-items:center;gap:0.5rem}
+.config-inline input{background:rgba(255,255,255,0.08);border:1px solid #3A3830;border-radius:6px;padding:0.4rem 0.6rem;color:var(--cream);font-family:var(--ffb);font-size:0.85rem;width:80px;outline:none;text-align:center}
+.config-inline input:focus{border-color:var(--gold)}
+.btn-save{background:var(--gold);color:var(--charcoal);border:none;border-radius:6px;padding:0.4rem 0.7rem;font-family:var(--ffb);font-size:0.78rem;font-weight:500;cursor:pointer}
 
-/* DONE */
-.done-icon{font-size:3.5rem;text-align:center;margin-bottom:1rem}
-.done-title{font-family:var(--ff);font-size:2rem;color:#fff;text-align:center;margin-bottom:0.5rem}
-.done-msg{color:#6A6560;text-align:center;line-height:1.6;margin-bottom:1.5rem}
-.footer{margin-top:2rem;font-size:0.72rem;color:#2A2A28;text-align:center;letter-spacing:0.06em}
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0.7rem;margin-bottom:1.2rem}
+.stat{background:var(--surface);border-radius:10px;padding:0.9rem;text-align:center;border:1px solid var(--border)}
+.stat-num{font-family:var(--ff);font-size:2rem;font-weight:700;color:var(--charcoal);line-height:1}
+.stat-label{font-size:0.7rem;color:#9A9080;margin-top:0.2rem;text-transform:uppercase;letter-spacing:0.08em}
+
+/* ACTIONS */
+.actions{display:flex;gap:0.7rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.btn-llamar{background:var(--gold);color:var(--charcoal);border:none;border-radius:8px;padding:0.8rem 1.4rem;font-family:var(--ffb);font-size:0.9rem;font-weight:500;cursor:pointer;flex:1;min-width:160px;transition:background 0.2s}
+.btn-llamar:hover{background:#D4B060}
+.btn-llamar:disabled{opacity:0.4;pointer-events:none}
+.btn-reset{background:none;border:1px solid rgba(196,92,38,0.4);color:var(--rust);border-radius:8px;padding:0.8rem 1rem;font-family:var(--ffb);font-size:0.82rem;cursor:pointer;transition:all 0.2s;white-space:nowrap}
+.btn-reset:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+
+/* TABS */
+.queue-tabs{display:flex;gap:0;margin-bottom:1.2rem;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:3px}
+.queue-tab{flex:1;padding:0.55rem 0.5rem;border:none;background:none;font-family:var(--ffb);font-size:0.8rem;font-weight:500;color:#9A9080;cursor:pointer;border-radius:6px;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:0.35rem}
+.queue-tab.active{background:var(--surface);color:var(--charcoal);box-shadow:0 1px 4px rgba(0,0,0,0.08)}
+.tab-count{background:var(--border);color:var(--charcoal);border-radius:10px;padding:0.05rem 0.45rem;font-size:0.7rem;font-weight:600;min-width:18px;text-align:center}
+.queue-tab.active .tab-count{background:var(--charcoal);color:#fff}
+.tab-count.urgent{background:rgba(196,92,38,0.2);color:var(--rust)}
+.queue-tab.active .tab-count.urgent{background:var(--rust);color:#fff}
+
+/* LIST */
+.list-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.7rem}
+.list-title{font-size:0.72rem;color:#9A9080;letter-spacing:0.12em;text-transform:uppercase}
+.timestamp{font-size:0.7rem;color:#B0A890}
+.turno-card{background:var(--surface);border-radius:10px;padding:0.9rem 1.1rem;margin-bottom:0.6rem;display:flex;align-items:center;gap:0.9rem;border:1px solid var(--border);transition:opacity 0.2s,transform 0.2s}
+.turno-card.llamado{border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.05)}
+.turno-card.llamado-urgente{border-color:rgba(196,92,38,0.6);background:rgba(196,92,38,0.05)}
+.turno-card.fading{opacity:0.4;transform:scale(0.98)}
+.turno-num{font-family:var(--ff);font-size:1.8rem;font-weight:700;color:var(--charcoal);min-width:38px;text-align:center;line-height:1}
+.turno-info{flex:1;min-width:0}
+.turno-nombre{font-size:0.95rem;font-weight:500;color:var(--charcoal);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.turno-meta{font-size:0.75rem;color:#9A9080;margin-top:0.15rem;display:flex;gap:0.6rem;flex-wrap:wrap}
+.wait-badge{font-size:0.72rem;font-weight:500;padding:0.15rem 0.5rem;border-radius:10px;white-space:nowrap}
+.wait-ok{background:rgba(90,122,80,0.12);color:var(--sage)}
+.wait-warn{background:rgba(196,92,38,0.12);color:var(--rust)}
+.llamado-info{display:flex;align-items:center;gap:0.4rem;font-size:0.72rem;font-weight:500;padding:0.2rem 0.55rem;border-radius:10px;white-space:nowrap}
+.llamado-info.reciente{background:rgba(201,168,76,0.15);color:#8B6A20}
+.llamado-info.urgente{background:rgba(196,92,38,0.15);color:var(--rust)}
+.turno-btns{display:flex;gap:0.45rem;flex-shrink:0}
+.btn-sentar{background:var(--sage);color:#fff;border:none;border-radius:6px;padding:0.55rem 0.9rem;font-family:var(--ffb);font-size:0.82rem;font-weight:500;cursor:pointer;transition:background 0.2s;white-space:nowrap}
+.btn-sentar:hover{background:var(--sage2)}
+.btn-cancelar{background:none;border:1px solid rgba(196,92,38,0.35);color:var(--rust);border-radius:6px;padding:0.55rem 0.6rem;font-family:var(--ffb);font-size:0.82rem;cursor:pointer;transition:all 0.2s}
+.btn-cancelar:hover{background:var(--rust);color:#fff;border-color:var(--rust)}
+.llamados-section{margin-bottom:1.2rem}
+.llamados-label{font-size:0.68rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--rust);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.4rem}
+.llamados-label::after{content:'';flex:1;height:1px;background:rgba(196,92,38,0.2)}
+.empty-state{text-align:center;padding:3rem 1rem;color:#B0A890;font-family:var(--ff);font-size:1.2rem;font-style:italic}
+
+/* HISTORIAL */
+.hist-card{background:var(--surface);border-radius:8px;padding:0.7rem 0.9rem;margin-bottom:0.45rem;display:flex;align-items:center;gap:0.8rem;border:1px solid var(--border);opacity:0.8}
+.hist-card.sentado{border-left:3px solid var(--sage)}
+.hist-card.cancelado{border-left:3px solid var(--rust)}
+.hist-num{font-family:var(--ff);font-size:1.3rem;font-weight:700;color:#B0A890;min-width:28px}
+.hist-info{flex:1;min-width:0}
+.hist-nombre{font-size:0.85rem;font-weight:500;color:var(--charcoal)}
+.hist-meta{font-size:0.72rem;color:#9A9080;display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.1rem}
+.hist-estado{font-size:0.7rem;font-weight:500;padding:0.18rem 0.55rem;border-radius:8px;white-space:nowrap;flex-shrink:0}
+.hist-estado.sentado{background:rgba(90,122,80,0.12);color:var(--sage)}
+.hist-estado.cancelado{background:rgba(196,92,38,0.12);color:var(--rust)}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;z-index:999;background:rgba(13,13,11,0.75);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;pointer-events:none;transition:opacity 0.25s}
+.modal-overlay.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--surface);border-radius:14px;border:1px solid var(--border);padding:2rem 1.8rem 1.6rem;max-width:380px;width:100%;transform:scale(0.95);transition:transform 0.25s}
+.modal-overlay.open .modal-box{transform:scale(1)}
+.modal-icon{font-size:2.2rem;margin-bottom:0.8rem}
+.modal-title{font-family:var(--ff);font-size:1.5rem;color:var(--charcoal);margin-bottom:0.5rem}
+.modal-msg{font-size:0.85rem;color:#6A6560;line-height:1.6;margin-bottom:1.5rem}
+.modal-btns{display:flex;gap:0.7rem}
+.modal-btn-cancel{flex:1;background:none;border:1px solid var(--border);border-radius:8px;padding:0.75rem;font-family:var(--ffb);font-size:0.88rem;color:var(--charcoal);cursor:pointer;transition:background 0.2s}
+.modal-btn-cancel:hover{background:#F5F0F0}
+.modal-btn-confirm{flex:1;background:var(--rust);color:#fff;border:none;border-radius:8px;padding:0.75rem;font-family:var(--ffb);font-size:0.88rem;font-weight:500;cursor:pointer;transition:background 0.2s}
+.modal-btn-confirm:hover{background:#A84A1E}
 </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- LOADING -->
-  <div id="view-loading">
-    <div class="spin"></div>
-    <div class="spin-label">Cargando...</div>
+<!-- LOGIN -->
+<div class="login-wrap" id="login-wrap">
+  <div class="login-box">
+    <div class="login-title">Panel del camarero</div>
+    <div class="login-sub">Introduce el código del establecimiento para acceder</div>
+    <div class="field">
+      <label>Código de acceso</label>
+      <input type="password" id="login-codigo" placeholder="••••" maxlength="20"
+        onkeydown="if(event.key==='Enter') loginPanel()">
+    </div>
+    <div class="err-txt" id="login-err"></div>
+    <button class="btn" onclick="loginPanel()">Entrar</button>
   </div>
-
-  <!-- JOIN FORM -->
-  <div id="view-join" class="hidden">
-    <div class="logo-name" id="rest-name">La Taberna del Sur</div>
-    <div class="logo-sub" id="rest-eslogan"></div>
-    <div class="gold-line"></div>
-    <div class="page-title">Lista de espera</div>
-    <div class="page-sub">Apúntate y te avisamos cuando sea tu turno</div>
-    <div class="gold-line"></div>
-
-    <div id="notif-hint" class="notif-hint hidden">
-      <strong>Activa las notificaciones</strong>
-      Te avisaremos cuando sea tu turno aunque tengas el móvil en el bolsillo.
-    </div>
-
-    <div id="form-area">
-      <div class="field">
-        <label>Tu nombre o apellido</label>
-        <input type="text" id="inp-nombre" placeholder="Ej. Familia García" autocapitalize="words" autocomplete="name">
-      </div>
-      <div class="field">
-        <label>Número de personas</label>
-        <input type="number" id="inp-personas" placeholder="4" min="1" max="20">
-      </div>
-      <div id="campo-codigo" class="field-codigo hidden">
-        <label>Código del local</label>
-        <p>Búscalo en la entrada o en la barra</p>
-        <input type="text" id="inp-codigo" placeholder="Introduce el código...">
-      </div>
-      <div class="err-msg" id="form-error"></div>
-      <button class="btn" id="btn-join" onclick="solicitarTurno()">Apuntarme a la lista</button>
-    </div>
-
-    <div id="closed-area" class="closed-msg hidden">
-      <div class="icon">🔒</div>
-      <p id="closed-msg-txt">La lista de espera está cerrada.</p>
-    </div>
-  </div>
-
-  <!-- STATUS -->
-  <div id="view-status" class="hidden">
-    <div class="logo-name" id="rest-name-2"></div>
-    <div class="gold-line"></div>
-
-    <div class="llamado-box hidden" id="llamado-box">
-      <div class="llamado-icon">📣</div>
-      <div class="llamado-title">¡Te están llamando!</div>
-      <div class="llamado-sub">Dirígete a la entrada del local.<br>El camarero te está esperando.</div>
-      <div class="llamado-timer" id="llamado-timer"></div>
-    </div>
-
-    <div id="status-espera">
-      <div class="page-sub" style="margin-bottom:1.2rem">Actualización automática cada 10 segundos</div>
-      <div class="status-badge" id="status-badge">
-        <span class="badge-sig-txt" id="badge-sig-txt" style="display:none">¡Siguiente!</span>
-        <span class="badge-num" id="badge-num">–</span>
-        <span class="badge-label" id="badge-label">por delante</span>
-      </div>
-      <div class="status-cards">
-        <div class="stat-card">
-          <div class="stat-val" id="stat-tiempo">–</div>
-          <div class="stat-lbl">Minutos aprox.</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-val" id="stat-turno">–</div>
-          <div class="stat-lbl">Tu número</div>
-        </div>
-      </div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-      <div id="btn-carta-wrap"></div>
-    </div>
-
-    <div class="refresh-row">
-      <div class="refresh-dot"></div>
-      <div class="refresh-txt" id="refresh-txt">Actualizando...</div>
-    </div>
-  </div>
-
-  <!-- DONE -->
-  <div id="view-done" class="hidden">
-    <div class="done-icon" id="done-icon">✅</div>
-    <div class="done-title" id="done-title">¡A comer!</div>
-    <div class="done-msg" id="done-msg">Tu mesa ya está lista. ¡Pasa dentro!</div>
-    <button class="btn" onclick="reiniciar()">Volver al inicio</button>
-  </div>
-
 </div>
-<div class="footer">Sistema de cola · La Taberna del Sur</div>
+
+<!-- PANEL -->
+<div class="panel" id="panel-main">
+  <div class="panel-header">
+    <div class="panel-title">Panel de cola</div>
+    <div class="header-actions">
+      <div class="refresh-indicator"><div class="dot"></div><span id="ts">—</span></div>
+    </div>
+  </div>
+
+  <div class="config-panel">
+    <div class="config-title">Ajustes en vivo</div>
+    <div class="config-grid">
+      <div class="config-row"><span class="config-label">Estado de la lista</span><button class="toggle" id="btn-cola" onclick="toggleCola()">...</button></div>
+      <div class="config-row"><span class="config-label">Pedir código</span><button class="toggle" id="btn-codigo" onclick="toggleCodigo()">...</button></div>
+      <div class="config-row" id="row-codigo-val"><span class="config-label">Código actual</span><div class="config-inline"><input type="text" id="inp-codigo"><button class="btn-save" onclick="guardarCodigo()">Guardar</button></div></div>
+      <div class="config-row"><span class="config-label">Min. por grupo</span><div class="config-inline"><input type="number" id="inp-minutos" min="1" max="60"><button class="btn-save" onclick="guardarMinutos()">Guardar</button></div></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="stat-num" id="stat-espera">–</div><div class="stat-label">En espera</div></div>
+    <div class="stat"><div class="stat-num" id="stat-atendidos">–</div><div class="stat-label">Atendidos</div></div>
+    <div class="stat"><div class="stat-num" id="stat-cancelados">–</div><div class="stat-label">Cancelados</div></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn-llamar" id="btn-llamar" onclick="llamarSiguiente()">📣 Llamar siguiente</button>
+    <button class="btn-reset" onclick="resetearCola()">🗑 Vaciar cola</button>
+  </div>
+
+  <div class="queue-tabs">
+    <button class="queue-tab active" id="tab-espera" onclick="switchTab('espera')">En espera <span class="tab-count" id="tab-espera-count">0</span></button>
+    <button class="queue-tab" id="tab-llamados" onclick="switchTab('llamados')">Llamados <span class="tab-count urgent" id="tab-llamados-count">0</span></button>
+    <button class="queue-tab" id="tab-historial" onclick="switchTab('historial')">Historial <span class="tab-count" id="tab-historial-count">0</span></button>
+  </div>
+
+  <div class="list-header">
+    <div class="list-title" id="list-title">Cola actual</div>
+    <div class="timestamp" id="ts-list">—</div>
+  </div>
+
+  <div id="panel-espera">
+    <div id="lista-llamados-inline"></div>
+    <div id="lista-cola"><div class="empty-state">Cargando...</div></div>
+  </div>
+  <div id="panel-llamados" style="display:none"><div id="lista-llamados-full"></div></div>
+  <div id="panel-historial" style="display:none"><div id="lista-historial"></div></div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal-box">
+    <div class="modal-icon" id="modal-icon">🗑</div>
+    <div class="modal-title" id="modal-title">Vaciar cola</div>
+    <div class="modal-msg" id="modal-msg">¿Seguro que quieres eliminar todos los turnos de hoy?</div>
+    <div class="modal-btns">
+      <button class="modal-btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-btn-confirm" id="modal-confirm-btn" onclick="confirmAction()">Vaciar cola</button>
+    </div>
+  </div>
+</div>
 
 <script>
-// ── STATE ────────────────────────────────────────────────────────────────────
-var deviceId = localStorage.getItem('cola_deviceId');
-if (!deviceId) {
-  deviceId = 'dev_' + Math.random().toString(36).substr(2,12) + Date.now().toString(36);
-  localStorage.setItem('cola_deviceId', deviceId);
-}
-var myQueueId  = localStorage.getItem('cola_queueId');
-var myTurno    = localStorage.getItem('cola_turno') || '?';
-var pollTimer  = null;
-var enlaceCarta = '';
+var configData  = {};
+var autoTimer   = null;
+var codigoSession = '';
+var currentTab  = 'espera';
+var _pendingAction = null;
 
-// ── API HELPERS ───────────────────────────────────────────────────────────────
-function apiGet(action, params) {
-  var url = API_URL + '?action=' + action;
-  if (params) {
-    Object.keys(params).forEach(function(k) { url += '&' + k + '=' + encodeURIComponent(params[k]); });
+// ── API ───────────────────────────────────────────────────────────────────────
+// All calls use GET — Apps Script CORS only works reliably on GET
+function api(params) {
+  var url = API_URL + '?';
+  var parts = [];
+  Object.keys(params).forEach(function(k) {
+    if (params[k] !== undefined && params[k] !== null) {
+      parts.push(k + '=' + encodeURIComponent(params[k]));
+    }
+  });
+  return fetch(url + parts.join('&')).then(function(r){ return r.json(); });
+}
+function apiGet(action, params) { var p = params||{}; p.action=action; return api(p); }
+function apiPost(data) { return api(data); }
+
+// ── LOGIN ─────────────────────────────────────────────────────────────────────
+function loginPanel() {
+  var codigo = document.getElementById('login-codigo').value.trim();
+  if (!codigo) return;
+  apiPost({ action: 'verificar', codigo: codigo }).then(function(res) {
+    if (res.ok) {
+      codigoSession = codigo;
+      document.getElementById('login-wrap').style.display = 'none';
+      document.getElementById('panel-main').style.display = 'block';
+      cargarTodo();
+      autoTimer = setInterval(cargarTodo, 8000);
+    } else {
+      document.getElementById('login-err').textContent = 'Código incorrecto.';
+    }
+  });
+}
+
+// ── CARGAR TODO ───────────────────────────────────────────────────────────────
+function cargarTodo() {
+  apiGet('cola').then(function(data) {
+    configData = data.config || {};
+    renderConfig();
+    renderStats(data.stats || {});
+    renderCola(data.cola || []);
+    renderLlamados(data.llamados || []);
+    renderHistorial(data.historial || []);
+    document.getElementById('ts').innerText = data.timestamp || '—';
+    document.getElementById('ts-list').innerText = 'Actualizado ' + (data.timestamp || '');
+    document.getElementById('tab-historial-count').innerText = (data.historial || []).length;
+  });
+}
+
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+function renderConfig() {
+  var cfg = configData;
+  var btnCola = document.getElementById('btn-cola');
+  btnCola.innerText   = cfg.colaAbierta ? 'ABIERTA' : 'CERRADA';
+  btnCola.className   = 'toggle ' + (cfg.colaAbierta ? 'toggle-on' : 'toggle-off');
+  var btnCod = document.getElementById('btn-codigo');
+  btnCod.innerText  = cfg.pedirCodigo ? 'ACTIVO' : 'NO';
+  btnCod.className  = 'toggle ' + (cfg.pedirCodigo ? 'toggle-on' : 'toggle-off');
+  document.getElementById('row-codigo-val').style.display = cfg.pedirCodigo ? '' : 'none';
+  document.getElementById('inp-codigo').value  = cfg.codigoActual || '';
+  document.getElementById('inp-minutos').value = cfg.minPorGrupo  || 5;
+}
+
+function toggleCola() {
+  var nuevo = configData.colaAbierta ? 'NO' : 'SI';
+  document.getElementById('btn-cola').innerText = '...';
+  apiPost({ action: 'config_set', key: 'cola_abierta', value: nuevo }).then(cargarTodo);
+}
+function toggleCodigo() {
+  var nuevo = configData.pedirCodigo ? 'NO' : 'SI';
+  document.getElementById('btn-codigo').innerText = '...';
+  apiPost({ action: 'config_set', key: 'pedir_codigo', value: nuevo }).then(cargarTodo);
+}
+function guardarCodigo() {
+  var val = document.getElementById('inp-codigo').value.trim();
+  if (val) apiPost({ action: 'config_set', key: 'codigo_actual', value: val }).then(cargarTodo);
+}
+function guardarMinutos() {
+  var val = Number(document.getElementById('inp-minutos').value);
+  if (val > 0) apiPost({ action: 'config_set', key: 'min_por_grupo', value: val }).then(cargarTodo);
+}
+
+// ── STATS ─────────────────────────────────────────────────────────────────────
+function renderStats(stats) {
+  document.getElementById('stat-espera').innerText     = stats.enEspera    || 0;
+  document.getElementById('stat-atendidos').innerText  = stats.atendidos   || 0;
+  document.getElementById('stat-cancelados').innerText = stats.cancelados  || 0;
+  document.getElementById('tab-espera-count').innerText   = stats.enEspera || 0;
+  document.getElementById('tab-llamados-count').innerText = stats.llamados || 0;
+  document.getElementById('btn-llamar').disabled = ((stats.enEspera || 0) === 0 && (stats.llamados || 0) === 0);
+}
+
+// ── COLA ──────────────────────────────────────────────────────────────────────
+function renderCola(cola) {
+  var div = document.getElementById('lista-cola');
+  if (!cola.length) { div.innerHTML = '<div class="empty-state">La cola está vacía</div>'; return; }
+  div.innerHTML = cola.map(function(item) {
+    return turnoCardHTML(item, false);
+  }).join('');
+}
+
+function renderLlamados(llamados) {
+  var inlineEl = document.getElementById('lista-llamados-inline');
+  var fullEl   = document.getElementById('lista-llamados-full');
+  if (!llamados.length) {
+    inlineEl.innerHTML = '';
+    fullEl.innerHTML   = '<div class="empty-state">No hay turnos llamados</div>';
+    return;
   }
-  return fetch(url).then(function(r) { return r.json(); });
+  var html = '<div class="llamados-section"><div class="llamados-label">Turnos llamados esperando respuesta</div>';
+  html += llamados.map(function(item){ return turnoCardHTML(item, true); }).join('');
+  html += '</div>';
+  inlineEl.innerHTML = html;
+  fullEl.innerHTML   = llamados.map(function(item){ return turnoCardHTML(item, true); }).join('');
 }
 
-function apiPost(data) {
-  return fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' },
-  }).then(function(r) { return r.json(); });
-}
-
-// ── INIT ──────────────────────────────────────────────────────────────────────
-window.addEventListener('load', function() {
-  apiGet('config').then(function(cfg) {
-    document.getElementById('rest-name').innerText   = cfg.nombre || 'Restaurante';
-    document.getElementById('rest-name-2').innerText = cfg.nombre || 'Restaurante';
-    if (cfg.eslogan) document.getElementById('rest-eslogan').innerText = cfg.eslogan;
-    if (cfg.pedirCodigo) document.getElementById('campo-codigo').classList.remove('hidden');
-    document.getElementById('view-loading').classList.add('hidden');
-
-    // Show notification hint if supported
-    if ('Notification' in window && Notification.permission === 'default') {
-      document.getElementById('notif-hint').classList.remove('hidden');
-    }
-
-    if (myQueueId) {
-      mostrarStatus();
-    } else {
-      document.getElementById('view-join').classList.remove('hidden');
-      if (!cfg.colaAbierta) {
-        document.getElementById('form-area').classList.add('hidden');
-        document.getElementById('closed-area').classList.remove('hidden');
-        document.getElementById('closed-msg-txt').innerText = cfg.mensajeCierre || 'La lista de espera está cerrada.';
-      }
-    }
-  }).catch(function(err) {
-    document.getElementById('view-loading').innerHTML =
-      '<p style="color:var(--rust);text-align:center">Error de conexión.<br><small>' + err.message + '</small></p>';
-  });
-});
-
-// ── REGISTRO ──────────────────────────────────────────────────────────────────
-function solicitarTurno() {
-  var nombre   = document.getElementById('inp-nombre').value.trim();
-  var personas = document.getElementById('inp-personas').value.trim();
-  var codigo   = document.getElementById('inp-codigo').value.trim();
-
-  if (!nombre)   { document.getElementById('form-error').innerText = 'Escribe tu nombre o apellido.'; return; }
-  if (!personas) { document.getElementById('form-error').innerText = 'Indica cuántas personas sois.'; return; }
-
-  var btn = document.getElementById('btn-join');
-  btn.innerText = 'Verificando...';
-  btn.disabled  = true;
-  document.getElementById('form-error').innerText = '';
-
-  // Request notification permission BEFORE joining (needs user gesture)
-  requestNotifPermission();
-
-  apiPost({ action: 'join', nombre: nombre, personas: Number(personas), codigo: codigo, deviceId: deviceId })
-    .then(function(res) {
-      if (res.ok) {
-        myQueueId = res.queueId;
-        myTurno   = res.turno;
-        localStorage.setItem('cola_queueId', myQueueId);
-        localStorage.setItem('cola_turno', myTurno);
-        mostrarStatus();
-      } else if (res.queueId) {
-        myQueueId = res.queueId;
-        localStorage.setItem('cola_queueId', myQueueId);
-        mostrarStatus();
-      } else {
-        document.getElementById('form-error').innerText = res.error || 'Error al unirse.';
-        btn.innerText = 'Apuntarme a la lista';
-        btn.disabled  = false;
-      }
-    })
-    .catch(function(err) {
-      document.getElementById('form-error').innerText = 'Error de conexión.';
-      btn.innerText = 'Apuntarme a la lista';
-      btn.disabled  = false;
-    });
-}
-
-// ── STATUS ────────────────────────────────────────────────────────────────────
-function mostrarStatus() {
-  document.getElementById('view-join').classList.add('hidden');
-  document.getElementById('view-status').classList.remove('hidden');
-  document.getElementById('stat-turno').innerText = myTurno || '?';
-  actualizarEstado();
-  pollTimer = setInterval(actualizarEstado, 10000);
-}
-
-function actualizarEstado() {
-  apiGet('status', { queueId: myQueueId }).then(function(res) {
-    var ahora = new Date();
-    document.getElementById('refresh-txt').innerText =
-      'Actualizado ' + ahora.getHours() + ':' +
-      String(ahora.getMinutes()).padStart(2,'0') + ':' +
-      String(ahora.getSeconds()).padStart(2,'0');
-
-    if (res.error) { finalizarTurno('error'); return; }
-
-    if (res.estado === 'espera') {
-      var pd    = res.porDelante;
-      var badge = document.getElementById('status-badge');
-      badge.classList.remove('siguiente');
-      document.getElementById('llamado-box').classList.add('hidden');
-      document.getElementById('status-espera').style.display = '';
-
-      if (pd === 0) {
-        badge.classList.add('siguiente');
-        document.getElementById('badge-num').style.display    = 'none';
-        document.getElementById('badge-sig-txt').style.display = '';
-        document.getElementById('badge-label').innerText = 'Acércate a la puerta';
-        document.getElementById('stat-tiempo').innerText = '0';
-        if (navigator.vibrate) navigator.vibrate([400, 200, 400]);
-        if (!window._siguienteNotif) {
-          window._siguienteNotif = true;
-          showNotif('¡Eres el siguiente!', 'Acércate a la puerta del local, te atenderán enseguida.');
-        }
-      } else {
-        window._siguienteNotif = false;
-        badge.classList.remove('siguiente');
-        document.getElementById('badge-num').style.display     = '';
-        document.getElementById('badge-sig-txt').style.display = 'none';
-        document.getElementById('badge-num').innerText   = pd;
-        document.getElementById('badge-label').innerText = pd === 1 ? 'grupo delante' : 'grupos delante';
-        document.getElementById('stat-tiempo').innerText = res.tiempo;
-      }
-
-      // Carta link
-      if (res.urlCarta && !document.getElementById('btn-carta-wrap').innerHTML) {
-        enlaceCarta = res.urlCarta;
-        document.getElementById('btn-carta-wrap').innerHTML =
-          '<button class="carta-btn" onclick="window.open(\'' + enlaceCarta + '\',\'_blank\')">🍽️ Ver la carta mientras esperas</button>';
-      }
-
-      // Progress bar
-      var pct = res.tiempo > 0 ? Math.min(100, (1 - res.tiempo / 30) * 100) : 100;
-      document.getElementById('progress-fill').style.width = pct + '%';
-
-    } else if (res.estado === 'llamado') {
-      document.getElementById('status-espera').style.display = 'none';
-      document.getElementById('llamado-box').classList.remove('hidden');
-      if (!window._llamadoSince) {
-        window._llamadoSince = new Date();
-        if (navigator.vibrate) navigator.vibrate([500, 200, 500, 200, 500]);
-        showNotif('¡Es tu turno! 📣', 'El camarero te está esperando. Dirígete a la entrada.');
-      }
-      var mins = Math.floor((new Date() - window._llamadoSince) / 60000);
-      document.getElementById('llamado-timer').innerText =
-        mins <= 0 ? 'Ahora mismo' : 'Hace ' + mins + ' minuto' + (mins > 1 ? 's' : '');
-
-    } else if (res.estado === 'sentado') {
-      finalizarTurno('sentado');
-    } else if (res.estado === 'cancelado') {
-      finalizarTurno('cancelado');
-    }
-  }).catch(function() {
-    document.getElementById('refresh-txt').innerText = 'Sin conexión, reintentando...';
-  });
-}
-
-// ── DONE ──────────────────────────────────────────────────────────────────────
-function finalizarTurno(tipo) {
-  clearInterval(pollTimer);
-  localStorage.removeItem('cola_queueId');
-  localStorage.removeItem('cola_turno');
-  document.getElementById('view-status').classList.add('hidden');
-  document.getElementById('view-done').classList.remove('hidden');
-
-  var icon  = document.getElementById('done-icon');
-  var title = document.getElementById('done-title');
-  var msg   = document.getElementById('done-msg');
-
-  if (tipo === 'sentado') {
-    icon.innerText  = '🎉';
-    title.innerText = '¡Mesa lista!';
-    msg.innerText   = 'Tu mesa ya está preparada. ¡Pasa dentro y buen provecho!';
-  } else if (tipo === 'cancelado') {
-    icon.innerText  = '❌';
-    if (window._llamadoSince) {
-      title.innerText = '¡Lo sentimos!';
-      var m = Math.floor((new Date() - window._llamadoSince) / 60000);
-      msg.innerText = 'Esperamos ' + (m > 0 ? m + ' minuto' + (m > 1 ? 's' : '') : 'un momento') +
-        ' y no te encontramos. Tu turno ha pasado al siguiente. ¡Vuelve cuando quieras!';
-    } else {
-      title.innerText = 'Turno cancelado';
-      msg.innerText   = 'Tu turno ha sido cancelado. Acércate a la barra si crees que es un error.';
-    }
+function turnoCardHTML(item, forceLlamado) {
+  var esLlamado = (item.estado === 'llamado') || forceLlamado;
+  var esUrgente = esLlamado && item.minsLlamado !== null && item.minsLlamado >= 3;
+  var cardClass = 'turno-card' + (esUrgente ? ' llamado-urgente' : (esLlamado ? ' llamado' : ''));
+  var badge = '';
+  if (esLlamado) {
+    var llCls = esUrgente ? 'urgente' : 'reciente';
+    var llTxt = (item.minsLlamado === null || item.minsLlamado <= 0)
+      ? 'Llamado ahora' : 'Llamado hace ' + item.minsLlamado + ' min' + (item.minsLlamado > 1 ? 's' : '');
+    badge = '<span class="llamado-info ' + llCls + '">' + (esUrgente ? '⚠️ ' : '📣 ') + llTxt + '</span>';
   } else {
-    icon.innerText  = '⚠️';
-    title.innerText = 'Turno no encontrado';
-    msg.innerText   = 'No hemos podido localizar tu turno. Acércate a la barra.';
+    var wCls = item.minEspera >= 15 ? 'wait-warn' : 'wait-ok';
+    badge = '<span class="wait-badge ' + wCls + '">' + item.minEspera + ' min esperando</span>';
   }
+  return '<div class="' + cardClass + '" id="card-' + item.id + '">' +
+    '<div class="turno-num">' + item.turno + '</div>' +
+    '<div class="turno-info">' +
+      '<div class="turno-nombre">' + item.nombre + '</div>' +
+      '<div class="turno-meta"><span>👥 ' + item.personas + '</span><span>🕐 ' + item.hora + '</span>' + badge + '</div>' +
+    '</div>' +
+    '<div class="turno-btns">' +
+      '<button class="btn-sentar" onclick="actualizarEstado(\'' + item.id + '\',\'sentado\')">Pasar</button>' +
+      '<button class="btn-cancelar" onclick="actualizarEstado(\'' + item.id + '\',\'cancelar\')">Saltar</button>' +
+    '</div>' +
+  '</div>';
 }
 
-function reiniciar() { window.location.reload(); }
+function renderHistorial(historial) {
+  var el = document.getElementById('lista-historial');
+  if (!historial.length) { el.innerHTML = '<div class="empty-state">Sin historial todavía</div>'; return; }
+  el.innerHTML = historial.slice().sort(function(a,b){ return b.turno - a.turno; }).map(function(item) {
+    var esCancel  = item.estado === 'cancelado';
+    var estadoTxt = esCancel ? 'Cancelado' : 'Pasado';
+    var callInfo  = item.horaLlamada
+      ? (esCancel
+          ? 'Llamado ' + item.horaLlamada + ' · sin respuesta' + (item.minsLlamado ? ' (' + item.minsLlamado + ' min)' : '')
+          : 'Llamado ' + item.horaLlamada + ' · pasó en ' + (item.minsLlamado || '?') + ' min')
+      : (esCancel ? 'Cancelado sin llamar' : 'Pasado directamente');
+    return '<div class="hist-card ' + item.estado + '">' +
+      '<div class="hist-num">' + item.turno + '</div>' +
+      '<div class="hist-info">' +
+        '<div class="hist-nombre">' + item.nombre + '</div>' +
+        '<div class="hist-meta"><span>👥 ' + item.personas + '</span><span>Llegada: ' + item.hora + '</span><span>' + callInfo + '</span></div>' +
+      '</div>' +
+      '<div class="hist-estado ' + item.estado + '">' + estadoTxt + '</div>' +
+    '</div>';
+  }).join('');
+}
 
-// ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
-function requestNotifPermission() {
-  if (!('Notification' in window) || Notification.permission !== 'default') return;
-  Notification.requestPermission().then(function(result) {
-    if (result === 'granted') {
-      document.getElementById('notif-hint').classList.add('hidden');
-      showNotif('Notificaciones activadas ✅', 'Te avisaremos cuando sea tu turno.');
+// ── ACCIONES ──────────────────────────────────────────────────────────────────
+function actualizarEstado(id, accion) {
+  var card = document.getElementById('card-' + id);
+  if (card) card.classList.add('fading');
+  apiPost({ action: accion, id: id }).then(function(res) {
+    if (res.ok) cargarTodo();
+    else { if (card) card.classList.remove('fading'); alert(res.error || 'Error'); }
+  });
+}
+
+function llamarSiguiente() {
+  var btn = document.getElementById('btn-llamar');
+  btn.disabled = true; btn.innerText = 'Llamando...';
+  apiPost({ action: 'llamar' }).then(function(res) {
+    if (res.ok) {
+      btn.innerText = '✓ Llamado: ' + res.nombre;
+      setTimeout(function() { btn.innerText = '📣 Llamar siguiente'; cargarTodo(); }, 2000);
+    } else {
+      btn.disabled = false; btn.innerText = '📣 Llamar siguiente';
+      alert(res.error || 'No hay nadie en espera.');
     }
   });
 }
 
-function showNotif(title, body) {
-  if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  try {
-    var n = new Notification(title, {
-      body:    body,
-      icon:    'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',
-      tag:     'cola-turno',
-      renotify: true,
-    });
-    n.onclick = function() { window.focus(); n.close(); };
-    setTimeout(function() { n.close(); }, 12000);
-  } catch(e) {}
+function resetearCola() {
+  showModal('🗑', 'Vaciar la cola', '¿Seguro que quieres eliminar todos los turnos de hoy?', 'Sí, vaciar', function() {
+    apiPost({ action: 'reset' }).then(function(res) { if (res.ok) cargarTodo(); });
+  });
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  ['espera','llamados','historial'].forEach(function(t) {
+    document.getElementById('tab-'   + t).classList.toggle('active', t === tab);
+    document.getElementById('panel-' + t).style.display = t === tab ? '' : 'none';
+  });
+  var titles = { espera: 'Cola actual', llamados: 'Turnos llamados', historial: 'Historial de hoy' };
+  document.getElementById('list-title').innerText = titles[tab] || '';
+}
+
+// ── MODAL ─────────────────────────────────────────────────────────────────────
+function showModal(icon, title, msg, confirmLabel, action) {
+  document.getElementById('modal-icon').innerText        = icon;
+  document.getElementById('modal-title').innerText       = title;
+  document.getElementById('modal-msg').innerText         = msg;
+  document.getElementById('modal-confirm-btn').innerText = confirmLabel;
+  _pendingAction = action;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal(evt) {
+  if (evt && evt.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  _pendingAction = null;
+}
+function confirmAction() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  if (_pendingAction) { _pendingAction(); _pendingAction = null; }
 }
 </script>
 </body>

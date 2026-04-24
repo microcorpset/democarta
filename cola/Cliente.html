@@ -8,7 +8,7 @@
 
 <!-- ── CONFIGURACIÓN ── Pon aquí la URL de tu Apps Script desplegado ── -->
 <script>
-  var API_URL = 'https://script.google.com/macros/s/AKfycbzkLnd659kzvDciKeBJFFz7Cn_Liwx4XVy5zdbIb7dRTvv75jRKvbefX6524IiU732e/exec';
+  var API_URL = 'https://script.google.com/macros/s/AKfycbzkVLctJefTcUFhLwiJt6YvmuFS5g0leq2L92rJspU9T_Ku5cqafD0vcIiAeDgnkPyZ/exechttps://script.google.com/macros/s/TU_ID_AQUI/exec';
 </script>
 
 <style>
@@ -200,21 +200,25 @@ var pollTimer  = null;
 var enlaceCarta = '';
 
 // ── API HELPERS ───────────────────────────────────────────────────────────────
-function apiGet(action, params) {
-  var url = API_URL + '?action=' + action;
-  if (params) {
-    Object.keys(params).forEach(function(k) { url += '&' + k + '=' + encodeURIComponent(params[k]); });
-  }
+// All calls use GET to avoid CORS issues with Apps Script
+function api(params) {
+  var url = API_URL + '?';
+  var parts = [];
+  Object.keys(params).forEach(function(k) {
+    if (params[k] !== undefined && params[k] !== null) {
+      parts.push(k + '=' + encodeURIComponent(params[k]));
+    }
+  });
+  url += parts.join('&');
   return fetch(url).then(function(r) { return r.json(); });
 }
-
-function apiPost(data) {
-  return fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' },
-  }).then(function(r) { return r.json(); });
+// Aliases for backwards compatibility
+function apiGet(action, params) {
+  var p = params || {};
+  p.action = action;
+  return api(p);
 }
+function apiPost(data) { return api(data); }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 window.addEventListener('load', function() {

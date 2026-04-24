@@ -8,7 +8,8 @@
 
 <!-- ── CONFIGURACIÓN ── Pon aquí la URL de tu Apps Script desplegado ── -->
 <script>
-  var API_URL = 'https://script.google.com/macros/s/AKfycbwTuVSl3-W3ADgqLn3Eg96V0kX0z5nA0emQx8rUKsq68C3CTEBNEXxMAy7N5Ycd7Yj0/exec';
+  var API_URL = 'https://script.google.com/macros/s/AKfycbwAEmiqAHiNPiyToBFqu7vaXQg7Xe4dnnt42tUnNbJHEhZjshQ6NrPY5CsBUOYVTy-F/exec';
+  var VAPID_PUBLIC = 'BKxFmUQ0hX8Za1ZsIhqrAr4pBDD9uXa7IBd4PKdzJ7EUA9TSc281F506Iu2eumqpVSyA5-ZYwNG1FrikX8M9IkY';
 </script>
 
 <style>
@@ -222,6 +223,7 @@ function apiPost(data) { return api(data); }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 window.addEventListener('load', function() {
+  initServiceWorker();
   apiGet('config').then(function(cfg) {
     document.getElementById('rest-name').innerText   = cfg.nombre || 'Restaurante';
     document.getElementById('rest-name-2').innerText = cfg.nombre || 'Restaurante';
@@ -266,6 +268,8 @@ function solicitarTurno() {
 
   // Request notification permission BEFORE joining (needs user gesture)
   requestNotifPermission();
+  // Subscribe to push after SW is ready
+  setTimeout(subscribePush, 2000);
 
   apiPost({ action: 'join', nombre: nombre, personas: Number(personas), codigo: codigo, deviceId: deviceId })
     .then(function(res) {
@@ -408,28 +412,77 @@ function finalizarTurno(tipo) {
 
 function reiniciar() { window.location.reload(); }
 
-// ── NOTIFICATIONS ─────────────────────────────────────────────────────────────
+// ── WEB PUSH NOTIFICATIONS (Service Worker) ──────────────────────────────────
+// Works on Android even with screen off.
+// Requires sw.js in the root of the GitHub Pages repo.
+
+var swReg = null;
+
+function urlBase64ToUint8Array(base64String) {
+  var padding = '='.repeat((4 - base64String.length % 4) % 4);
+  var base64  = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+  var rawData = window.atob(base64);
+  var arr = new Uint8Array(rawData.length);
+  for (var i = 0; i < rawData.length; i++) arr[i] = rawData.charCodeAt(i);
+  return arr;
+}
+
+function initServiceWorker() {
+  if (!('serviceWorker' in navigator) || !('PushManager' in window)) return;
+  navigator.serviceWorker.register('/democarta/sw.js').then(function(reg) {
+    swReg = reg;
+    console.log('SW registered');
+  }).catch(function(e) { console.log('SW error:', e); });
+}
+
 function requestNotifPermission() {
-  if (!('Notification' in window) || Notification.permission !== 'default') return;
+  if (!('Notification' in window)) return;
+  if (Notification.permission === 'granted') {
+    subscribePush();
+    return;
+  }
+  if (Notification.permission === 'denied') return;
   Notification.requestPermission().then(function(result) {
     if (result === 'granted') {
       document.getElementById('notif-hint').classList.add('hidden');
-      showNotif('Notificaciones activadas ✅', 'Te avisaremos cuando sea tu turno.');
+      subscribePush();
     }
   });
 }
 
+function subscribePush() {
+  if (!swReg) return;
+  swReg.pushManager.getSubscription().then(function(existing) {
+    if (existing) { sendSubToServer(existing); return; }
+    swReg.pushManager.subscribe({
+      userVisibleOnly:      true,
+      applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC),
+    }).then(function(sub) {
+      sendSubToServer(sub);
+    }).catch(function(e) { console.log('Push subscribe error:', e); });
+  });
+}
+
+function sendSubToServer(sub) {
+  if (!myQueueId) return;
+  var subStr = JSON.stringify(sub);
+  apiGet('save_player', { queueId: myQueueId, playerId: encodeURIComponent(subStr) });
+}
+
+// Fallback for when SW is not available — basic Notification API
 function showNotif(title, body) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
   try {
-    var n = new Notification(title, {
-      body:    body,
-      icon:    'https://cdn-icons-png.flaticon.com/512/3595/3595455.png',
-      tag:     'cola-turno',
-      renotify: true,
-    });
-    n.onclick = function() { window.focus(); n.close(); };
-    setTimeout(function() { n.close(); }, 12000);
+    if (swReg) {
+      swReg.showNotification(title, {
+        body: body, tag: 'cola-turno', renotify: true,
+        requireInteraction: true, vibrate: [400, 200, 400],
+      });
+    } else {
+      var n = new Notification(title, { body: body, tag: 'cola-turno', renotify: true });
+      n.onclick = function() { window.focus(); n.close(); };
+      setTimeout(function() { n.close(); }, 12000);
+    }
   } catch(e) {}
 }
 </script>
